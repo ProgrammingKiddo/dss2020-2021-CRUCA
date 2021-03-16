@@ -9,7 +9,7 @@ public class OrderFactory
 	
 	public ImplOrder createOrder()
 	{
-		return Order(orderCount + 1);//We are increasing the number so that they are correlative
+		return ImplOrder(orderCount++);//We are increasing the number so that they are correlative
 		
 	}	
 	
