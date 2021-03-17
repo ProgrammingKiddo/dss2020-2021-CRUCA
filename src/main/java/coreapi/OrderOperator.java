@@ -50,11 +50,39 @@ public class OrderOperator
 		 * PRECONDITION:Receive an order and order status 
 		 * POSTCONDITION: Assign the indicated status to the order
 		 */
-		public void setOrderStatus(Order ord,Status stat)///DUDA
+		public void setOrderStatus(Order ord,orderStatus stat)
 		{
-			setStatus(stat);
+			switch(stat)
+			{
+				case "Cobrado":
+					ord.Status = "Cobrado";
+					break;
+				
+				case "En Cocina":
+					ord.Status = "En Cocina";
+					break;
+					
+				case "Entregado":
+					ord.Status = "Entregado";
+					break;
+					
+				case "Finalizado":
+					ord.Status = "Finalizado";
+					break;
+				default:
+					System.out.println("Incorrect status");
+					
+			}
 		}
-		
+	
+		/*
+		 * PRECONDITION:
+		 * POSTCONDITION:
+		 */
+		public int checkDailyRegister()
+		{
+			
+		}
 		
 		
 }
