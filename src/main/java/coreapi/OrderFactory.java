@@ -7,10 +7,18 @@ public class OrderFactory
 	//It starts at 0 because the first registered order will have 0 as its identification number
 	private static int orderCount = 0;
 	
-	public ImplOrder createOrder()
+	/**
+	 * @return the orderCount
+	 */
+	public static int getOrderCount() 
 	{
-		return ImplOrder(orderCount++);//We are increasing the number so that they are correlative
+		return orderCount;
+	}
+	
+	public OrderImpl createOrder()
+	{
+		return OrderImpl(orderCount++);//We are increasing the number so that they are correlative
 		
-	}	
+	}
 	
 }
