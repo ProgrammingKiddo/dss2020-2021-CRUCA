@@ -15,9 +15,9 @@ public class OrderFactory
 		return orderCount;
 	}
 	
-	public OrderImpl createOrder()
+	public Order createOrder()
 	{
-		return OrderImpl(orderCount++);//We are increasing the number so that they are correlative
+		return new OrderImpl(orderCount++);//We are increasing the number so that they are correlative
 		
 	}
 	
