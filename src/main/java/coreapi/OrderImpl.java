@@ -3,18 +3,24 @@ package coreapi;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
-public class ImplOrder implements Order {
+public class OrderImpl implements Order {
 
-	private int id;
+	private final int id;
 	private Date date;
 	// Map cannot take primitive types as the type
 	// of its mapped values
-	private Map<Product, Integer> basket;
+	private LinkedHashMap<Product, Integer> basket;
 	
+	
+	OrderImpl(int assignedId)
+	{
+		id = assignedId;
+		basket = new LinkedHashMap<Product, Integer>();
+	}
 	
 	public int totalCost()
 	{
