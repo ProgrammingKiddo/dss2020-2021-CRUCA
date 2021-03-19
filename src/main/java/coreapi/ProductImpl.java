@@ -1,6 +1,6 @@
 package coreapi;
 
-public class ImplProduct implements Product {
+public class ProductImpl implements Product {
 
 	private int id;
 	private float price;
@@ -8,7 +8,7 @@ public class ImplProduct implements Product {
 	private String name;
 	
 	
-	public Product(int id, float price, int stock, String name)
+	public ProductImpl(int id, float price, int stock, String name)
 	{
 		this.id = id;
 		this.price = price;
@@ -18,7 +18,7 @@ public class ImplProduct implements Product {
 	
 	public int getId() { return id; }
 	
-	public int getPrice() { return price; }
+	public float getPrice() { return price; }
 	
 	public int getStock() { return stock; }
 	
