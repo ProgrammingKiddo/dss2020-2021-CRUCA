@@ -1,6 +1,7 @@
 package coreapi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,15 +13,24 @@ public class Menu implements Product {
 	private int id;
 	private String name;
 	
-	public Menu(int id, String name)
+	public Menu(int assignedId, String assignedName)
 	{
-		this.id = id;
-		this.name = name;
+		id = assignedId;
+		name = assignedName;
 	}
 	
+	/*
+	 * @return Returns the unique identifier assigned to this Menu.
+	 */
 	public int getId() { return id; }
+	/*
+	 * @return Returns the name of this Menu.
+	 */
 	public String getName() { return name; }
 	
+	/*
+	 * @return Returns the combined cost of all products that make up this Menu.
+	 */
 	public float  getPrice() {
 		
 		float price = 0;
@@ -34,8 +44,11 @@ public class Menu implements Product {
 		return price;
 	}
 	
+	/*
+	 * @return Returns a read-only list containing the products that make up this Menu.
+	 */
 	public List<Product> getProductsInMenu()
 	{
-		return new ArrayList<Product>(productsMenu.keySet());
+		return Collections.unmodifiableList(new ArrayList<Product>(productsMenu.keySet()));
 	}
 }
