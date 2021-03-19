@@ -1,10 +1,13 @@
 package coreapi;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Set;
 
 public class Menu implements Product {
 	
-	private Map<Product,int> productsMenu;
+	private LinkedHashMap<Product, Integer> productsMenu;
 	private int id;
 	private String name;
 	
@@ -15,19 +18,20 @@ public class Menu implements Product {
 	}
 	
 	public int getId() { return id; }
+	public String getName() { return name; }
 	
-	public int getPrice() {
+	public float  getPrice() {
 		
 		float price = 0;
-		Iterator<Product> prodIterator = productsMenu.iterator();
+		Set<Product> containedProducts = productsMenu.keySet();
+		Iterator<Product> prodIterator = containedProducts.iterator();
+		
 		while (prodIterator.hasNext())
 		{
-			Product actual = prodIterator.next();
-			price += actual.getPrice() * linkedHashMap.get(actual);
+			price += prodIterator.next().getPrice();
 		}
 		return price;
 	}
 	
-	public String getName() {return name;}
 	
 }
