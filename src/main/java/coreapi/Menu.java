@@ -3,6 +3,7 @@ package coreapi;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 public class Menu implements Product {
@@ -33,5 +34,8 @@ public class Menu implements Product {
 		return price;
 	}
 	
-	
+	public List<Product> getProductsInMenu()
+	{
+		return new ArrayList<Product>(productsMenu.keySet());
+	}
 }
