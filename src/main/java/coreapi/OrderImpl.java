@@ -66,18 +66,7 @@ public class OrderImpl implements Order {
 	 */
 	public boolean containsProduct(int id)
 	{
-		boolean isContained = false;
-		Set<Product> products = basket.keySet();
-		Iterator<Product> prodIterator = products.iterator();
-		
-		while (prodIterator.hasNext() && isContained == false)
-		{
-			if (prodIterator.next().getId() == id)
-			{
-				isContained = true;
-			}
-		}
-		return isContained;
+		return basket.containsKey(ProductCatalog.getProduct(id));
 	}
 
 	/**
@@ -85,18 +74,60 @@ public class OrderImpl implements Order {
 	 */
 	public int checkProductQuantity(int id)
 	{
-		int quantity = 0;
+		int quantity;
 		
 		if (this.containsProduct(id))
 		{
-			for (Map.Entry<Product, Integer> entry : basket.entrySet())
-			{
-				if (entry.getKey().getId() == id)
-				{
-					quantity = entry.getValue().intValue();
-				}
-			}
+			quantity = basket.get(ProductCatalog.getProduct(id)).intValue();
+		}
+		else
+		{
+			quantity = 0;
 		}
 		return quantity;
+	}
+
+	public void addProduct(int newProductId)
+	{
+		addProduct(newProductId, 1);
+	}
+	
+	public void addProduct(int newProductId, int quantity)
+	{
+		if (quantity > 0)
+		{
+			Product prod = ProductCatalog.getProduct(newProductId);
+			if (this.containsProduct(newProductId))
+			{
+				int actualQuantity = basket.get(prod).intValue();
+				basket.replace(prod, Integer.valueOf(actualQuantity + quantity));
+			}
+			else
+			{
+				basket.put(prod, Integer.valueOf(quantity));
+			}	
+		}
+	}
+	
+	public void removeProduct(int productId)
+	{
+		basket.remove(ProductCatalog.getProduct(productId));
+	}
+	
+	public void removeProduct(int productId, int quantity)
+	{
+		if (quantity > 0)
+		{
+			Product prod = ProductCatalog.getProduct(productId);
+			if (basket.get(prod).intValue() <= quantity)
+			{
+				this.removeProduct(productId);
+			}
+			else
+			{
+				int actualQuantity = basket.get(prod).intValue();
+				basket.replace(prod, Integer.valueOf(actualQuantity - quantity));
+			}
+		}
 	}
 }
