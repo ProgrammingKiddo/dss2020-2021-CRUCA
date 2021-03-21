@@ -1,6 +1,5 @@
 package coreapi;
 
-import java.util.Scanner;
 import java.util.Date;
 
 
@@ -12,7 +11,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Add the product with the indicated quantity to the order
 	 */
-	public void addProductToOrder(Cafeteria coffe,Order ord, int productId, int q)
+	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int q)
 	{
 		Product prod = ProductCatalog.getProduct(productId);
 		if(ord.containsProduct(productId))
@@ -40,7 +39,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Modify the quantity of the product indicated in the order
 	 */
-	public void modifyProductQuantity(Cafeteria coffe, Order ord, int productId, int q)
+	public void modifyProductQuantity(Cafeteria coffe, OrderImpl ord, int productId, int q)
 	{
 		Product prod = ProductCatalog.getProduct(productId);
 		
@@ -65,7 +64,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION:Eliminate the indicated amount of the product
 	 */
-	public void removeProductFromOrder(Order ord, int productId, int q)
+	public void removeProductFromOrder(OrderImpl ord, int productId, int q)
 	{
 		int quantbasket = ord.checkProductQuantity(productId);
 		
@@ -86,7 +85,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_InKitchen(Order ord)
+	public void OrderStatus_InKitchen(OrderImpl ord)
 	{
 		//There must be products in the basket and the order be in the open state
 		if(!ord.getProducts().isEmpty() && ord.getStatus() == "OPEN")
@@ -103,7 +102,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Delivered(Order ord)
+	public void OrderStatus_Delivered(OrderImpl ord)
 	{
 		//The state must be in the kitchen to be delivered
 		if(ord.getStatus() == "IN_KITCHEN")
@@ -119,7 +118,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Payed(Order ord)
+	public void OrderStatus_Payed(OrderImpl ord)
 	{
 		//The state must be payed or in the kitchen in order to be paid
 		if(ord.getStatus() == "IN_KITCHEN" || ord.getStatus() == "DELIVERED")
@@ -137,7 +136,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Finished(Order ord)
+	public void OrderStatus_Finished(OrderImpl ord)
 	{
 		// The state must be charged in order to be finalized
 		if(ord.getStatus() == "PAYED")
@@ -172,7 +171,7 @@ public class OrderService
 			}
 			num_ord++;
 		}
-		System.out.println("The box of the day is " + total + "€." + "With " + num_ord + "orders.");	
+		System.out.println("The box of the day is " + total + "€. " + "With " + num_ord + "orders.");	
 	}
 	
 	
