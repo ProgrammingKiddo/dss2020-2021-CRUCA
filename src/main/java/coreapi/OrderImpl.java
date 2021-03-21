@@ -22,10 +22,12 @@ public class OrderImpl implements Order {
 		basket = new LinkedHashMap<Product, Integer>();
 	}
 	
-	public int totalCost()
+	public float totalCost()
 	{
 		return 0;
 	}
+	
+	public int getId() { return id; }
 	
 	public List<Product> getProducts()
 	{
