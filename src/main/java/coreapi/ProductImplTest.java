@@ -15,9 +15,9 @@ public class ProductImplTest
 	@Before
 	protected void setUp()
 	{
-		Product1 = new ProductImpl(0,3.15,"Coffe");
-		Product2 = new ProductImpl(1,4,"Cake");
-		Product3 = new ProductImpl(2,6.5,"Water");
+		Product1 = new ProductImpl(0,float 3.15,"Coffe");
+		Product2 = new ProductImpl(1,float 4,"Cake");
+		Product3 = new ProductImpl(2,float 6.5,"Water");
 	}
 	
 	@After
@@ -39,9 +39,9 @@ public class ProductImplTest
 	@Test
 	public void PriceCheckProductImpl()
 	{
-		assertEquals("DifferentPriceAtProductImpl1",3.15,Product1.getPrice());
-		assertEquals("DifferentPriceAtProductImpl2",4,Product2.getPrice());
-		assertEquals("DifferentPriceAtProductImpl3",6.5,Product3.getPrice());
+		assertEquals("DifferentPriceAtProductImpl1",float 3.15,Product1.getPrice());
+		assertEquals("DifferentPriceAtProductImpl2",float 4,Product2.getPrice());
+		assertEquals("DifferentPriceAtProductImpl3",float 6.5,Product3.getPrice());
 	}
 	
 	@Test
