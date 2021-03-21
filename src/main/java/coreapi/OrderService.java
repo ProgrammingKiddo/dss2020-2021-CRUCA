@@ -139,7 +139,7 @@ public class OrderService
 	 */
 	public void OrderStatus_Finished(Order ord)
 	{
-		//El estado debe ser cobrado para poder ser finalizada
+		// The state must be charged in order to be finalized
 		if(ord.getStatus() == "PAYED")
 		{
 			ord.setStatus(OrderStatus.FINISHED);
@@ -160,8 +160,10 @@ public class OrderService
 	 */
 	public void checkDailyRegister(Cafeteria coffe, Date date)
 	{
-		float total = 0;
-		int num_ord = 0;
+		float total = 0; //We save the total of the day
+		int num_ord = 0; //We save the total number of orders for the day
+		
+		//We go through the order history of the establishment
 		for(Order ord: coffe.orderHistory)
 		{
 			if(ord.getDate() == date)
