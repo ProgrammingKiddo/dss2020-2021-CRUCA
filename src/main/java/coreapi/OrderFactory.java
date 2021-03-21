@@ -1,5 +1,7 @@
 package coreapi;
 
+import java.util.Date;
+
 public class OrderFactory 
 {
 	
@@ -8,16 +10,20 @@ public class OrderFactory
 	private static int orderCount = 0;
 	
 	/**
-	 * @return the orderCount
+	 * @return Returns the current unique counter of new Orders' id.
 	 */
 	public static int getOrderCount() 
 	{
 		return orderCount;
 	}
 	
+	/**
+	 * @return Returns a new instance of Order with a unique id.
+	 */
 	public Order createOrder()
 	{
-		return new OrderImpl(orderCount++);//We are increasing the number so that they are correlative
+		// We are increasing the number so that they are correlative
+		return new OrderImpl(orderCount++, new Date(System.currentTimeMillis()));
 		
 	}
 	
