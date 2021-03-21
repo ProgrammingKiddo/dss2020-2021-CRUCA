@@ -1,5 +1,9 @@
 package coreapi;
-//Falta libreria para linkedHashMap
+
+import java.util.Scanner;
+import java.util.Date;
+
+
 public class OrderService
 {
 	
@@ -9,30 +13,26 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Add the product with the indicated quantity to the order
 	 */
-	public void addProductToOrder(Order ord, int productId, int q)
+	public void addProductToOrder(Cafeteria coffe,Order ord, int productId, int q)
 	{
-		
-		//Suponiendo que tenemos un mapa de producto con su cantidad (en cada restaurante) = mapProdQuant
-		Iterator<Product> prodIterator = mapProdQuant.iterator();
-		while(prodIterator.hasNext())
+		Product prod = ProductCatalog.getProduct(productId);
+		if(ord.containsProduct(productId))
 		{
-			Product actual = prodIterator.next();
-			if(actual.getId() == productId)
+			System.out.println("This product is already in your basket, you can modify the quantity of it if you wish.");
+		}
+		else
+		{
+			if(coffe.productStock.containsKey(prod))
 			{
-				/*
-				 * We check that the quantity of the product to be introduced is valid, 
-				 * that is, that it is greater than 0 and that there is enough stock
-				 */
-				if(q > 0 && q < mapProdQuant.get(actual))
+				if(q > 0 && coffe.productStock.get(prod).intValue() >= q)
 				{
-					ord.addProduct(actual,q);
+					ord.addProduct(productId,q);
 				}
 				else
 				{
-					System.out.println("Insufficient stock");
+					System.out.println("There is not enough stock of the product.");
 				}
 			}
-		
 		}
 		
 	}
@@ -41,24 +41,24 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Modify the quantity of the product indicated in the order
 	 */
-	public void modifyProductQuantity(Order ord, int productId, int q)
+	public void modifyProductQuantity(Cafeteria coffe, Order ord, int productId, int q)
 	{
-		Iterator<Product> prodIterator = mapProdQuant.iterator();
-	
+		Product prod = ProductCatalog.getProduct(productId);
 		
-		while(prodIterator.hasNext())
+		if(coffe.productStock.containsKey(prod) && ord.containsProduct(productId))
 		{
-			Product actual = prodIterator.next();
-			if(actual.getId() == productId)
+			if(q > 0 && coffe.productStock.get(prod).intValue() >= q)
 			{
-				/*
-				 * We check that the quantity of the product to be introduced is valid, 
-				 * that is, that it is greater than 0 and that there is enough stock
-				 */
-				
-				//Necesito acceder a la cantidad de producto que hay en la cesta
-				
+				ord.addProduct(productId,q);
 			}
+			else
+			{
+				System.out.println("There is not enough stock of the product.");
+			}
+		}
+		else
+		{
+			System.out.println("The product is not in your basket.");
 		}
 	
 	}
@@ -68,7 +68,18 @@ public class OrderService
 	 */
 	public void removeProductFromOrder(Order ord, int productId, int q)
 	{
-		//Necesito acceder a la cantidad del producto en la cesta
+		int quantbasket = ord.checkProductQuantity(productId);
+		
+		if(q > 0 && q <= quantbasket)
+		{
+			ord.removeProduct(productId, q);
+		}
+		else
+		{
+			System.out.println("Can't remove that amount of product.");
+		}
+		
+		
 	}
 	
 	/* ---------------------------------ORDER_STATUS----------------------------------*/
@@ -78,7 +89,15 @@ public class OrderService
 	 */
 	public void OrderStatus_InKitchen(Order ord)
 	{
-		//Debe haber productos en la lista
+		//There must be products in the basket and the order be in the open state
+		if(!ord.getProducts().isEmpty() && ord.getStatus() == "OPEN")
+		{
+			ord.setStatus(OrderStatus.IN_KITCHEN);
+		}
+		else
+		{
+			System.out.println("The order has no products to send to the kitchen.");
+		}
 	}
 	
 	/*
@@ -87,36 +106,72 @@ public class OrderService
 	 */
 	public void OrderStatus_Delivered(Order ord)
 	{
-		//El estado debe ser en cocina para poder ser entregado
+		//The state must be in the kitchen to be delivered
+		if(ord.getStatus() == "IN_KITCHEN")
+		{
+			ord.setStatus(OrderStatus.DELIVERED);
+		}
+		else
+		{
+			System.out.println("The order cannot be entered if it has not been in the kitchen.");
+		}
 	}
 	/*
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Charged(Order ord)
+	public void OrderStatus_Payed(Order ord)
 	{
-		//El estado debe de ser entregado o en cocina para poder ser cobrado
+		//The state must be payed or in the kitchen in order to be paid
+		if(ord.getStatus() == "IN_KITCHEN" || ord.getStatus() == "DELIVERED")
+		{
+			ord.setStatus(OrderStatus.PAYED);
+		}
+		else
+		{
+			System.out.println("The order cannot be charged because it is not yet in the kitchen or delivered.");
+		}
+		
 	}
 	
 	/*
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Finalized(Order ord)
+	public void OrderStatus_Finished(Order ord)
 	{
 		//El estado debe ser cobrado para poder ser finalizada
+		if(ord.getStatus() == "PAYED")
+		{
+			ord.setStatus(OrderStatus.FINISHED);
+		}
+		else
+		{
+			System.out.println("The order cannot be finalized because it has not been charged.");
+		}
+		
 	}
 	
 	/*-------------------------------DAILY_REGISTER-------------------------------*/
 	
 	/*
-	 * PRECONDITION:Receive a date
+	 * PRECONDITION: Receive a date
 	 * POSTCONDITION: Print on screen the number of orders and the total amount of 
 	 * all orders for the indicated date
 	 */
-	public void checkDailyRegister(Fecha fech)
+	public void checkDailyRegister(Cafeteria coffe, Date date)
 	{
-		//Necesito acceder a una lista de todos los pedidos
+		float total = 0;
+		int num_ord = 0;
+		for(Order ord: coffe.orderHistory)
+		{
+			if(ord.getDate() == date)
+			{
+				total += ord.totalCost();
+			}
+			num_ord++;
+		}
+		System.out.println("The box of the day is " + total + "€." + "With " + num_ord + "orders.");	
 	}
 	
 	
