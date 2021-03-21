@@ -5,4 +5,14 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>CRUCA</name>
   <description>Management software for the restaurants and cafes at UCA.</description>
+  
+  	<dependencies>
+	 <dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>4.13.2</version>
+	    <scope>test</scope>
+	 </dependency>
+	</dependencies>
+	
 </project>

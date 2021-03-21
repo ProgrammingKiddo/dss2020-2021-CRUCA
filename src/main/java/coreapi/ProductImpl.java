@@ -4,7 +4,6 @@ public class ProductImpl implements Product {
 
 	private int id;
 	private float price;
-	private int stock;
 	private String name;
 	
 	
