@@ -15,6 +15,7 @@ public class OrderImpl implements Order {
 	private final Date date;
 	// Map cannot take primitive types as the type of its mapped values
 	private LinkedHashMap<Product, Integer> basket;
+	private OrderStatus orderStatus;
 	
 	
 	OrderImpl(int assignedId, Date creationDate)
@@ -22,10 +23,13 @@ public class OrderImpl implements Order {
 		id = assignedId;
 		date = creationDate;
 		basket = new LinkedHashMap<Product, Integer>();
+		orderStatus = OrderStatus.OPEN;
 	}
 	
 	public int getId() { return id; }
 	public Date getDate() { return date; }
+	public String getStatus() { return orderStatus.toString(); }
+	public void setStatus(OrderStatus newStatus) { orderStatus = newStatus; }
 	
 	/**
 	 * @return Returns the total cost of all the products contained in the Order.
