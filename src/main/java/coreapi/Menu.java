@@ -17,6 +17,7 @@ public class Menu implements Product {
 	{
 		id = assignedId;
 		name = assignedName;
+		productsMenu = new LinkedHashMap<Product, Integer>();
 	}
 	
 	/*
@@ -50,5 +51,14 @@ public class Menu implements Product {
 	public List<Product> getProductsInMenu()
 	{
 		return Collections.unmodifiableList(new ArrayList<Product>(productsMenu.keySet()));
+	}
+	
+	/*
+	 * Add a product to the menu.
+	 */
+	
+	public void addProductToMenu(Product product, int q)
+	{
+		productsMenu.put(product,q);
 	}
 }
