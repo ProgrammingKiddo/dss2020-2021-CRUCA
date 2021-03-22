@@ -26,5 +26,10 @@ public class OrderFactory
 		return new OrderImpl(orderCount++, new Date(System.currentTimeMillis()));
 		
 	}
+
+	/**
+	 * Create an object of OrderFactory
+	 */
+	public OrderFactory(){}
 	
 }
