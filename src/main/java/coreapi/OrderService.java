@@ -16,7 +16,7 @@ public class OrderService
 		Product prod = ProductCatalog.getProduct(productId);
 		if(ord.containsProduct(productId))
 		{
-			System.out.println("This product is already in your basket, you can modify the quantity of it if you wish.");
+			throw new RuntimeException("This product is already in your basket, you can modify the quantity of it if you wish.");
 		}
 		else
 		{
@@ -28,7 +28,7 @@ public class OrderService
 				}
 				else
 				{
-					System.out.println("There is not enough stock of the product.");
+					throw new RuntimeException("There is not enough stock of the product.");
 				}
 			}
 		}
@@ -51,12 +51,12 @@ public class OrderService
 			}
 			else
 			{
-				System.out.println("There is not enough stock of the product.");
+				throw new RuntimeException("There is not enough stock of the product.");
 			}
 		}
 		else
 		{
-			System.out.println("The product is not in your basket.");
+			throw new RuntimeException("The product is not in your basket.");
 		}
 	
 	}
@@ -74,7 +74,7 @@ public class OrderService
 		}
 		else
 		{
-			System.out.println("Can't remove that amount of product.");
+			throw new RuntimeException("Can't remove that amount of product.");
 		}
 		
 		
@@ -94,7 +94,7 @@ public class OrderService
 		}
 		else
 		{
-			System.out.println("The order has no products to send to the kitchen.");
+			throw new RuntimeException("The order has no products to send to the kitchen.");
 		}
 	}
 	
@@ -111,7 +111,7 @@ public class OrderService
 		}
 		else
 		{
-			System.out.println("The order cannot be entered if it has not been in the kitchen.");
+			throw new RuntimeException("The order cannot be entered if it has not been in the kitchen.");
 		}
 	}
 	/*
@@ -127,7 +127,7 @@ public class OrderService
 		}
 		else
 		{
-			System.out.println("The order cannot be charged because it is not yet in the kitchen or delivered.");
+			throw new RuntimeException("The order cannot be charged because it is not yet in the kitchen or delivered.");
 		}
 		
 	}
@@ -145,7 +145,7 @@ public class OrderService
 		}
 		else
 		{
-			System.out.println("The order cannot be finalized because it has not been charged.");
+			throw new RuntimeException("The order cannot be finalized because it has not been charged.");
 		}
 		
 	}
