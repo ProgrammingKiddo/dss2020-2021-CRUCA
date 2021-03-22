@@ -1,4 +1,4 @@
-package coreapi
+package coreapi;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses(
 		{
 			ProductImplTest.class,
-			ProductTest,class,
+			ProductTest.class,
+			MenuTest.class
 		})
 
 public class CoffeShopTestSuite

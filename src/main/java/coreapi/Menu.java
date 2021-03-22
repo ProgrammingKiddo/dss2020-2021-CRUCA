@@ -40,7 +40,7 @@ public class Menu implements Product {
 		
 		while (prodIterator.hasNext())
 		{
-			price += prodIterator.next().getPrice();
+			price += (prodIterator.next().getPrice() * productsMenu.get(prodIterator.next()));
 		}
 		return price;
 	}
@@ -57,7 +57,7 @@ public class Menu implements Product {
 	 * Add a product to the menu.
 	 */
 	
-	public void addProductToMenu(Product product, int q)
+	public void addProductToMenu(Product product, Integer q)
 	{
 		productsMenu.put(product,q);
 	}
