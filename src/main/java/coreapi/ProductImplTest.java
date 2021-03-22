@@ -15,9 +15,9 @@ public class ProductImplTest
 	@Before
 	protected void setUp()
 	{
-		Product1 = new ProductImpl(0,float 3.15,"Coffe");
-		Product2 = new ProductImpl(1,float 4,"Cake");
-		Product3 = new ProductImpl(2,float 6.5,"Water");
+		Product1 = new ProductImpl(0,(float) 3.15,"Coffe");
+		Product2 = new ProductImpl(1,(float) 4,"Cake");
+		Product3 = new ProductImpl(2,(float) 6.5,"Water");
 	}
 	
 	@After

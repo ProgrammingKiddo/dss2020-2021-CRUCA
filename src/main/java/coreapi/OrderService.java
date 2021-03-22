@@ -5,6 +5,9 @@ import java.util.Date;
 
 public class OrderService
 {
+	//Create a new object of OrderService
+	public OrderService() {}
+
 	
 	/*---------------------------ORDER_PRODUCTS------------------------------------------*/
 	
@@ -68,16 +71,21 @@ public class OrderService
 	public void removeProductFromOrder(OrderImpl ord, int productId, int q)
 	{
 		int quantbasket = ord.checkProductQuantity(productId);
-		
-		if(q > 0 && q <= quantbasket)
+		if(ord.containsProduct(productId))
 		{
-			ord.removeProduct(productId, q);
-		}
+			if(q > 0 && q <= quantbasket)
+			{
+				ord.removeProduct(productId, q);
+			}
+			else
+			{
+				throw new RuntimeException("Can't remove that amount of product.");
+			}
+		}	
 		else
 		{
-			throw new RuntimeException("Can't remove that amount of product.");
+			throw new RuntimeException("This object is not in your basket.");
 		}
-		
 		
 	}
 	
@@ -158,7 +166,7 @@ public class OrderService
 	 * POSTCONDITION: Print on screen the number of orders and the total amount of 
 	 * all orders for the indicated date
 	 */
-	public void checkDailyRegister(Cafeteria coffe, Date date)
+	public void DailyRegister(Cafeteria coffe, Date date)
 	{
 		float total = 0; //We save the total of the day
 		int num_ord = 0; //We save the total number of orders for the day
