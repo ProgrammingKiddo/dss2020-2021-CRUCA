@@ -8,7 +8,9 @@ import org.junit.runners.Suite;
 		{
 			ProductImplTest.class,
 			ProductTest.class,
-			MenuTest.class
+			MenuTest.class,
+			OrderServiceTest.class,
+			OrderFactoryTest.class
 		})
 
 public class CoffeShopTestSuite
