@@ -163,13 +163,11 @@ public class OrderService
 	
 	/*
 	 * PRECONDITION: Receive a date
-	 * POSTCONDITION: Print on screen the number of orders and the total amount of 
-	 * all orders for the indicated date
+	 * POSTCONDITION: Return the total of all orders for the date entered.
 	 */
-	public void DailyRegister(Cafeteria coffe, Date date)
+	public float DailyRegister(Cafeteria coffe, Date date)
 	{
 		float total = 0; //We save the total of the day
-		int num_ord = 0; //We save the total number of orders for the day
 		
 		//We go through the order history of the establishment
 		for(Order ord: coffe.orderHistory)
@@ -178,9 +176,8 @@ public class OrderService
 			{
 				total += ord.totalCost();
 			}
-			num_ord++;
 		}
-		System.out.println("The box of the day is " + total + "€. " + "With " + num_ord + "orders.");	
+		return total;
 	}
 	
 	
