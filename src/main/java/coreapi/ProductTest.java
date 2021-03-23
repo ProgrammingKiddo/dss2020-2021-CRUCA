@@ -15,9 +15,9 @@ public class ProductTest
 	@Before
 	protected void setUp()
 	{
-		Product1 = new ProductImpl(3,float 0.9,"Meat");
-		Product2 = new ProductImpl(4,float 5.2,"Fish");
-		Product3 = new ProductImpl(5,float 10,"Lentils");
+		Product1 = ProductCatalog.getProduct(3);
+		Product2 = ProductCatalog.getProduct(4);
+		Product3 = ProductCatalog.getProduct(5);
 	}
 	
 	@After
@@ -31,24 +31,24 @@ public class ProductTest
 	@Test
 	public void IdCheckProduct()
 	{
-		assertEquals("DifferentIdAtProduct1",3,Product1.getId());
-		assertEquals("DifferentIdAtProduct2",4,Product2.getId());
-		assertEquals("DifferentIdAtProduct3",5,Product3.getId());
+		Assert.assertEquals("DifferentIdAtProduct1",3,Product1.getId());
+		Assert.assertEquals("DifferentIdAtProduct2",4,Product2.getId());
+		Assert.assertEquals("DifferentIdAtProduct3",5,Product3.getId());
 	}
 	
 	@Test
 	public void PriceCheckProduct()
 	{
-		assertEquals("DifferentPriceAtProduct1",float 0.9,Product1.getPrice());
-		assertEquals("DifferentPriceAtProduct2",float 5.2,Product2.getPrice());
-		assertEquals("DifferentPriceAtProduct3",float 10,Product3.getPrice());
+		Assert.assertEquals("DifferentPriceAtProduct1",(float) 0.5,Product1.getPrice());
+		Assert.assertEquals("DifferentPriceAtProduct2",(float) 1.6,Product2.getPrice());
+		Assert.assertEquals("DifferentPriceAtProduct3",(float) 1.3,Product3.getPrice());
 	}
 	
 	@Test
 	public void NameCheckProduct()
 	{
-		assertEquals("DifferentNameAtProduct1","Meat",Product1.getName());
-		assertEquals("DifferentNameAtProduct2","Fish",Product2.getName());
-		assertEquals("DifferentNameAtProduct3","Lentils",Product3.getName());
+		Assert.assertEquals("DifferentNameAtProduct1","Doritos",Product1.getName());
+		Assert.assertEquals("DifferentNameAtProduct2","Monster",Product2.getName());
+		Assert.assertEquals("DifferentNameAtProduct3","Bocadillo de tortilla",Product3.getName());
 	}
 }
