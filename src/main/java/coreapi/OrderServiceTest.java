@@ -14,6 +14,8 @@ public class OrderServiceTest
 
 	private Cafeteria coffe;
 	private OrderImpl ord1;
+	private OrderImpl ord2;
+	private OrderImpl ord3;
 	private OrderService ordSer;
 	private Date date;
 	private Product Product1;
@@ -27,7 +29,11 @@ public class OrderServiceTest
 		coffe = new Cafeteria();
 		date = new Date(System.currentTimeMillis());
 		ord1 = new OrderImpl(17, date);
+		ord2 = new OrderImpl(18, date);
+		ord3 = new OrderImpl(19, date);
 		ordSer = new OrderService();
+		
+		// We introduce products from the catalog to the cafeteria with a certain stock
 		Product1 = ProductCatalog.getProduct(0);
 		Product2 = ProductCatalog.getProduct(1);
 		Product3 = ProductCatalog.getProduct(2);
@@ -44,126 +50,244 @@ public class OrderServiceTest
 	}
 	
 	/*---------------------------ORDER_PRODUCTS_CHECK------------------------------------------*/
+	
+	/*_____________________________ADD_PRODUCT_TO_ORDER_CHECK__________________________________*/
+	
 	@Test
-	public void addProductToOrderCheck_OrderService()
+	/*
+	 * Check that the product has been added to the order correctly in case the product is not
+	 * in the basket and there is enough stock.
+	 */
+	public void addProductToOrder_Correctly_OrderService()
 	{
 		try
 		{
-			//Que no esté en la cesta y que haya stock suficiente
 			ordSer.addProductToOrder(coffe,ord1,2,30);
 		}
 		catch(Exception e) 
 		{
 			Assert.assertEquals(e.getMessage(),null);
 		}
-		
+	}
+	
+	@Test
+	/*
+	 * Check that the product is not added to the order if there is not enough stock.
+	 */
+	public void addProductToOrder_NoStock_OrderService()
+	{
 		try
 		{
-			//No hay stock
+		
 			ordSer.addProductToOrder(coffe,ord1,1,10);
 		}
 		catch(Exception e) 
 		{
 			Assert.assertEquals(e.getMessage(),"There is not enough stock of the product.");
 		}
+	}
 	
+	@Test
+	/*
+	 * Check that the product is not added to the order if it is already in the basket.
+	 */
+	public void addProductToOrder_ProductInBasket_OrderService()
+	{
 		try
 		{
-			//Ya se encuentra en la cesta
 			ordSer.addProductToOrder(coffe,ord1,2,1);
 		}
 		catch(Exception e) 
 		{
 			Assert.assertEquals(e.getMessage(),"This product is already in your basket, you can modify the quantity of it if you wish.");
-		}
-		
-			
+		}		
 	}
 	
+	/*_____________________________MODIFY_PRODUCT_QUANTITY_CHECK__________________________________*/
+	
 	@Test
-	public void modifyProductQuantityCheck_OrderService()
+	/*
+	 *Check that the quantity of the product is modified if it is in the basket 
+	 *and there is enough stock.
+	 */
+	public void modifyProductQuantity_Correctly_OrderService()
 	{
 		try
 		{
-			//Está en la cesta y hay stock
 			ordSer.modifyProductQuantity(coffe, ord1, 2, 10);
 		}
 		catch(Exception e) 
 		{
 			Assert.assertEquals(e.getMessage(),null);
 		}
-		
+	}
+	
+	@Test
+	/*
+	 *Check that the product quantity is not modified if there is not enough stock.
+	 */
+	public void modifyProductQuantity_NoStock_OrderService()
+	{
 		try
 		{
-			//Esta en la cesta y no hay stock
 			ordSer.modifyProductQuantity(coffe, ord1, 2, 50);
 		}
 		catch(Exception e) 
 		{
 			Assert.assertEquals(e.getMessage(),"There is not enough stock of the product.");
 		}
+	}
 		
+	@Test
+	/*
+	 *Check that the quantity of the product is not modified if it is not in the basket.
+	 */
+	public void modifyProductQuantity_NotInBasket_OrderService()
+	{
 		try
 		{
-			//No esta en la lista
 			ordSer.modifyProductQuantity(coffe, ord1, 0, 4);
 		}
 		catch(Exception e) 
 		{
 			Assert.assertEquals(e.getMessage(),"The product is not in your basket.");
+		}	
+	}
+	
+	/*_____________________________REMOVE_PRODUCT_FROM_ORDER_CHECK__________________________________*/
+	
+	@Test
+	/*
+	 * Check that the indicated amount of product is eliminated since the product is in the basket 
+	 * with an amount equal to or greater than that indicated.
+	 */
+	public void removeProductFromOrder_Correctly_OrderService()
+	{
+		try
+		{
+			ordSer.removeProductFromOrder(ord1, 2, 10);
 		}
-		
+		catch(Exception e)
+		{
+			Assert.assertEquals(e.getMessage(),null);
+		}
 		
 	}
 	
 	@Test
-	public void removeProductFromOrderCheck_OrderService()
+	/*
+	 *Check that the amount of product indicated is not eliminated since the product is in the basket
+	 *with a smaller quantity than indicated.
+	 */
+	public void removeProductFromOrder_NotEnoughQuantity_OrderService()
 	{
-		//Está en la cesta y hay la cantidad indicada a eliminar
-		ordSer.removeProductFromOrder(ord1, 2, 10);
-				
-		//Esta en la cesta y no hay suficiente producto para eliminar
-		ordSer.removeProductFromOrder(ord1, 2, 100);
-				
-		//No esta en la lista
-		ordSer.removeProductFromOrder(ord1, 0, 4);
+		try
+		{
+			ordSer.removeProductFromOrder(ord1, 2, 100);
+		}
+		catch(Exception e)
+		{
+			Assert.assertEquals(e.getMessage(),"Can't remove that amount of product.");
+		}
+		
+	}
+	
+	@Test
+	/*
+	 *Check that the indicated amount of product is not eliminated, 
+	 *since the product is not in the basket
+	 */
+	public void removeProductFromOrder_NotInBasket_OrderService()
+	{
+		try
+		{
+			ordSer.removeProductFromOrder(ord1, 0, 4);
+		}
+		catch(Exception e)
+		{
+			Assert.assertEquals(e.getMessage(), "This object is not in your basket.");
+		}
+		
 	}
 	
 	/* ---------------------------------ORDER_STATUS_CHECK----------------------------------*/
+	
 	@Test
+	/*
+	 * Check that the Order Status has been changed to the one indicated.
+	 */
 	public void OrderStatus_InKitchenCheck_OrderService()
 	{
-		ordSer.OrderStatus_InKitchen(ord1);
-		Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"IN_KITCHEN");	
+		try
+		{
+			ordSer.OrderStatus_InKitchen(ord1);
+		}
+		catch(Exception e)
+		{
+			Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"IN_KITCHEN");	
+		}
 	}
 	
 	@Test
+	/*
+	 * Check that the Order Status has been changed to the one indicated.
+	 */
 	public void OrderStatus_DeliveredCheck_OrderService()
 	{
-		ordSer.OrderStatus_Delivered(ord1);
-		Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"DELIVERED");
+		try
+		{
+			ordSer.OrderStatus_Delivered(ord1);
+		}
+		catch(Exception e)
+		{
+			Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"DELIVERED");
+		}
 	}
 	
 	@Test
+	/*
+	 * Check that the Order Status has been changed to the one indicated.
+	 */
 	public void OrderStatus_PayedCheck_OrderService()
 	{
-		ordSer.OrderStatus_Payed(ord1);
-		Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"PAYED");
+		try
+		{
+			ordSer.OrderStatus_Payed(ord1);
+		}
+		catch(Exception e)
+		{
+			Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"PAYED");
+		}
 	}
 	
 	@Test
+	/*
+	 *Check that the Order Status has been changed to the one indicated.
+	 */
 	public void OrderStatus_FinishedCheck_OrderService()
 	{
-		ordSer.OrderStatus_Finished(ord1);
-		Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"FINISHED");
+		try
+		{
+			ordSer.OrderStatus_Finished(ord1);
+		}
+		catch(Exception e)
+		{
+			Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"FINISHED");
+		}
 	}
 	
 	
 	/*-------------------------------DAILY_REGISTER_CHECK-------------------------------*/
 	
 	@Test
+	/*
+	 *Check that the total of the orders for the date entered is correct.
+	 */
 	public void DailyRegisterCheck_OrderService()
 	{
-		
+		float total = ordSer.DailyRegister(coffe, date);
+		float correctTotal=(ord1.totalCost() + ord2.totalCost() + ord3.totalCost());
+		Assert.assertTrue("Incorrect total",total == correctTotal);
+	
 	}
 }
