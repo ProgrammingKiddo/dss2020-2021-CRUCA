@@ -17,13 +17,13 @@ public class OrderImplTest {
 	private Product product2 = ProductCatalog.getProduct(1);
 	
 	@Before
-	protected void setUp()
+	public void setUp()
 	{
 		myOrder = (OrderImpl) OrderFactory.createOrder();
 	}
 	
 	@After
-	protected void tearDown()
+	public void tearDown()
 	{
 		myOrder = null;
 	}

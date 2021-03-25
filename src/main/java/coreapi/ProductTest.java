@@ -13,7 +13,7 @@ public class ProductTest
 	private Product Product3;
 	
 	@Before
-	protected void setUp()
+	public void setUp()
 	{
 		Product1 = ProductCatalog.getProduct(3);
 		Product2 = ProductCatalog.getProduct(4);
@@ -21,7 +21,7 @@ public class ProductTest
 	}
 	
 	@After
-	protected void tearDown()
+	public void tearDown()
 	{
 		Product1 = null;
 		Product2 = null;
