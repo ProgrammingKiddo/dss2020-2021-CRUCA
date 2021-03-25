@@ -1,6 +1,6 @@
 package coreapi;
 
-import static org.junit.Assert.*;
+import org.junit.Assert;
 
 import org.junit.After;
 import org.junit.Before;
@@ -39,9 +39,9 @@ public class ProductTest
 	@Test
 	public void PriceCheckProduct()
 	{
-		Assert.assertEquals("DifferentPriceAtProduct1",(float) 0.5,Product1.getPrice());
-		Assert.assertEquals("DifferentPriceAtProduct2",(float) 1.6,Product2.getPrice());
-		Assert.assertEquals("DifferentPriceAtProduct3",(float) 1.3,Product3.getPrice());
+		Assert.assertEquals("DifferentPriceAtProduct1",(float) 0.5,Product1.getPrice(), 0.0);
+		Assert.assertEquals("DifferentPriceAtProduct2",(float) 1.6,Product2.getPrice(), 0.0);
+		Assert.assertEquals("DifferentPriceAtProduct3",(float) 1.3,Product3.getPrice(), 0.0);
 	}
 	
 	@Test

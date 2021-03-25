@@ -20,16 +20,12 @@ public class OrderFactory
 	/**
 	 * @return Returns a new instance of Order with a unique id.
 	 */
-	public Order createOrder()
+	public static Order createOrder()
 	{
 		// We are increasing the number so that they are correlative
 		return new OrderImpl(orderCount++, new Date(System.currentTimeMillis()));
 		
 	}
 
-	/**
-	 * Create an object of OrderFactory
-	 */
-	public OrderFactory(){}
 	
 }
