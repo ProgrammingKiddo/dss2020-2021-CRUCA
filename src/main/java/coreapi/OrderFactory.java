@@ -22,10 +22,11 @@ public class OrderFactory
 	 */
 	public static Order createOrder()
 	{
-		// We are increasing the number so that they are correlative
-		return new OrderImpl(orderCount++, new Date(System.currentTimeMillis()));
-		
+		return createOrder(new Date(System.currentTimeMillis()));
 	}
 
-	
+	public static Order createOrder(Date creationDate)
+	{
+		return new OrderImpl(orderCount++, creationDate);
+	}
 }

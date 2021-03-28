@@ -1,4 +1,7 @@
-package coreapi;
+package coreapiTest;
+
+import coreapi.ProductImpl;
+import coreapi.ProductCatalog;
 
 import org.junit.Assert;
 

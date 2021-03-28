@@ -1,12 +1,15 @@
-package coreapi;
-
-import org.junit.Assert;
+package coreapiTest;
 
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import coreapi.Menu;
+import coreapi.Product;
+import coreapi.ProductCatalog;
 
 
 public class MenuTest

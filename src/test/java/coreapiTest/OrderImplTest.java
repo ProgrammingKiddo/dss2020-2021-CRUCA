@@ -1,5 +1,6 @@
-package coreapi;
+package coreapiTest;
 
+import coreapi.*;
 import org.junit.Assert;
 
 import java.util.List;

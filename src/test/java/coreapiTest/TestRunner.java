@@ -1,5 +1,7 @@
-package coreapi;
+package coreapiTest;
 
+
+import coreapi.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

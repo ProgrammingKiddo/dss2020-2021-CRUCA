@@ -1,4 +1,7 @@
-package coreapi;
+package coreapiTest;
+
+import coreapi.Cafeteria;
+import coreapi.Order;
 
 import org.junit.Assert.*;
 

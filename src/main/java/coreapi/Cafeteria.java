@@ -11,7 +11,7 @@ public class Cafeteria
 	public ArrayList<Order> dailyOrders;
 	public OrderFactory ordFact;
 	
-	Cafeteria()
+	public Cafeteria()
 	{
 		productStock = new LinkedHashMap<Product, Integer>();
 		ordFact = new OrderFactory();

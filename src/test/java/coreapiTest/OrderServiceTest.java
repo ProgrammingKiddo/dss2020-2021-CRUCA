@@ -1,5 +1,6 @@
-package coreapi;
+package coreapiTest;
 
+import coreapi.*;
 import java.util.Date;
 
 import org.junit.After;
@@ -28,9 +29,9 @@ public class OrderServiceTest
 	{
 		coffe = new Cafeteria();
 		date = new Date(System.currentTimeMillis());
-		ord1 = new OrderImpl(17, date);
-		ord2 = new OrderImpl(18, date);
-		ord3 = new OrderImpl(19, date);
+		ord1 = (OrderImpl) OrderFactory.createOrder(date);
+		ord2 = (OrderImpl) OrderFactory.createOrder(date);
+		ord3 = (OrderImpl) OrderFactory.createOrder(date);
 		ordSer = new OrderService();
 		
 		// We introduce products from the catalog to the cafeteria with a certain stock

@@ -3,6 +3,7 @@
   <groupId>es.uca.dss.cruca</groupId>
   <artifactId>projectcruca</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <name>CRUCA</name>
   <description>Management software for the restaurants and cafes at UCA.</description>
   
