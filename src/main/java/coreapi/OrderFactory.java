@@ -10,7 +10,10 @@ public class OrderFactory
 	private static int orderCount = 0;
 	
 	/**
-	 * @return Returns the current unique counter of new Orders' id.
+	 * Returns the current counter of created Orders.
+	 * This is id number that will be assigned to the next Order created,
+	 * which is unique for each and everyone of them.
+	 * @return the current unique id counter.
 	 */
 	public static int getOrderCount() 
 	{
@@ -18,13 +21,24 @@ public class OrderFactory
 	}
 	
 	/**
-	 * @return Returns a new instance of Order with a unique id.
+	 * Returns a new instance of Order with a unique id.
+	 * Sets the timestamp as the current time of execution.
+	 * @return the newly created instance of an order.
+	 * @see Order
 	 */
 	public static Order createOrder()
 	{
 		return createOrder(new Date(System.currentTimeMillis()));
 	}
 
+	/**
+	 * Returns a new instance of Order with a unique id.
+	 * Sets the specified timestamp as the order's creation date.
+	 * @param creationDate the timestamp to assign to the order
+	 * @return the newly created instance of an order from the indicated date.
+	 * @see Order
+	 * @see Date
+	 */
 	public static Order createOrder(Date creationDate)
 	{
 		return new OrderImpl(orderCount++, creationDate);
