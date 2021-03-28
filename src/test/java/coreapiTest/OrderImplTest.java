@@ -70,8 +70,8 @@ public class OrderImplTest {
 		myOrder.addProduct(product1.getId());
 		myOrder.addProduct(product2.getId());
 		List<Product> tempList = myOrder.getProducts();
-		Assert.assertEquals(product1.getId(), tempList.get(0).getId());
-		Assert.assertEquals(product2.getId(), tempList.get(1).getId());
+		Assert.assertEquals(product1.getId(), tempList.get(tempList.indexOf(product1)).getId());
+		Assert.assertEquals(product2.getId(), tempList.get(tempList.indexOf(product2)).getId());
 	}
 	
 	@Test
