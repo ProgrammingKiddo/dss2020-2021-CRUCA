@@ -1,6 +1,8 @@
 package coreapi;
 
-import static org.junit.Assert.*;
+import org.junit.Assert;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,7 +19,7 @@ public class MenuTest
 	private Product p3;
 	
 	@Before
-	protected void setUp()
+	public void setUp()
 	{
 		menu1 = new Menu(1,"Oro");
 		menu2 = new Menu(2,"Plata");
@@ -28,7 +30,7 @@ public class MenuTest
 	}
 	
 	@After
-	protected void tearDown()
+	public void tearDown()
 	{
 		menu1 = null;
 		menu2 = null;
@@ -41,15 +43,9 @@ public class MenuTest
 		menu1.addProductToMenu(p1,1);
 		menu1.addProductToMenu(p2,2);
 		menu1.addProductToMenu(p3,3);
-		Set<Product> containedProducts = menu1.productsMenu.keySet();
-		Iterator<Product> prodIterator = containedProducts.iterator();
-		int Comp = 0;
-		
-		while (prodIterator.hasNext())
-		{
-			Assert.assertEquals("AddProductToMenuError",prodIterator.next().getId(),Comp);
-			Assert.assertEquals("AddProductToMenuError",menu1.productsMenu.get(prodIterator.next()),Comp+1);
-		}
+		Assert.assertTrue(menu1.getProductsInMenu().contains(p1));
+		Assert.assertTrue(menu1.getProductsInMenu().contains(p2));
+		Assert.assertTrue(menu1.getProductsInMenu().contains(p3));
 	}
 	
 	@Test
