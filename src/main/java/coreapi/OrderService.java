@@ -97,7 +97,7 @@ public class OrderService
 	public void OrderStatus_InKitchen(OrderImpl ord)
 	{
 		//There must be products in the basket and the order be in the open state
-		if(!ord.getProducts().isEmpty() && ord.getStatus() == "OPEN")
+		if(!ord.getProducts().isEmpty() && ord.getStatus() == OrderStatus.OPEN)
 		{
 			ord.setStatus(OrderStatus.IN_KITCHEN);
 		}
@@ -114,7 +114,7 @@ public class OrderService
 	public void OrderStatus_Delivered(OrderImpl ord)
 	{
 		//The state must be in the kitchen to be delivered
-		if(ord.getStatus() == "IN_KITCHEN")
+		if(ord.getStatus() == OrderStatus.IN_KITCHEN)
 		{
 			ord.setStatus(OrderStatus.DELIVERED);
 		}
@@ -129,8 +129,8 @@ public class OrderService
 	 */
 	public void OrderStatus_Payed(OrderImpl ord)
 	{
-		//The state must be payed or in the kitchen in order to be paid
-		if(ord.getStatus() == "IN_KITCHEN" || ord.getStatus() == "DELIVERED")
+		//The state must be delivered or in the kitchen in order to be paid
+		if(ord.getStatus() == OrderStatus.IN_KITCHEN || ord.getStatus() == OrderStatus.DELIVERED)
 		{
 			ord.setStatus(OrderStatus.PAYED);
 		}
@@ -148,7 +148,7 @@ public class OrderService
 	public void OrderStatus_Finished(OrderImpl ord)
 	{
 		// The state must be charged in order to be finalized
-		if(ord.getStatus() == "PAYED")
+		if(ord.getStatus() == OrderStatus.PAYED)
 		{
 			ord.setStatus(OrderStatus.FINISHED);
 		}

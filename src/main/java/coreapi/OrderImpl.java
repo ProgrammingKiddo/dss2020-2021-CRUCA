@@ -26,7 +26,7 @@ public class OrderImpl implements Order {
 	
 	public int getId() { return id; }
 	public Date getDate() { return date; }
-	public String getStatus() { return orderStatus.toString(); }
+	public OrderStatus getStatus() { return OrderStatus.valueOf(orderStatus.name()); }
 	public void setStatus(OrderStatus newStatus) { orderStatus = newStatus; }
 	
 	/**

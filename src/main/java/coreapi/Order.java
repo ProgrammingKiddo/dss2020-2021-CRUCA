@@ -12,7 +12,7 @@ public interface Order {
 	public float totalCost();
 	public int getId();
 	public Date getDate();
-	public String getStatus();
+	public OrderStatus getStatus();
 	public List<Product> getProducts();
 	public Map<Product, Integer> getBasket();
 	public int checkProductQuantity(int id);
