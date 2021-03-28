@@ -1,4 +1,4 @@
-package coreapi
+package coreapi;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -11,6 +11,7 @@ public class TestRunner
 {
 	public static void main(String[] args)
 	{
+		ProductCatalog.createProducts();
 		Result result = JUnitCore.runClasses(CoffeShopTestSuite.class);
 		for(Failure failure : result.getFailures())
 		{
