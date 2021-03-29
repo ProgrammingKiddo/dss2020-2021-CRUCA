@@ -1,9 +1,7 @@
 package coreapiTest;
 
-import coreapi.Cafeteria;
+import coreapi.OrderFactory;
 import coreapi.Order;
-
-import org.junit.Assert.*;
 
 import java.util.Date;
 
@@ -14,34 +12,29 @@ import org.junit.Test;
 
 public class OrderFactoryTest 
 {
-	private Cafeteria coffe;
-	private Order ord1, ord2, ord3;
+	private Order ord1, ord2;
 	
 	@Before
 	protected void setUp()
 	{
-		coffe = new Cafeteria();
-		ord1 = coffe.ordFact.createOrder();
-		ord2 = coffe.ordFact.createOrder();
-		ord3 = coffe.ordFact.createOrder();
+		ord1 = OrderFactory.createOrder();
+		ord2 = OrderFactory.createOrder();
 	}
 	
 	@After
 	protected void tearDown()
 	{
-		coffe = null;
 		ord1 = null;
 		ord2 = null;
-		ord3 = null;
 	}
 	
 	@Test
 	public void IdCheck_OrderFactory()
 	{
-		Assert.assertEquals("The Order's Id not is correlative", ord1.getId(), ord2.getId() - 1 , ord3.getId() - 2);
+		Assert.assertEquals("The Order's Id are not correlative", 1, ord2.getId() - ord1.getId());
 		
 	}
-	
+	@Test
 	public void DateCheck_OrderFactory()
 	{
 		Date today =  new Date(System.currentTimeMillis());
