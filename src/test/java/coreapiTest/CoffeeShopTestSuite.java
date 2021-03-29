@@ -10,6 +10,9 @@ import org.junit.runners.Suite;
 			ProductImplTest.class,
 			ProductTest.class,
 			OrderImplTest.class,
+			MenuTest.class,
+			OrderFactoryTest.class,
+			OrderServiceTest.class
 		})
 
 public class CoffeeShopTestSuite
