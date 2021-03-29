@@ -286,7 +286,7 @@ public class OrderServiceTest
 	 */
 	public void DailyRegisterCheck_OrderService()
 	{
-		float total = ordSer.DailyRegister(coffe, date);
+		float total = ordSer.getDailyRegister(coffe, date);
 		float correctTotal=(ord1.totalCost() + ord2.totalCost() + ord3.totalCost());
 		Assert.assertTrue("Incorrect total",total == correctTotal);
 	

@@ -165,7 +165,7 @@ public class OrderService
 	 * PRECONDITION: Receive a date
 	 * POSTCONDITION: Return the total of all orders for the date entered.
 	 */
-	public float DailyRegister(Cafeteria coffe, Date date)
+	public float getDailyRegister(Cafeteria coffe, Date date)
 	{
 		float total = 0; //We save the total of the day
 		
