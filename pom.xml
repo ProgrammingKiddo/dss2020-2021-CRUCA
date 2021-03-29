@@ -7,6 +7,12 @@
   <name>CRUCA</name>
   <description>Management software for the restaurants and cafes at UCA.</description>
   
+  <properties>
+  	<maven.compiler.source>11</maven.compiler.source>
+  	<maven.compiler.target>11</maven.compiler.target>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
   	<dependencies>
 	 <dependency>
 	    <groupId>junit</groupId>
