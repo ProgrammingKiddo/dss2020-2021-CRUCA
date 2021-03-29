@@ -1,11 +1,37 @@
+/**
+ * The <code>ProductCatalog</code> class works as a placeholder for product
+ * data representation, as it will come later pre-established as a file.
+ * @author Borja
+ * @version 0.2
+ * @see Product
+ */
+
 package coreapi;
 
 
 public class ProductCatalog {
 
 	private static Product[] products = new Product[10];
+	private static ProductCatalog uniqueInstance;
 	
-	public static void createProducts()
+	/**
+	 * Returns the unique existing instance of the <code>ProductCatalog</code> class,
+	 * through which the user is able to call its methods.
+	 * @return the only instance of the class.
+	 */
+	public static ProductCatalog Instance()
+	{
+		if (uniqueInstance == null)
+		{
+			uniqueInstance = new ProductCatalog();
+		}
+		return uniqueInstance;
+	}
+	/**
+	 * This private constructor initializes the list of products that serves as a
+	 * temporary placeholder for product information.
+	 */
+	private ProductCatalog()
 	{
 		products[0] = new ProductImpl(0, (float) 1.2, "Patatas fritas");
 		products[1] = new ProductImpl(1, (float) 1.7, "Bacon-queso-huevo");
@@ -18,8 +44,12 @@ public class ProductCatalog {
 		products[8] = new ProductImpl(8, (float) 0.75, "Donut de chocolate");
 		products[9] = new ProductImpl(9, (float) 1.4, "Sándwich de roquefort");
 	}
-	
-	public static Product getProduct(int id)
+	/**
+	 * Returns the corresponding reference to a certain product, determined by its identifier.
+	 * @param id the product identifier number to check for.
+	 * @return the product corresponding to the id passed as a parameter.
+	 */
+	public Product getProduct(int id)
 	{
 		if (id <= 9 && id >= 0)
 		{

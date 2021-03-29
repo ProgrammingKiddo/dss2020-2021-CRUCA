@@ -18,9 +18,9 @@ public class ProductImplTest
 	@Before
 	public void setUp()
 	{
-		Product1 = (ProductImpl) ProductCatalog.getProduct(0);
-		Product2 = (ProductImpl) ProductCatalog.getProduct(1);
-		Product3 = (ProductImpl) ProductCatalog.getProduct(2);
+		Product1 = (ProductImpl) ProductCatalog.Instance().getProduct(0);
+		Product2 = (ProductImpl) ProductCatalog.Instance().getProduct(1);
+		Product3 = (ProductImpl) ProductCatalog.Instance().getProduct(2);
 	}
 	
 	@After

@@ -17,7 +17,7 @@ public class OrderService
 	 */
 	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int q)
 	{
-		Product prod = ProductCatalog.getProduct(productId);
+		Product prod = ProductCatalog.Instance().getProduct(productId);
 		if(ord.containsProduct(productId))
 		{
 			throw new RuntimeException("This product is already in your basket, you can modify the quantity of it if you wish.");
@@ -45,7 +45,7 @@ public class OrderService
 	 */
 	public void modifyProductQuantity(Cafeteria coffe, OrderImpl ord, int productId, int q)
 	{
-		Product prod = ProductCatalog.getProduct(productId);
+		Product prod = ProductCatalog.Instance().getProduct(productId);
 		
 		if(coffe.productStock.containsKey(prod) && ord.containsProduct(productId))
 		{

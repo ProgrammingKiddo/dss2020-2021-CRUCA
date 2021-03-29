@@ -15,8 +15,8 @@ import coreapi.ProductCatalog;
 public class MenuTest
 {
 	private Menu myMenu;
-	private Product product1 = ProductCatalog.getProduct(0);
-	private Product product2 = ProductCatalog.getProduct(1);
+	private Product product1 = ProductCatalog.Instance().getProduct(0);
+	private Product product2 = ProductCatalog.Instance().getProduct(1);
 	
 	@Before
 	public void setUp()

@@ -66,12 +66,12 @@ public class Menu implements Product {
 	 */
 	public int getProductQuantity(int productId)
 	{
-		Product productToCheck = ProductCatalog.getProduct(productId);
+		Product productToCheck = ProductCatalog.Instance().getProduct(productId);
 		int productQuantity;
 		
 		if (productsMenu.containsKey(productToCheck))
 		{
-			productQuantity = productsMenu.get(ProductCatalog.getProduct(productId)).intValue();			
+			productQuantity = productsMenu.get(ProductCatalog.Instance().getProduct(productId)).intValue();			
 		}
 		else
 		{

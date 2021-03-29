@@ -11,7 +11,6 @@ public class TestRunner
 {
 	public static void main(String[] args)
 	{
-		ProductCatalog.createProducts();
 		Result result = JUnitCore.runClasses(CoffeeShopTestSuite.class);
 		for(Failure failure : result.getFailures())
 		{

@@ -35,9 +35,9 @@ public class OrderServiceTest
 		ordSer = new OrderService();
 		
 		// We introduce products from the catalog to the cafeteria with a certain stock
-		Product1 = ProductCatalog.getProduct(0);
-		Product2 = ProductCatalog.getProduct(1);
-		Product3 = ProductCatalog.getProduct(2);
+		Product1 = ProductCatalog.Instance().getProduct(0);
+		Product2 = ProductCatalog.Instance().getProduct(1);
+		Product3 = ProductCatalog.Instance().getProduct(2);
 		coffe.ProductRegister(Product1, 10);
 		coffe.ProductRegister(Product2, 8);
 		coffe.ProductRegister(Product3, 30);

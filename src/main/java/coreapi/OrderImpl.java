@@ -64,7 +64,7 @@ public class OrderImpl implements Order {
 	 */
 	public boolean containsProduct(int id)
 	{
-		return basket.containsKey(ProductCatalog.getProduct(id));
+		return basket.containsKey(ProductCatalog.Instance().getProduct(id));
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class OrderImpl implements Order {
 		
 		if (this.containsProduct(id))
 		{
-			quantity = basket.get(ProductCatalog.getProduct(id)).intValue();
+			quantity = basket.get(ProductCatalog.Instance().getProduct(id)).intValue();
 		}
 		else
 		{
@@ -94,7 +94,7 @@ public class OrderImpl implements Order {
 	{
 		if (quantity > 0)
 		{
-			Product prod = ProductCatalog.getProduct(newProductId);
+			Product prod = ProductCatalog.Instance().getProduct(newProductId);
 			if (this.containsProduct(newProductId))
 			{
 				int actualQuantity = basket.get(prod).intValue();
@@ -109,14 +109,14 @@ public class OrderImpl implements Order {
 	
 	public void removeProduct(int productId)
 	{
-		basket.remove(ProductCatalog.getProduct(productId));
+		basket.remove(ProductCatalog.Instance().getProduct(productId));
 	}
 	
 	public void removeProduct(int productId, int quantity)
 	{
 		if (quantity > 0)
 		{
-			Product prod = ProductCatalog.getProduct(productId);
+			Product prod = ProductCatalog.Instance().getProduct(productId);
 			if (basket.get(prod).intValue() <= quantity)
 			{
 				this.removeProduct(productId);
