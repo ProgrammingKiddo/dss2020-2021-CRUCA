@@ -4,6 +4,7 @@
  */
 package coreapi;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,9 @@ public interface Order {
 	 * Returns the combined cost of the whole order.
 	 * Takes into account which products comprised the order, and how many of each of them.
 	 * @return the cost of the order.
+	 * @see BigDecimal
 	 */
-	public float totalCost();
+	public BigDecimal totalCost();
 	/**
 	 * Returns the unique Id assigned to this order.
 	 * Each Order has a unique identifier within the system. Two different orders cannot

@@ -1,9 +1,11 @@
 package coreapi;
 
+import java.math.BigDecimal;
+
 public interface Product {
 	
 	public int getId();
-	public float getPrice();
+	public BigDecimal getPrice();
 	public String getName();
 	
 }
