@@ -56,7 +56,7 @@ public class Menu implements Product {
 	 */
 	public List<Product> getProductsInMenu()
 	{
-		return Collections.unmodifiableList(new ArrayList<Product>(productsMenu.keySet()));
+		return List.copyOf(new ArrayList<Product>(productsMenu.keySet()));
 	}
 	/**
 	 * Returns how much of a product is contained in this menu.

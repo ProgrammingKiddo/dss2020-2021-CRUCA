@@ -91,7 +91,7 @@ public class OrderImpl implements Order {
 	 */
 	public List<Product> getProducts()
 	{
-		return Collections.unmodifiableList(new ArrayList<Product>(basket.keySet()));
+		return List.copyOf(new ArrayList<Product>(basket.keySet()));
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class OrderImpl implements Order {
 	 */
 	public Map<Product,Integer> getBasket()
 	{
-		return Collections.unmodifiableMap(basket);
+		return Map.copyOf(basket);
 	}
 	
 	/**
