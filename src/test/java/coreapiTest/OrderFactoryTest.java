@@ -15,14 +15,14 @@ public class OrderFactoryTest
 	private Order ord1, ord2;
 	
 	@Before
-	protected void setUp()
+	public void setUp()
 	{
 		ord1 = OrderFactory.createOrder();
 		ord2 = OrderFactory.createOrder();
 	}
 	
 	@After
-	protected void tearDown()
+	public void tearDown()
 	{
 		ord1 = null;
 		ord2 = null;

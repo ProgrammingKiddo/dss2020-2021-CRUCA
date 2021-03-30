@@ -27,7 +27,7 @@ public class OrderServiceTest
 
 	
 	@Before
-	protected void setUp()
+	public void setUp()
 	{
 		coffe = new Cafeteria();
 		date = new Date(System.currentTimeMillis());
@@ -46,7 +46,7 @@ public class OrderServiceTest
 	}
 	
 	@After
-	protected void tearDown()
+	public void tearDown()
 	{
 		coffe = null;
 		ord1 = null;
