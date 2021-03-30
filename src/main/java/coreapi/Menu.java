@@ -1,5 +1,11 @@
+/**
+ * @author Fran
+ * @author Borja
+ * @version 0.2
+ */
 package coreapi;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -39,12 +45,20 @@ public class Menu implements Product {
 	 * Returns the combined cost of all products that make up this menu.
 	 * @return the cost of the entire menu.
 	 */
-	public float getPrice()
+	public BigDecimal getPrice()
 	{	
-		float sumCost = 0;
+		BigDecimal sumCost = BigDecimal.ZERO;
+		BigDecimal productCost = BigDecimal.ZERO;
+		BigDecimal productQuantity = BigDecimal.ZERO;
+		
 		for (Map.Entry<Product, Integer> entry : productsMenu.entrySet())
 		{
-			sumCost += entry.getKey().getPrice() * entry.getValue().intValue();
+			// We create a copy of the product's price as to not modify its value via this reference.
+			productCost = entry.getKey().getPrice();
+			productQuantity = new BigDecimal(entry.getValue().intValue());
+			productCost = productCost.multiply(productQuantity);
+			
+			sumCost = sumCost.add(productCost);
 		}
 		return sumCost;
 	}

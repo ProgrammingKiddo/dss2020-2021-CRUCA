@@ -1,6 +1,8 @@
 package coreapiTest;
 
 import coreapi.*;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.junit.After;
@@ -286,9 +288,10 @@ public class OrderServiceTest
 	 */
 	public void DailyRegisterCheck_OrderService()
 	{
-		float total = ordSer.getDailyRegister(coffe, date);
-		float correctTotal=(ord1.totalCost() + ord2.totalCost() + ord3.totalCost());
-		Assert.assertTrue("Incorrect total",total == correctTotal);
+		BigDecimal expectedRegister = BigDecimal.ZERO;
+		expectedRegister = expectedRegister.add(ord1.totalCost()).add(ord2.totalCost()).add(ord3.totalCost());
+
+		Assert.assertEquals(0, expectedRegister.compareTo(ordSer.getDailyRegister(coffe, date)));
 	
 	}
 }

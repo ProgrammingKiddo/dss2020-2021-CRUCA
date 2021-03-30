@@ -1,5 +1,6 @@
 package coreapi;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -165,19 +166,19 @@ public class OrderService
 	 * PRECONDITION: Receive a date
 	 * POSTCONDITION: Return the total of all orders for the date entered.
 	 */
-	public float getDailyRegister(Cafeteria coffe, Date date)
+	public BigDecimal getDailyRegister(Cafeteria coffe, Date date)
 	{
-		float total = 0; //We save the total of the day
+		BigDecimal dailyRegister = BigDecimal.ZERO;
 		
 		//We go through the order history of the establishment
 		for(Order ord: coffe.orderHistory)
 		{
 			if(ord.getDate() == date)
 			{
-				total += ord.totalCost();
+				dailyRegister = dailyRegister.add(ord.totalCost());
 			}
 		}
-		return total;
+		return dailyRegister;
 	}
 	
 	

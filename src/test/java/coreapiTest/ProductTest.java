@@ -1,7 +1,14 @@
+/**
+ * @author Fran
+ * @author Borja
+ * @version 0.2
+ */
 package coreapiTest;
 
 import coreapi.*;
 import org.junit.Assert;
+
+import java.math.BigDecimal;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,47 +16,23 @@ import org.junit.Test;
 
 public class ProductTest
 {
-	private Product Product1;
-	private Product Product2;
-	private Product Product3;
-	
-	@Before
-	public void setUp()
-	{
-		Product1 = ProductCatalog.Instance().getProduct(3);
-		Product2 = ProductCatalog.Instance().getProduct(4);
-		Product3 = ProductCatalog.Instance().getProduct(5);
-	}
-	
-	@After
-	public void tearDown()
-	{
-		Product1 = null;
-		Product2 = null;
-		Product3 = null;
-	}
+	private Product myProduct = ProductCatalog.Instance().getProduct(3);
 	
 	@Test
 	public void IdCheckProduct()
 	{
-		Assert.assertEquals("DifferentIdAtProduct1",3,Product1.getId());
-		Assert.assertEquals("DifferentIdAtProduct2",4,Product2.getId());
-		Assert.assertEquals("DifferentIdAtProduct3",5,Product3.getId());
+		Assert.assertEquals("DifferentIdAtProduct1", 3, myProduct.getId());
 	}
 	
 	@Test
 	public void PriceCheckProduct()
 	{
-		Assert.assertEquals("DifferentPriceAtProduct1",(float) 0.5,Product1.getPrice(), 0.0);
-		Assert.assertEquals("DifferentPriceAtProduct2",(float) 1.6,Product2.getPrice(), 0.0);
-		Assert.assertEquals("DifferentPriceAtProduct3",(float) 1.3,Product3.getPrice(), 0.0);
+		Assert.assertEquals(0, myProduct.getPrice().compareTo(new BigDecimal(0.5)));
 	}
 	
 	@Test
 	public void NameCheckProduct()
 	{
-		Assert.assertEquals("DifferentNameAtProduct1","Doritos",Product1.getName());
-		Assert.assertEquals("DifferentNameAtProduct2","Monster",Product2.getName());
-		Assert.assertEquals("DifferentNameAtProduct3","Bocadillo de tortilla",Product3.getName());
+		Assert.assertEquals("DifferentNameAtProduct1", "Doritos", myProduct.getName());
 	}
 }

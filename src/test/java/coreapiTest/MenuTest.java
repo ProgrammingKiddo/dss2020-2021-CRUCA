@@ -1,5 +1,6 @@
 package coreapiTest;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.After;
@@ -56,8 +57,14 @@ public class MenuTest
 	{
 		myMenu.addProductToMenu(product1, 2);
 		myMenu.addProductToMenu(product2, 4);
-		float expectedPrice = (product1.getPrice() * 2) + (product2.getPrice() * 4);
-		Assert.assertEquals(expectedPrice, myMenu.getPrice(), 0.0);
+
+		BigDecimal product1Cost = product1.getPrice();
+		BigDecimal product2Cost = product2.getPrice();
+		product1Cost = product1Cost.multiply(new BigDecimal(2));
+		product2Cost = product2Cost.multiply(new BigDecimal(4));
+		
+		BigDecimal expectedCost = product1Cost.add(product2Cost);
+		Assert.assertEquals(0, expectedCost.compareTo(myMenu.getPrice()));
 	}
 	
 	@Test

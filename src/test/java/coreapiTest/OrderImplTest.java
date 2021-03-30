@@ -1,8 +1,13 @@
+/**
+ * @author Borja
+ * @version 0.2
+ */
 package coreapiTest;
 
 import coreapi.*;
 import org.junit.Assert;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -156,7 +161,7 @@ public class OrderImplTest {
 	@Test
 	public void TotalCostEmptyCheck()
 	{
-		Assert.assertEquals(0.0, myOrder.totalCost(), 0.0);
+		Assert.assertEquals(0, myOrder.totalCost().compareTo(BigDecimal.ZERO));
 	}
 	
 	@Test
@@ -164,8 +169,14 @@ public class OrderImplTest {
 	{
 		myOrder.addProduct(product1.getId(), 2);
 		myOrder.addProduct(product2.getId(), 4);
-		float calculatedCost = (product1.getPrice() * 2) + (product2.getPrice() * 4);
-		Assert.assertEquals(calculatedCost, myOrder.totalCost(), 0.0);
+		
+		BigDecimal product1Cost = product1.getPrice();
+		BigDecimal product2Cost = product2.getPrice();
+		product1Cost = product1Cost.multiply(new BigDecimal(2));
+		product2Cost = product2Cost.multiply(new BigDecimal(4));
+		
+		BigDecimal expectedCost = product1Cost.add(product2Cost);
+		Assert.assertEquals(0, expectedCost.compareTo(myOrder.totalCost()));
 	}
 	
 }
