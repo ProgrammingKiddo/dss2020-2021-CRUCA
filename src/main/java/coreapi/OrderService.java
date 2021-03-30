@@ -3,7 +3,36 @@ package coreapi;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/*_________________________________________EXCEPTION_CLASSES______________________________ */
 
+//Class that throws an exception when there is not enough stock of the product.
+class InsufficientStock extends Exception
+{
+	public InsufficientStock(String msg)
+	{
+		super(msg);
+	}
+}
+
+//Class that throws exceptions related to the products in the basket.
+class ExistenceInTheBasket extends Exception
+{
+	public ExistenceInTheBasket(String msg)
+	{
+		super(msg);
+	}
+}
+
+//Class that throws exceptions related to order status change.
+class StatusException extends Exception
+{
+	public StatusException(String msg)
+	{
+		super(msg);
+	}
+}
+
+/*_________________________________________CLASS_ORDERSERVICE______________________________ */
 public class OrderService
 {
 	//Create a new object of OrderService
@@ -16,12 +45,12 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Add the product with the indicated quantity to the order
 	 */
-	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int q)
+	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int q) throws InsufficientStock, ExistenceInTheBasket
 	{
 		Product prod = ProductCatalog.Instance().getProduct(productId);
 		if(ord.containsProduct(productId))
 		{
-			throw new RuntimeException("This product is already in your basket, you can modify the quantity of it if you wish.");
+			throw new ExistenceInTheBasket("This product is already in your basket, you can modify the quantity of it if you wish.");
 		}
 		else
 		{
@@ -33,7 +62,7 @@ public class OrderService
 				}
 				else
 				{
-					throw new RuntimeException("There is not enough stock of the product.");
+					throw new InsufficientStock("There is not enough stock of the product.");
 				}
 			}
 		}
@@ -44,7 +73,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Modify the quantity of the product indicated in the order
 	 */
-	public void modifyProductQuantity(Cafeteria coffe, OrderImpl ord, int productId, int q)
+	public void modifyProductQuantity(Cafeteria coffe, OrderImpl ord, int productId, int q) throws InsufficientStock, ExistenceInTheBasket
 	{
 		Product prod = ProductCatalog.Instance().getProduct(productId);
 		
@@ -56,12 +85,12 @@ public class OrderService
 			}
 			else
 			{
-				throw new RuntimeException("There is not enough stock of the product.");
+				throw new InsufficientStock("There is not enough stock of the product.");
 			}
 		}
 		else
 		{
-			throw new RuntimeException("The product is not in your basket.");
+			throw new ExistenceInTheBasket("The product is not in your basket.");
 		}
 	
 	}
@@ -69,7 +98,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION:Eliminate the indicated amount of the product
 	 */
-	public void removeProductFromOrder(OrderImpl ord, int productId, int q)
+	public void removeProductFromOrder(OrderImpl ord, int productId, int q) throws ExistenceInTheBasket, InsufficientStock
 	{
 		int quantbasket = ord.checkProductQuantity(productId);
 		if(ord.containsProduct(productId))
@@ -80,12 +109,12 @@ public class OrderService
 			}
 			else
 			{
-				throw new RuntimeException("Can't remove that amount of product.");
+				throw new InsufficientStock("Can't remove that amount of product.");
 			}
 		}	
 		else
 		{
-			throw new RuntimeException("This object is not in your basket.");
+			throw new ExistenceInTheBasket("This object is not in your basket.");
 		}
 		
 	}
@@ -95,7 +124,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_InKitchen(OrderImpl ord)
+	public void OrderStatus_InKitchen(OrderImpl ord) throws StatusException
 	{
 		//There must be products in the basket and the order be in the open state
 		if(!ord.getProducts().isEmpty() && ord.getStatus() == OrderStatus.OPEN)
@@ -104,7 +133,7 @@ public class OrderService
 		}
 		else
 		{
-			throw new RuntimeException("The order has no products to send to the kitchen.");
+			throw new StatusException("The order has no products to send to the kitchen.");
 		}
 	}
 	
@@ -112,7 +141,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Delivered(OrderImpl ord)
+	public void OrderStatus_Delivered(OrderImpl ord) throws StatusException
 	{
 		//The state must be in the kitchen to be delivered
 		if(ord.getStatus() == OrderStatus.IN_KITCHEN)
@@ -121,14 +150,14 @@ public class OrderService
 		}
 		else
 		{
-			throw new RuntimeException("The order cannot be entered if it has not been in the kitchen.");
+			throw new StatusException("The order cannot be entered if it has not been in the kitchen.");
 		}
 	}
 	/*
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Payed(OrderImpl ord)
+	public void OrderStatus_Payed(OrderImpl ord) throws StatusException
 	{
 		//The state must be delivered or in the kitchen in order to be paid
 		if(ord.getStatus() == OrderStatus.IN_KITCHEN || ord.getStatus() == OrderStatus.DELIVERED)
@@ -137,7 +166,7 @@ public class OrderService
 		}
 		else
 		{
-			throw new RuntimeException("The order cannot be charged because it is not yet in the kitchen or delivered.");
+			throw new StatusException("The order cannot be charged because it is not yet in the kitchen or delivered.");
 		}
 		
 	}
@@ -146,7 +175,7 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Finished(OrderImpl ord)
+	public void OrderStatus_Finished(OrderImpl ord) throws StatusException
 	{
 		// The state must be charged in order to be finalized
 		if(ord.getStatus() == OrderStatus.PAYED)
@@ -155,7 +184,7 @@ public class OrderService
 		}
 		else
 		{
-			throw new RuntimeException("The order cannot be finalized because it has not been charged.");
+			throw new StatusException("The order cannot be finalized because it has not been charged.");
 		}
 		
 	}
