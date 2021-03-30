@@ -10,20 +10,17 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.junit.Assert.*;
 
 public class OrderServiceTest 
 {
 
 	private Cafeteria coffe;
-	private OrderImpl ord1;
-	private OrderImpl ord2;
-	private OrderImpl ord3;
+	private OrderImpl myOrder;
 	private OrderService ordSer;
 	private Date date;
-	private Product Product1;
-	private Product Product2;
-	private Product Product3;
+	private Product product1 = ProductCatalog.Instance().getProduct(0);
+	private Product product2 = ProductCatalog.Instance().getProduct(1);
+	private Product product3 = ProductCatalog.Instance().getProduct(2);
 
 	
 	@Before
@@ -31,25 +28,22 @@ public class OrderServiceTest
 	{
 		coffe = new Cafeteria();
 		date = new Date(System.currentTimeMillis());
-		ord1 = (OrderImpl) OrderFactory.createOrder(date);
-		ord2 = (OrderImpl) OrderFactory.createOrder(date);
-		ord3 = (OrderImpl) OrderFactory.createOrder(date);
+		myOrder = (OrderImpl) OrderFactory.createOrder(date);
 		ordSer = new OrderService();
+		coffe.orderHistory.add(myOrder);
 		
-		// We introduce products from the catalog to the cafeteria with a certain stock
-		Product1 = ProductCatalog.Instance().getProduct(0);
-		Product2 = ProductCatalog.Instance().getProduct(1);
-		Product3 = ProductCatalog.Instance().getProduct(2);
-		coffe.ProductRegister(Product1, 10);
-		coffe.ProductRegister(Product2, 8);
-		coffe.ProductRegister(Product3, 30);
+		// We introduce the products to the cafeteria with a certain stock
+		coffe.ProductRegister(product1, 8);
+		coffe.ProductRegister(product2, 35);
+		coffe.ProductRegister(product3, 30);
 	}
 	
 	@After
 	public void tearDown()
 	{
+		coffe.orderHistory.remove(myOrder);
 		coffe = null;
-		ord1 = null;
+		myOrder = null;
 	}
 	
 	/*---------------------------ORDER_PRODUCTS_CHECK------------------------------------------*/
@@ -65,12 +59,13 @@ public class OrderServiceTest
 	{
 		try
 		{
-			ordSer.addProductToOrder(coffe,ord1,2,30);
+			ordSer.addProductToOrder(coffe, myOrder, 1, 30);
 		}
 		catch(Exception e) 
 		{
-			Assert.assertEquals(e.getMessage(),null);
+			System.err.println(e.getMessage());
 		}
+		Assert.assertEquals(30, myOrder.checkProductQuantity(1));
 	}
 	
 	@Test
@@ -79,15 +74,10 @@ public class OrderServiceTest
 	 */
 	public void addProductToOrder_NoStock_OrderService()
 	{
-		try
-		{
-		
-			ordSer.addProductToOrder(coffe,ord1,1,10);
-		}
-		catch(Exception e) 
-		{
-			Assert.assertEquals(e.getMessage(),"There is not enough stock of the product.");
-		}
+		Assert.assertThrows(InsufficientStockException.class, () -> {
+			ordSer.addProductToOrder(coffe, myOrder, 0, 10);
+		});
+		Assert.assertFalse(myOrder.containsProduct(0));
 	}
 	
 	@Test
@@ -96,14 +86,17 @@ public class OrderServiceTest
 	 */
 	public void addProductToOrder_ProductInBasket_OrderService()
 	{
-		try
-		{
-			ordSer.addProductToOrder(coffe,ord1,2,1);
+		try {
+			ordSer.addProductToOrder(coffe, myOrder, 1, 1);
 		}
-		catch(Exception e) 
+		catch(Exception e)
 		{
-			Assert.assertEquals(e.getMessage(),"This product is already in your basket, you can modify the quantity of it if you wish.");
-		}		
+			System.err.println(e.getMessage());
+		}
+		
+		Assert.assertThrows(ProductAlreadyInOrderException.class, () -> {
+			ordSer.addProductToOrder(coffe, myOrder, 1, 1);
+		});	
 	}
 	
 	/*_____________________________MODIFY_PRODUCT_QUANTITY_CHECK__________________________________*/
@@ -117,12 +110,14 @@ public class OrderServiceTest
 	{
 		try
 		{
-			ordSer.modifyProductQuantity(coffe, ord1, 2, 10);
+			ordSer.addProductToOrder(coffe, myOrder, 2, 1);
+			ordSer.modifyProductQuantity(coffe, myOrder, 2, 10);
 		}
 		catch(Exception e) 
 		{
-			Assert.assertEquals(e.getMessage(),null);
+			System.err.println(e.getMessage());
 		}
+		Assert.assertEquals(11, myOrder.checkProductQuantity(2));
 	}
 	
 	@Test
@@ -131,14 +126,17 @@ public class OrderServiceTest
 	 */
 	public void modifyProductQuantity_NoStock_OrderService()
 	{
-		try
-		{
-			ordSer.modifyProductQuantity(coffe, ord1, 2, 50);
+		try {
+			ordSer.addProductToOrder(coffe, myOrder, 2, 1);
 		}
-		catch(Exception e) 
+		catch(Exception e)
 		{
-			Assert.assertEquals(e.getMessage(),"There is not enough stock of the product.");
+			System.err.println(e.getMessage());
 		}
+		Assert.assertThrows(InsufficientStockException.class, () -> {
+			ordSer.modifyProductQuantity(coffe, myOrder, 2, 50);
+		});
+		Assert.assertEquals(1, myOrder.checkProductQuantity(2));;
 	}
 		
 	@Test
@@ -147,14 +145,9 @@ public class OrderServiceTest
 	 */
 	public void modifyProductQuantity_NotInBasket_OrderService()
 	{
-		try
-		{
-			ordSer.modifyProductQuantity(coffe, ord1, 0, 4);
-		}
-		catch(Exception e) 
-		{
-			Assert.assertEquals(e.getMessage(),"The product is not in your basket.");
-		}	
+		Assert.assertThrows(ProductNotContainedInOrderException.class, () -> {
+			ordSer.modifyProductQuantity(coffe, myOrder, 0, 4);
+		});
 	}
 	
 	/*_____________________________REMOVE_PRODUCT_FROM_ORDER_CHECK__________________________________*/
@@ -168,13 +161,15 @@ public class OrderServiceTest
 	{
 		try
 		{
-			ordSer.removeProductFromOrder(ord1, 2, 10);
+			ordSer.addProductToOrder(coffe, myOrder, 2, 15);
+			ordSer.removeProductFromOrder(myOrder, 2, 10);
 		}
 		catch(Exception e)
 		{
-			Assert.assertEquals(e.getMessage(),null);
+			System.err.println(e.getMessage());
 		}
-		
+		Assert.assertEquals("The incorrect amount of product was removed from the order.", 5,
+				myOrder.checkProductQuantity(2));
 	}
 	
 	@Test
@@ -184,15 +179,17 @@ public class OrderServiceTest
 	 */
 	public void removeProductFromOrder_NotEnoughQuantity_OrderService()
 	{
-		try
-		{
-			ordSer.removeProductFromOrder(ord1, 2, 100);
+		try {
+			ordSer.addProductToOrder(coffe, myOrder, 2, 1);
 		}
 		catch(Exception e)
 		{
-			Assert.assertEquals(e.getMessage(),"Can't remove that amount of product.");
+			System.err.println(e.getMessage());
 		}
-		
+		Assert.assertThrows(InsufficientStockException.class, () -> {
+			ordSer.removeProductFromOrder(myOrder, 2, 100);
+		});
+		Assert.assertEquals(1, myOrder.checkProductQuantity(2));
 	}
 	
 	@Test
@@ -202,14 +199,9 @@ public class OrderServiceTest
 	 */
 	public void removeProductFromOrder_NotInBasket_OrderService()
 	{
-		try
-		{
-			ordSer.removeProductFromOrder(ord1, 0, 4);
-		}
-		catch(Exception e)
-		{
-			Assert.assertEquals(e.getMessage(), "This object is not in your basket.");
-		}
+		Assert.assertThrows(ProductNotContainedInOrderException.class, () -> {
+			ordSer.removeProductFromOrder(myOrder, 0, 4);
+		});
 		
 	}
 	
@@ -217,66 +209,46 @@ public class OrderServiceTest
 	
 	@Test
 	/*
-	 * Check that the Order Status has been changed to the one indicated.
+	 * Check that the Order Status can't be changed to the one indicated.
 	 */
-	public void OrderStatus_InKitchenCheck_OrderService()
+	public void checkInvalidSetOrderStatus_InKitchen()
 	{
-		try
-		{
-			ordSer.OrderStatus_InKitchen(ord1);
-		}
-		catch(Exception e)
-		{
-			Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"IN_KITCHEN");	
-		}
+		Assert.assertThrows(UnreachableStatusException.class, () -> {
+			ordSer.OrderStatus_InKitchen(myOrder);
+		});
 	}
 	
 	@Test
 	/*
-	 * Check that the Order Status has been changed to the one indicated.
+	 * Check that the Order Status can't be changed to the one indicated.
 	 */
-	public void OrderStatus_DeliveredCheck_OrderService()
+	public void checkInvalidSetOrderStatus_Delivered()
 	{
-		try
-		{
-			ordSer.OrderStatus_Delivered(ord1);
-		}
-		catch(Exception e)
-		{
-			Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"DELIVERED");
-		}
+		Assert.assertThrows(UnreachableStatusException.class, () -> {
+			ordSer.OrderStatus_Delivered(myOrder);
+		});
 	}
 	
 	@Test
 	/*
-	 * Check that the Order Status has been changed to the one indicated.
+	 * Check that the Order Status can't be changed to the one indicated.
 	 */
-	public void OrderStatus_PayedCheck_OrderService()
+	public void checkInvalidSetOrderStatus_Payed()
 	{
-		try
-		{
-			ordSer.OrderStatus_Payed(ord1);
-		}
-		catch(Exception e)
-		{
-			Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"PAYED");
-		}
+		Assert.assertThrows(UnreachableStatusException.class, () -> {
+			ordSer.OrderStatus_Payed(myOrder);
+		});
 	}
 	
 	@Test
 	/*
-	 *Check that the Order Status has been changed to the one indicated.
+	 * Check that the Order Status can't be changed to the one indicated.
 	 */
-	public void OrderStatus_FinishedCheck_OrderService()
+	public void checkInvalidSetOrderStatus_Finished()
 	{
-		try
-		{
-			ordSer.OrderStatus_Finished(ord1);
-		}
-		catch(Exception e)
-		{
-			Assert.assertEquals("Incorrect Order Status",ord1.getStatus(),"FINISHED");
-		}
+		Assert.assertThrows(UnreachableStatusException.class, () -> {
+			ordSer.OrderStatus_Finished(myOrder);
+		});
 	}
 	
 	
@@ -288,8 +260,21 @@ public class OrderServiceTest
 	 */
 	public void DailyRegisterCheck_OrderService()
 	{
+		OrderImpl auxOrder1 = (OrderImpl) OrderFactory.createOrder(date);
+		OrderImpl auxOrder2 = (OrderImpl) OrderFactory.createOrder(date);
+		coffe.orderHistory.add(auxOrder1);
+		coffe.orderHistory.add(auxOrder2);
+		
+		try {
+			ordSer.addProductToOrder(coffe, myOrder, 0, 3);
+			ordSer.addProductToOrder(coffe, myOrder, 1, 1);
+			ordSer.addProductToOrder(coffe, auxOrder1, 1, 4);
+			ordSer.addProductToOrder(coffe, auxOrder2, 2, 8);			
+		}
+		catch (Exception e) { }
+		
 		BigDecimal expectedRegister = BigDecimal.ZERO;
-		expectedRegister = expectedRegister.add(ord1.totalCost()).add(ord2.totalCost()).add(ord3.totalCost());
+		expectedRegister = expectedRegister.add(myOrder.totalCost()).add(auxOrder1.totalCost()).add(auxOrder2.totalCost());
 
 		Assert.assertEquals(0, expectedRegister.compareTo(ordSer.getDailyRegister(coffe, date)));
 	

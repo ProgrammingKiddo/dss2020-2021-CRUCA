@@ -15,6 +15,7 @@ public class Cafeteria
 	{
 		productStock = new LinkedHashMap<Product, Integer>();
 		ordFact = new OrderFactory();
+		orderHistory = new ArrayList<Order>();
 	}
 	
 	public void ProductRegister(Product prod, int q)
