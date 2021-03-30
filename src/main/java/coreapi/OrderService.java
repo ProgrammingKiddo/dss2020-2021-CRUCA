@@ -41,12 +41,9 @@ public class OrderService
 	
 	/*---------------------------ORDER_PRODUCTS------------------------------------------*/
 	
-	/*
-	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
-	 * POSTCONDITION: Add the product with the indicated quantity to the order
-	 */
 	/**
-	 * Add a quantity of product to an order of a cafeteria.
+	 * Receive an order and an id of a existing product, plus a positive quantity 
+	 * Add the product with the indicated quantity to the order
 	 * @param coffe the Cafeteria which stock the different orders.
 	 * @param ord the order which stock the different products and the quantities.
 	 * @param productId the id of the product which will be add to the order.
@@ -78,12 +75,9 @@ public class OrderService
 		
 	}
 	
-	/*
-	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
-	 * POSTCONDITION: Modify the quantity of the product indicated in the order
-	 */
 	/**
-	 * Modify the quantity of a product in an order
+	 * Receive an order and an id of a existing product, plus a positive quantity 
+	 * Modify the quantity of the product indicated in the order
 	 * @param coffe the Cafeteria which stock the different orders.
 	 * @param ord the order which stock the different products and the quantities.
 	 * @param productId the id of the product which will be add to the order.
@@ -112,11 +106,10 @@ public class OrderService
 		}
 	
 	}
-	/*
-	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
-	 * POSTCONDITION:Eliminate the indicated amount of the product
-	 */
+
 	/**
+	 * Receive an order and an id of a existing product, plus a positive quantity 
+	 * Eliminate the indicated amount of the product
 	 * @param ord the order which stock the different products and the quantities.
 	 * @param productId the id of the product which will be add to the order.
 	 * @param q the quantity of the product.
@@ -145,12 +138,10 @@ public class OrderService
 	}
 	
 	/* ---------------------------------ORDER_STATUS----------------------------------*/
-	/*
-	 * PRECONDITION:Receive an order
-	 * POSTCONDITION: Assign the status to the order
-	 */
 	/**
-	 * 
+	 * Receive an order
+	 * Assign the status to the order
+	 * @param ord the order which status change
 	 */
 	public void OrderStatus_InKitchen(OrderImpl ord)throws StatusException
 	{
@@ -165,15 +156,10 @@ public class OrderService
 		}
 	}
 	
-	/*
-	 * PRECONDITION:Receive an order
-	 * POSTCONDITION: Assign the status to the order
-	 */
 	/**
-	 * Returns the current counter of created Orders.
-	 * This is id number that will be assigned to the next Order created,
-	 * which is unique for each and everyone of them.
-	 * @return the current unique id counter.
+	 * Receive an order
+	 * Assign the status to the order
+	 * @param ord the order which status change
 	 */
 	public void OrderStatus_Delivered(OrderImpl ord)throws StatusException
 	{
@@ -187,15 +173,10 @@ public class OrderService
 			throw new StatusException("The order cannot be entered if it has not been in the kitchen.");
 		}
 	}
-	/*
-	 * PRECONDITION:Receive an order
-	 * POSTCONDITION: Assign the status to the order
-	 */
 	/**
-	 * Returns the current counter of created Orders.
-	 * This is id number that will be assigned to the next Order created,
-	 * which is unique for each and everyone of them.
-	 * @return the current unique id counter.
+	 * Receive an order
+	 * Assign the status to the order
+	 * @param ord the order which status change
 	 */
 	public void OrderStatus_Payed(OrderImpl ord)throws StatusException
 	{
@@ -210,16 +191,10 @@ public class OrderService
 		}
 		
 	}
-	
-	/*
-	 * PRECONDITION:Receive an order
-	 * POSTCONDITION: Assign the status to the order
-	 */
 	/**
-	 * Returns the current counter of created Orders.
-	 * This is id number that will be assigned to the next Order created,
-	 * which is unique for each and everyone of them.
-	 * @return the current unique id counter.
+	 * Receive an order
+	 * Assign the status to the order
+	 * @param ord the order which status change
 	 */
 	public void OrderStatus_Finished(OrderImpl ord)throws StatusException
 	{
@@ -242,10 +217,11 @@ public class OrderService
 	 * POSTCONDITION: Return the total of all orders for the date entered.
 	 */
 	/**
-	 * Returns the current counter of created Orders.
-	 * This is id number that will be assigned to the next Order created,
-	 * which is unique for each and everyone of them.
-	 * @return the current unique id counter.
+	 * Receive a date
+	 * Return the total of all orders for the date entered.
+	 * @param coffe Cafeteria which stock the different daily register according to the date.
+	 * @param date Date of the Daily Register which get the profit
+	 * @return total profit of the date received
 	 */
 	public BigDecimal getDailyRegister(Cafeteria coffe, Date date)
 	{
