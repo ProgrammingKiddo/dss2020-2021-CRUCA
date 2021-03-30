@@ -1,3 +1,8 @@
+/**
+ *  @author María
+ *  @version 0.2
+ */
+
 package coreapi;
 
 import java.math.BigDecimal;

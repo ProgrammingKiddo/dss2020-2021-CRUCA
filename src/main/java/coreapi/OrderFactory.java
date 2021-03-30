@@ -1,5 +1,6 @@
 /**
  * @author Borja
+ * @author María
  * @version 0.2
  * @see Order
  */
