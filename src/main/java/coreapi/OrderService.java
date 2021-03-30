@@ -16,6 +16,15 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Add the product with the indicated quantity to the order
 	 */
+	/**
+	 * Add a quantity of product to an order of a cafeteria.
+	 * @param coffe the Cafeteria which stock the different orders.
+	 * @param ord the order which stock the different products and the quantities.
+	 * @param productId the id of the product which will be add to the order.
+	 * @param q the quantity of the product.
+	 * @throws If the product is already in the basket
+	 * @throws If there isn't enough stock of the product
+	 */
 	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int q)
 	{
 		Product prod = ProductCatalog.Instance().getProduct(productId);
@@ -44,6 +53,15 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Modify the quantity of the product indicated in the order
 	 */
+	/**
+	 * Modify the quantity of a product in an order
+	 * @param coffe the Cafeteria which stock the different orders.
+	 * @param ord the order which stock the different products and the quantities.
+	 * @param productId the id of the product which will be add to the order.
+	 * @param q the quantity of the product.
+	 * @throws If there isn't enough stock of the product
+	 * @throws If the product isn't in the basket
+	 */
 	public void modifyProductQuantity(Cafeteria coffe, OrderImpl ord, int productId, int q)
 	{
 		Product prod = ProductCatalog.Instance().getProduct(productId);
@@ -68,6 +86,13 @@ public class OrderService
 	/*
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION:Eliminate the indicated amount of the product
+	 */
+	/**
+	 * @param ord the order which stock the different products and the quantities.
+	 * @param productId the id of the product which will be add to the order.
+	 * @param q the quantity of the product.
+	 * @throws If the quantity to remove is bigger than the quantity which is stock in the order
+	 * @throws If the product isn't in the basket
 	 */
 	public void removeProductFromOrder(OrderImpl ord, int productId, int q)
 	{
@@ -95,6 +120,9 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
+	/**
+	 * 
+	 */
 	public void OrderStatus_InKitchen(OrderImpl ord)
 	{
 		//There must be products in the basket and the order be in the open state
@@ -112,6 +140,12 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
+	/**
+	 * Returns the current counter of created Orders.
+	 * This is id number that will be assigned to the next Order created,
+	 * which is unique for each and everyone of them.
+	 * @return the current unique id counter.
+	 */
 	public void OrderStatus_Delivered(OrderImpl ord)
 	{
 		//The state must be in the kitchen to be delivered
@@ -127,6 +161,12 @@ public class OrderService
 	/*
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
+	 */
+	/**
+	 * Returns the current counter of created Orders.
+	 * This is id number that will be assigned to the next Order created,
+	 * which is unique for each and everyone of them.
+	 * @return the current unique id counter.
 	 */
 	public void OrderStatus_Payed(OrderImpl ord)
 	{
@@ -145,6 +185,12 @@ public class OrderService
 	/*
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
+	 */
+	/**
+	 * Returns the current counter of created Orders.
+	 * This is id number that will be assigned to the next Order created,
+	 * which is unique for each and everyone of them.
+	 * @return the current unique id counter.
 	 */
 	public void OrderStatus_Finished(OrderImpl ord)
 	{
@@ -165,6 +211,12 @@ public class OrderService
 	/*
 	 * PRECONDITION: Receive a date
 	 * POSTCONDITION: Return the total of all orders for the date entered.
+	 */
+	/**
+	 * Returns the current counter of created Orders.
+	 * This is id number that will be assigned to the next Order created,
+	 * which is unique for each and everyone of them.
+	 * @return the current unique id counter.
 	 */
 	public BigDecimal getDailyRegister(Cafeteria coffe, Date date)
 	{
