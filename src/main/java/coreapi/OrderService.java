@@ -45,7 +45,16 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Add the product with the indicated quantity to the order
 	 */
-	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int q) throws InsufficientStock, ExistenceInTheBasket
+	/**
+	 * Add a quantity of product to an order of a cafeteria.
+	 * @param coffe the Cafeteria which stock the different orders.
+	 * @param ord the order which stock the different products and the quantities.
+	 * @param productId the id of the product which will be add to the order.
+	 * @param q the quantity of the product.
+	 * @throws If the product is already in the basket
+	 * @throws If there isn't enough stock of the product
+	 */
+	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int q)throws InsufficientStock, ExistenceInTheBasket
 	{
 		Product prod = ProductCatalog.Instance().getProduct(productId);
 		if(ord.containsProduct(productId))
@@ -73,7 +82,16 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION: Modify the quantity of the product indicated in the order
 	 */
-	public void modifyProductQuantity(Cafeteria coffe, OrderImpl ord, int productId, int q) throws InsufficientStock, ExistenceInTheBasket
+	/**
+	 * Modify the quantity of a product in an order
+	 * @param coffe the Cafeteria which stock the different orders.
+	 * @param ord the order which stock the different products and the quantities.
+	 * @param productId the id of the product which will be add to the order.
+	 * @param q the quantity of the product.
+	 * @throws If there isn't enough stock of the product
+	 * @throws If the product isn't in the basket
+	 */
+	public void modifyProductQuantity(Cafeteria coffe, OrderImpl ord, int productId, int q)throws InsufficientStock, ExistenceInTheBasket
 	{
 		Product prod = ProductCatalog.Instance().getProduct(productId);
 		
@@ -98,7 +116,14 @@ public class OrderService
 	 * PRECONDITION:Receive an order and an id of a existing product, plus a positive quantity 
 	 * POSTCONDITION:Eliminate the indicated amount of the product
 	 */
-	public void removeProductFromOrder(OrderImpl ord, int productId, int q) throws ExistenceInTheBasket, InsufficientStock
+	/**
+	 * @param ord the order which stock the different products and the quantities.
+	 * @param productId the id of the product which will be add to the order.
+	 * @param q the quantity of the product.
+	 * @throws If the quantity to remove is bigger than the quantity which is stock in the order
+	 * @throws If the product isn't in the basket
+	 */
+	public void removeProductFromOrder(OrderImpl ord, int productId, int q)throws ExistenceInTheBasket, InsufficientStock
 	{
 		int quantbasket = ord.checkProductQuantity(productId);
 		if(ord.containsProduct(productId))
@@ -124,7 +149,10 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_InKitchen(OrderImpl ord) throws StatusException
+	/**
+	 * 
+	 */
+	public void OrderStatus_InKitchen(OrderImpl ord)throws StatusException
 	{
 		//There must be products in the basket and the order be in the open state
 		if(!ord.getProducts().isEmpty() && ord.getStatus() == OrderStatus.OPEN)
@@ -141,7 +169,13 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Delivered(OrderImpl ord) throws StatusException
+	/**
+	 * Returns the current counter of created Orders.
+	 * This is id number that will be assigned to the next Order created,
+	 * which is unique for each and everyone of them.
+	 * @return the current unique id counter.
+	 */
+	public void OrderStatus_Delivered(OrderImpl ord)throws StatusException
 	{
 		//The state must be in the kitchen to be delivered
 		if(ord.getStatus() == OrderStatus.IN_KITCHEN)
@@ -157,7 +191,13 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Payed(OrderImpl ord) throws StatusException
+	/**
+	 * Returns the current counter of created Orders.
+	 * This is id number that will be assigned to the next Order created,
+	 * which is unique for each and everyone of them.
+	 * @return the current unique id counter.
+	 */
+	public void OrderStatus_Payed(OrderImpl ord)throws StatusException
 	{
 		//The state must be delivered or in the kitchen in order to be paid
 		if(ord.getStatus() == OrderStatus.IN_KITCHEN || ord.getStatus() == OrderStatus.DELIVERED)
@@ -175,7 +215,13 @@ public class OrderService
 	 * PRECONDITION:Receive an order
 	 * POSTCONDITION: Assign the status to the order
 	 */
-	public void OrderStatus_Finished(OrderImpl ord) throws StatusException
+	/**
+	 * Returns the current counter of created Orders.
+	 * This is id number that will be assigned to the next Order created,
+	 * which is unique for each and everyone of them.
+	 * @return the current unique id counter.
+	 */
+	public void OrderStatus_Finished(OrderImpl ord)throws StatusException
 	{
 		// The state must be charged in order to be finalized
 		if(ord.getStatus() == OrderStatus.PAYED)
@@ -194,6 +240,12 @@ public class OrderService
 	/*
 	 * PRECONDITION: Receive a date
 	 * POSTCONDITION: Return the total of all orders for the date entered.
+	 */
+	/**
+	 * Returns the current counter of created Orders.
+	 * This is id number that will be assigned to the next Order created,
+	 * which is unique for each and everyone of them.
+	 * @return the current unique id counter.
 	 */
 	public BigDecimal getDailyRegister(Cafeteria coffe, Date date)
 	{
