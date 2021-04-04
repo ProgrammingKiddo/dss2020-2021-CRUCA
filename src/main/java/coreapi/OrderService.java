@@ -1,15 +1,17 @@
+package coreapi;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 /**
+ * This class acts as a service provider and interface for the client to work
+ * with objects from the Order class.
+ * Modifying and operating an object of the order class should always be done
+ * through the methods provided here.
  *  @author Maria
  *  @author Borja
  *  @version 0.2
  */
-
-package coreapi;
-
-import java.math.BigDecimal;
-import java.util.Date;
-
-
 public class OrderService
 {
 	//Create a new object of OrderService
@@ -21,86 +23,45 @@ public class OrderService
 	/**
 	 * Receive an order and an id of a existing product, plus a positive quantity 
 	 * Add the product with the indicated quantity to the order
-	 * @param coffe the Cafeteria which stock the different orders.
-	 * @param ord the order which stock the different products and the quantities.
-	 * @param productId the id of the product which will be add to the order.
-	 * @param q the quantity of the product.
-	 * @throws If the product is already in the basket
-	 * @throws If there isn't enough stock of the product
+	 * @param coffe 		the Cafeteria which stock the different orders.
+	 * @param ord 			the order which stock the different products and the quantities.
+	 * @param productId 	the id of the product which will be add to the order.
+	 * @param quantity 		the quantity of the product.
+	 * @throws InsufficientStockException	If there isn't enough stock of the product
 	 */
-	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int q)throws InsufficientStockException, ProductAlreadyInOrderException
+	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int quantity) throws InsufficientStockException
 	{
 		Product prod = ProductCatalog.Instance().getProduct(productId);
-		if(ord.containsProduct(productId))
+		if(coffe.getAvailableProducts().contains(prod))
 		{
-			throw new ProductAlreadyInOrderException("This product is already in your basket, you can modify the quantity of it if you wish.");
-		}
-		else
-		{
-			if(coffe.productStock.containsKey(prod))
+			if(quantity > 0 && coffe.getProductQuantity(prod) >= quantity)
 			{
-				if(q > 0 && coffe.productStock.get(prod).intValue() >= q)
-				{
-					ord.addProduct(productId,q);
-				}
-				else
-				{
-					throw new InsufficientStockException("There is not enough stock of the product.");
-				}
-			}
-		}
-		
-	}
-	
-	/**
-	 * Receive an order and an id of a existing product, plus a positive quantity 
-	 * Modify the quantity of the product indicated in the order
-	 * @param coffe the Cafeteria which stock the different orders.
-	 * @param ord the order which stock the different products and the quantities.
-	 * @param productId the id of the product which will be add to the order.
-	 * @param q the quantity of the product.
-	 * @throws If there isn't enough stock of the product
-	 * @throws If the product isn't in the basket
-	 */
-	public void modifyProductQuantity(Cafeteria coffe, OrderImpl ord, int productId, int q)throws InsufficientStockException, ProductNotContainedInOrderException
-	{
-		Product prod = ProductCatalog.Instance().getProduct(productId);
-		
-		if(coffe.productStock.containsKey(prod) && ord.containsProduct(productId))
-		{
-			if(q > 0 && coffe.productStock.get(prod).intValue() >= q)
-			{
-				ord.addProduct(productId,q);
+				ord.addProduct(productId, quantity);
 			}
 			else
 			{
 				throw new InsufficientStockException("There is not enough stock of the product.");
 			}
 		}
-		else
-		{
-			throw new ProductNotContainedInOrderException("The product is not in your basket.");
-		}
-	
 	}
 
 	/**
 	 * Receive an order and an id of a existing product, plus a positive quantity 
 	 * Eliminate the indicated amount of the product
-	 * @param ord the order which stock the different products and the quantities.
-	 * @param productId the id of the product which will be add to the order.
-	 * @param q the quantity of the product.
-	 * @throws If the quantity to remove is bigger than the quantity which is stock in the order
-	 * @throws If the product isn't in the basket
+	 * @param ord 			the order which stock the different products and the quantities.
+	 * @param productId		the id of the product which will be add to the order.
+	 * @param quantity		the quantity of the product.
+	 * @throws InsufficientStockException			If the quantity to remove is bigger than the quantity which is stock in the order
+	 * @throws ProductNotContainedInOrderException	If the product isn't in the basket
 	 */
-	public void removeProductFromOrder(OrderImpl ord, int productId, int q)throws InsufficientStockException, ProductNotContainedInOrderException
+	public void removeProductFromOrder(OrderImpl ord, int productId, int quantity)throws InsufficientStockException, ProductNotContainedInOrderException
 	{
 		int quantbasket = ord.checkProductQuantity(productId);
 		if(ord.containsProduct(productId))
 		{
-			if(q > 0 && q <= quantbasket)
+			if(quantity > 0 && quantity <= quantbasket)
 			{
-				ord.removeProduct(productId, q);
+				ord.removeProduct(productId, quantity);
 			}
 			else
 			{
@@ -118,7 +79,7 @@ public class OrderService
 	/**
 	 * Receive an order
 	 * Assign the status to the order
-	 * @param ord the order which status change
+	 * @param ord	the order which status change
 	 */
 	public void OrderStatus_InKitchen(OrderImpl ord)throws UnreachableStatusException
 	{
@@ -136,7 +97,7 @@ public class OrderService
 	/**
 	 * Receive an order
 	 * Assign the status to the order
-	 * @param ord the order which status change
+	 * @param ord	the order which status change
 	 */
 	public void OrderStatus_Delivered(OrderImpl ord)throws UnreachableStatusException
 	{
@@ -153,7 +114,7 @@ public class OrderService
 	/**
 	 * Receive an order
 	 * Assign the status to the order
-	 * @param ord the order which status change
+	 * @param ord	the order which status change
 	 */
 	public void OrderStatus_Payed(OrderImpl ord)throws UnreachableStatusException
 	{
@@ -171,7 +132,7 @@ public class OrderService
 	/**
 	 * Receive an order
 	 * Assign the status to the order
-	 * @param ord the order which status change
+	 * @param ord	the order which status change
 	 */
 	public void OrderStatus_Finished(OrderImpl ord)throws UnreachableStatusException
 	{
@@ -187,25 +148,20 @@ public class OrderService
 		
 	}
 	
-	/*-------------------------------DAILY_REGISTER-------------------------------*/
-	
-	/*
-	 * PRECONDITION: Receive a date
-	 * POSTCONDITION: Return the total of all orders for the date entered.
-	 */
+
 	/**
 	 * Receive a date
 	 * Return the total of all orders for the date entered.
-	 * @param coffe Cafeteria which stock the different daily register according to the date.
-	 * @param date Date of the Daily Register which get the profit
-	 * @return total profit of the date received
+	 * @param coffe		Cafeteria which stock the different daily register according to the date.
+	 * @param date		Date of the Daily Register which get the profit
+	 * @return 			total profit of the date received
 	 */
-	public BigDecimal getDailyRegister(Cafeteria coffe, Date date)
+	public BigDecimal getDailyRegister(Cafeteria coffe, LocalDate date)
 	{
 		BigDecimal dailyRegister = BigDecimal.ZERO;
 		
 		//We go through the order history of the establishment
-		for(Order ord: coffe.orderHistory)
+		for(Order ord: coffe.getOrders())
 		{
 			if(ord.getDate() == date)
 			{
