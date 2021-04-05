@@ -1,14 +1,17 @@
-/**
- * @author Borja
- * @version 0.2
- */
 package coreapi;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This interface represents a regular order at a cafeteria.
+ * Users should be able to get by with the methods declared here for a basic
+ * usage of an order object.
+ * @author Borja
+ * @version 0.2
+ */
 public interface Order {
 
 	/**
@@ -31,7 +34,7 @@ public interface Order {
 	 * @return timestamp from the creation of the order
 	 * @see Date
 	 */
-	public Date getDate();
+	public LocalDate getDate();
 	/**
 	 * Returns the constant corresponding to the current state of the order,
 	 * as determined by the Enum <code>OrderStatus</code>.

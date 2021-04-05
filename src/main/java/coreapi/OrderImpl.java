@@ -1,23 +1,22 @@
+package coreapi;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import java.time.LocalDate;
+
 /**
  * Implementation of the <code>Order</code> interface.
  * Users of the API shouldn't use this class directly.
  * @author Borja
  * @version 0.2
  */
-package coreapi;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.LinkedHashMap;
-import java.util.Collections;
-
 public class OrderImpl implements Order {
 
 	private final int id;
-	private final Date date;
+	private LocalDate creationDate;
 	// Map cannot take primitive types as the type of its mapped values
 	private LinkedHashMap<Product, Integer> basket;
 	private OrderStatus orderStatus;
@@ -27,10 +26,10 @@ public class OrderImpl implements Order {
 	 * @param assignedId the identifier assigned to this order.
 	 * @param creationDate the timestamp representing the moment this order was created.
 	 */
-	OrderImpl(int assignedId, Date creationDate)
+	OrderImpl(int assignedId, LocalDate assignedDate)
 	{
 		id = assignedId;
-		date = creationDate;
+		creationDate = assignedDate;
 		basket = new LinkedHashMap<Product, Integer>();
 		orderStatus = OrderStatus.OPEN;
 	}
@@ -46,7 +45,7 @@ public class OrderImpl implements Order {
 	 * @return the date on which the order was created.
 	 * @see Date
 	 */
-	public Date getDate() { return date; }
+	public LocalDate getDate() { return creationDate; }
 	/**
 	 * Returns a read-only value of the current state of this order.
 	 * @return returns the state of this order.
@@ -87,7 +86,7 @@ public class OrderImpl implements Order {
 	
 	/**
 	 * Returns a read-only list containing what products are in this Order.
-	 * @return the list of products contained in this order.
+	 * @return Returns the list of products contained in this order.
 	 */
 	public List<Product> getProducts()
 	{
@@ -108,7 +107,8 @@ public class OrderImpl implements Order {
 	 * Returns whether or not the product determined by the id is contained in this order.
 	 * Returns <code>true</code> if there is at least one unit of the product in this order, and
 	 * <code>false</code> if there is none.
-	 * @return if the product represented by the id exists in this order.
+	 * @param id	The identifier of the product to check for.
+	 * @return 		Returns whether or not the product represented by the id exists in this order.
 	 */
 	public boolean containsProduct(int id)
 	{

@@ -1,8 +1,3 @@
-/**
- * @author Fran
- * @author Borja
- * @version 0.2
- */
 package coreapi;
 
 import java.math.BigDecimal;
@@ -12,6 +7,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * @author Fran
+ * @author Borja
+ * @version 0.2
+ */
 public class Menu implements Product {
 	
 	private LinkedHashMap<Product, Integer> productsMenu;
@@ -33,17 +34,19 @@ public class Menu implements Product {
 	}
 	
 	/**
-	 * @return the identifier assigned to this menu.
+	 * Returns the identifier assigned to this menu.
+	 * @return Returns the identifier assigned to this menu.
 	 */
 	public int getId() { return id; }
 	/**
-	 * @return the name of this menu.
+	 * Returns the name of this menu.
+	 * @return Returns the name of this menu.
 	 */
 	public String getName() { return name; }
 	
 	/**
 	 * Returns the combined cost of all products that make up this menu.
-	 * @return the cost of the entire menu.
+	 * @return Returns the cost of the entire menu.
 	 */
 	public BigDecimal getPrice()
 	{	
@@ -64,7 +67,7 @@ public class Menu implements Product {
 	}
 	/**
 	 * Returns a read-only list containing the products that make up this menu.
-	 * @return a list containing the products in the menu.
+	 * @return Returns a list containing the products in the menu.
 	 * @see List
 	 * @see Product
 	 */
@@ -75,8 +78,8 @@ public class Menu implements Product {
 	/**
 	 * Returns how much of a product is contained in this menu.
 	 * If the product doesn't exist within this menu, the returned value is zero.
-	 * @param productId the id of the product to check.
-	 * @return the quantity of the product contained in this menu.
+	 * @param productId		The id of the product to check.
+	 * @return 		Returns the quantity of the product contained in this menu.
 	 */
 	public int getProductQuantity(int productId)
 	{
@@ -95,7 +98,7 @@ public class Menu implements Product {
 	}
 	/**
 	 * Adds one unit of the specified product to the menu.
-	 * @param product the product to add to the menu.
+	 * @param product 	The product to add to the menu.
 	 * @see Product
 	 */
 	public void addProductToMenu(Product product)
@@ -104,8 +107,8 @@ public class Menu implements Product {
 	}
 	/**
 	 * Add the specified amount of units of  the specified product to the menu.
-	 * @param product the product to add to the menu.
-	 * @param quantity how much of that product to add to the menu.
+	 * @param product	The product to add to the menu.
+	 * @param quantity	How much of that product to add to the menu.
 	 * @see Product
 	 */
 	public void addProductToMenu(Product product, int quantity)

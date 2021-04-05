@@ -1,14 +1,15 @@
+package coreapi;
+
+import java.math.BigDecimal;
+
 /**
  * Implementation of the <code>Product</code> interface.
+ * 
  * Users of the API shouldn't use this class directly.
  * @author Fran
  * @author Borja
  * @version 0.2
  */
-package coreapi;
-
-import java.math.BigDecimal;
-
 public class ProductImpl implements Product {
 
 	private int id;
@@ -17,6 +18,7 @@ public class ProductImpl implements Product {
 	
 	/**
 	 * Creates a new instance of a specific product.
+	 * 
 	 * To be used only in the creation of the product catalog.
 	 * @param id the identifier assigned to this product.
 	 * @param price the cost of this product.
@@ -31,19 +33,19 @@ public class ProductImpl implements Product {
 	}
 	/**
 	 * Returns the unique id assigned by the product catalog to this specific catalog.
-	 * @return returns the id of this product.
+	 * @return Returns the id of this product.
 	 * @see ProductCatalog
 	 */
 	public int getId() { return id; }
 	/**
 	 * Returns the price of this product as a <code>BigDecimal</code> to avoid precision loss.
-	 * @return returns the price of this product.
+	 * @return Returns the price of this product.
 	 * @see BigDecimal
 	 */
 	public BigDecimal getPrice() { return price; }
 	/**
 	 * Returns the name assigned by the product catalog to this specific catalog.
-	 * @return returns the name of this product.
+	 * @return Returns the name of this product.
 	 * @see ProductCatalog
 	 */
 	public String getName() {return name;}
