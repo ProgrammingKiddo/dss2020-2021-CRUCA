@@ -46,7 +46,7 @@ public class ProductCatalog {
 	}
 	/**
 	 * Returns the corresponding reference to a certain product, determined by its identifier.
-	 * @param	Id the product identifier number to check for.
+	 * @param id	The product identifier number to check for.
 	 * @return	The product corresponding to the id passed as a parameter.
 	 */
 	public Product getProduct(int id)
