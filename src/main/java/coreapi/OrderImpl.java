@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 /**
  * Implementation of the <code>Order</code> interface.
+ * 
  * Users of the API shouldn't use this class directly.
  * @author Borja
  * @version 0.2
@@ -23,8 +24,8 @@ public class OrderImpl implements Order {
 	
 	/**
 	 * Creates a new <code>OrderImpl</code> instance.
-	 * @param assignedId the identifier assigned to this order.
-	 * @param creationDate the timestamp representing the moment this order was created.
+	 * @param assignedId	The identifier assigned to this order.
+	 * @param creationDate	The timestamp representing the day this order was created.
 	 */
 	OrderImpl(int assignedId, LocalDate assignedDate)
 	{
@@ -36,41 +37,43 @@ public class OrderImpl implements Order {
 	
 	/**
 	 * Returns the unique id assigned by the order factory to this specific order.
-	 * @return returns the id of this order.
+	 * @return	Returns the order Id.
 	 * @see OrderFactory
 	 */
 	public int getId() { return id; }
 	/**
-	 * Returns the timestamp representing the moment this order was created. 
-	 * @return the date on which the order was created.
-	 * @see Date
+	 * Returns the date when the order was created.
+	 * @return	Returns the day of creation of the order
+	 * @see LocalDate
 	 */
 	public LocalDate getDate() { return creationDate; }
 	/**
-	 * Returns a read-only value of the current state of this order.
-	 * @return returns the state of this order.
+	 * Returns the constant corresponding to the current state of the order,
+	 * as determined by the Enum <code>OrderStatus</code>.
+	 * @return	Returns the current state of the order.
 	 * @see OrderStatus
 	 */
 	public OrderStatus getStatus() { return OrderStatus.valueOf(orderStatus.name()); }
 	/**
 	 * Sets the current status of this order to the one passed by parameter.
-	 * @param newStatus the new status to set this order to.
+	 * @param newStatus		The new status to set this order to.
 	 * @see OrderStatus
 	 */
 	public void setStatus(OrderStatus newStatus) { orderStatus = newStatus; }
 	
 	/**
-	 * Returns the total cost of all the products contained in the order.
+	 * Returns the combined cost of the whole order.
+	 * 
 	 * Takes into account the individual price of each product, as well as how many
 	 * of them are currently in this order.
-	 * @return the combined cost of this order.
+	 * @return	Returns the combined cost of this order.
 	 * @see BigDecimal
 	 */
 	public BigDecimal totalCost() 
 	{
 		BigDecimal sumCost = BigDecimal.ZERO;
-		BigDecimal productCost = BigDecimal.ZERO;
-		BigDecimal productQuantity = BigDecimal.ZERO;
+		BigDecimal productCost;
+		BigDecimal productQuantity;
 		
 		for (Map.Entry<Product, Integer> entry : basket.entrySet())
 		{
@@ -86,7 +89,7 @@ public class OrderImpl implements Order {
 	
 	/**
 	 * Returns a read-only list containing what products are in this Order.
-	 * @return Returns the list of products contained in this order.
+	 * @return	Returns the list of products contained in this order.
 	 */
 	public List<Product> getProducts()
 	{
@@ -96,7 +99,7 @@ public class OrderImpl implements Order {
 	/**
 	 * Returns a read-only map containing what products and how many
 	 * of each of them are in this order.
-	 * @return the map of products and their quantities in this order.
+	 * @return	Returns the map of products and their quantities in this order.
 	 */
 	public Map<Product,Integer> getBasket()
 	{
@@ -105,6 +108,7 @@ public class OrderImpl implements Order {
 	
 	/**
 	 * Returns whether or not the product determined by the id is contained in this order.
+	 * 
 	 * Returns <code>true</code> if there is at least one unit of the product in this order, and
 	 * <code>false</code> if there is none.
 	 * @param id	The identifier of the product to check for.
@@ -117,8 +121,9 @@ public class OrderImpl implements Order {
 
 	/**
 	 * Returns how many existences of the product determined by the id are there in this order.
+	 * 
 	 * Returns zero if the product in question isn't in this order.
-	 * @return the quantity of a product in this order.
+	 * @return	Returns the quantity of a product in this order.
 	 */
 	public int checkProductQuantity(int id)
 	{
@@ -136,7 +141,7 @@ public class OrderImpl implements Order {
 	}
 	/**
 	 * Adds a single unit of the product determined by the id to this order.
-	 * @param newProductId the id of the product to add.
+	 * @param newProductId	The id of the product to add.
 	 */
 	public void addProduct(int newProductId)
 	{
@@ -144,8 +149,8 @@ public class OrderImpl implements Order {
 	}
 	/**
 	 * Adds a certain amount of units of the product determined by the id to this order.
-	 * @param newProductId the id of the product to add.
-	 * @param quantity the amount of the product to add.
+	 * @param newProductId	The id of the product to add.
+	 * @param quantity		The amount of product to add.
 	 */
 	public void addProduct(int newProductId, int quantity)
 	{
@@ -165,8 +170,9 @@ public class OrderImpl implements Order {
 	}
 	/**
 	 * Removes all amounts of the product determined by the id from this order.
+	 * 
 	 * The product in question will no longer be contained within this order.
-	 * @param productId the id of the product to remove.
+	 * @param productId	The id of the product to remove.
 	 */
 	public void removeProduct(int productId)
 	{
@@ -174,10 +180,11 @@ public class OrderImpl implements Order {
 	}
 	/**
 	 * Removes a certain amount of units of the product determined by the id from this order.
+	 * 
 	 * If the amount to remove is equal to or greater that the amount of that product currently
 	 * in the order, the product in question is removed from the order entirely.
-	 * @param productId the id of the product to remove.
-	 * @param quantity the amount of the product to remove.
+	 * @param productId	The id of the product to remove.
+	 * @param quantity	The amount of product to remove.
 	 */
 	public void removeProduct(int productId, int quantity)
 	{

@@ -1,15 +1,14 @@
-/**
- * The <code>ProductCatalog</code> class works as a placeholder for product
- * data representation, as it will come later pre-established as a file.
- * @author Borja
- * @version 0.2
- * @see Product
- */
-
 package coreapi;
 
 import java.math.BigDecimal;
 
+/**
+ * This class works as a placeholder for product data representation,
+ * as it will come later pre-established as a file.
+ * @author Borja
+ * @version 0.2
+ * @see Product
+ */
 public class ProductCatalog {
 
 	private static Product[] products = new Product[10];
@@ -18,7 +17,7 @@ public class ProductCatalog {
 	/**
 	 * Returns the unique existing instance of the <code>ProductCatalog</code> class,
 	 * through which the user is able to call its methods.
-	 * @return the only instance of the class.
+	 * @return	The only instance of the class.
 	 */
 	public static ProductCatalog Instance()
 	{
@@ -47,8 +46,8 @@ public class ProductCatalog {
 	}
 	/**
 	 * Returns the corresponding reference to a certain product, determined by its identifier.
-	 * @param id the product identifier number to check for.
-	 * @return the product corresponding to the id passed as a parameter.
+	 * @param	Id the product identifier number to check for.
+	 * @return	The product corresponding to the id passed as a parameter.
 	 */
 	public Product getProduct(int id)
 	{

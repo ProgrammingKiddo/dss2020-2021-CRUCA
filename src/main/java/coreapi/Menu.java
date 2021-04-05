@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Implementation of the <code>Product</code> interface representing a menu comprised of multiple products.
  * 
+ * Users of the API shouldn't use this class directly.
  * @author Fran
  * @author Borja
  * @version 0.2
@@ -21,10 +23,11 @@ public class Menu implements Product {
 	
 	/**
 	 * Creates a new menu with the assigned numerical Id and name.
+	 * 
 	 * The user of this class should be aware to assign a unique identifier to this menu,
 	 * and to provide a user-friendly name for display.
-	 * @param assignedId the numerical identifier to assign to this menu.
-	 * @param assignedName the name to assign to this menu.
+	 * @param assignedId	The numerical identifier to assign to this menu.
+	 * @param assignedName	The name to assign to this menu.
 	 */
 	public Menu(int assignedId, String assignedName)
 	{
@@ -35,18 +38,18 @@ public class Menu implements Product {
 	
 	/**
 	 * Returns the identifier assigned to this menu.
-	 * @return Returns the identifier assigned to this menu.
+	 * @return	Returns the identifier assigned to this menu.
 	 */
 	public int getId() { return id; }
 	/**
 	 * Returns the name of this menu.
-	 * @return Returns the name of this menu.
+	 * @return	Returns the name of this menu.
 	 */
 	public String getName() { return name; }
 	
 	/**
 	 * Returns the combined cost of all products that make up this menu.
-	 * @return Returns the cost of the entire menu.
+	 * @return	Returns the cost of the entire menu.
 	 */
 	public BigDecimal getPrice()
 	{	
@@ -67,7 +70,7 @@ public class Menu implements Product {
 	}
 	/**
 	 * Returns a read-only list containing the products that make up this menu.
-	 * @return Returns a list containing the products in the menu.
+	 * @return	Returns a list containing the products in the menu.
 	 * @see List
 	 * @see Product
 	 */
@@ -77,6 +80,7 @@ public class Menu implements Product {
 	}
 	/**
 	 * Returns how much of a product is contained in this menu.
+	 * 
 	 * If the product doesn't exist within this menu, the returned value is zero.
 	 * @param productId		The id of the product to check.
 	 * @return 		Returns the quantity of the product contained in this menu.

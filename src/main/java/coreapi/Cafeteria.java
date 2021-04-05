@@ -107,11 +107,12 @@ public class Cafeteria
 	 * Removes the indicated amount of product stock from this cafeteria.
 	 * 
 	 * Keep in mind that removing all stock of this product does NOT remove the product
-	 * from the cafeteria, to do so, use the <code>removeProduct()</code> method.
+	 * from the cafeteria, to do so, use the <code>removeProduct()</code> method instead.
 	 * 
 	 * @param prod		The product from which to remove stock.
 	 * @param quantity	The amount of product to remove from the stock of this cafeteria.
-	 * @throws InsufficientStockException
+	 * @throws InsufficientStockException If the amount to be removed is greater than
+	 * 							the current stock of the indicated product.
 	 */
 	public void removeStock(Product prod, int quantity) throws InsufficientStockException
 	{

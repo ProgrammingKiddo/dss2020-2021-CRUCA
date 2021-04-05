@@ -1,6 +1,8 @@
 package coreapi;
 
 /**
+ * This exception class represents the situation where a client is trying to remove a product
+ * from an order, but said product does not exist in that order.
  * @author Maria
  * @author Borja
  * @version 0.1

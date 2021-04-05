@@ -3,6 +3,7 @@ package coreapi;
 import java.util.Date;
 import java.time.LocalDate;
 /**
+ * The static factory to use in the creation of new order objects.
  * @author Borja
  * @author Mar�a
  * @version 0.2
@@ -17,9 +18,10 @@ public class OrderFactory
 	
 	/**
 	 * Returns the current counter of created Orders.
+	 * 
 	 * This is id number that will be assigned to the next Order created,
 	 * which is unique for each and everyone of them.
-	 * @return the current unique id counter.
+	 * @return	Returns the current unique id counter.
 	 */
 	public static int getOrderCount() 
 	{
@@ -28,8 +30,10 @@ public class OrderFactory
 	
 	/**
 	 * Returns a new instance of Order with a unique id.
+	 * 
 	 * Sets the timestamp as the current time of execution.
-	 * @return the newly created instance of an order.
+	 * @param assignedCafeteria		The cafeteria to which the new order pertains.	
+	 * @return 	The newly created instance of an order.
 	 * @see Order
 	 */
 	public static Order createOrder(Cafeteria assignedCafeteria)
@@ -39,14 +43,18 @@ public class OrderFactory
 
 	/**
 	 * Returns a new instance of <code>Order</code> with a unique id.
+	 * 
 	 * Sets the specified timestamp as the order's creation date.
-	 * @param creationDate the timestamp to assign to the order
-	 * @return the newly created instance of an order from the indicated date.
+	 * @param assignedCafeteria		The cafeteria to which the new order pertains.
+	 * @param creationDate 			The timestamp to assign to the order.
+	 * @return 		The newly created instance of an order from the indicated date.
 	 * @see Order
 	 * @see Date
 	 */
 	public static Order createOrder(Cafeteria assignedCafeteria, LocalDate creationDate)
 	{
-		return new OrderImpl(orderCount++, creationDate);
+		OrderImpl createdOrder = new OrderImpl(orderCount++, creationDate);
+		assignedCafeteria.registerOrder(createdOrder);
+		return createdOrder;
 	}
 }

@@ -84,7 +84,7 @@ public class OrderService
 	 * Sets the status of the order passed as parameter to <code>IN_KITCHEN</code>
 	 * if the order has at least one product and its current status is <code>OPEN</code>.
 	 * @param ord	The order to change the status of.
-	 * @throws UnreachableStatusException	If the conditions to set the <code>IN_KITCHEN</code> aren't met.
+	 * @throws UnreachableStatusException	If the conditions to set the <code>IN_KITCHEN</code> status aren't met.
 	 */
 	public void OrderStatus_InKitchen(OrderImpl ord)
 			throws UnreachableStatusException
@@ -104,7 +104,7 @@ public class OrderService
 	 * Sets the status of the order passed as parameter to <code>DELIVERED</code>
 	 * if the order current status is <code>IN_KITCHEN</code>.
 	 * @param ord	The order to change the status of.
-	 * @throws UnreachableStatusException	If the conditions to set the <code>IN_KITCHEN</code> aren't met.
+	 * @throws UnreachableStatusException	If the conditions to set the <code>DELIVERED</code> status aren't met.
 	 */
 	public void OrderStatus_Delivered(OrderImpl ord)
 			throws UnreachableStatusException
@@ -123,7 +123,7 @@ public class OrderService
 	 * Sets the status of the order passed as parameter to <code>PAYED</code>
 	 * if the order current status is either <code>IN_KITCHEN</code> or <code>DELIVERED</code>.
 	 * @param ord	The order to change the status of.
-	 * @throws UnreachableStatusException	If the conditions to set the <code>IN_KITCHEN</code> aren't met.
+	 * @throws UnreachableStatusException	If the conditions to set the <code>PAYED</code> status aren't met.
 	 */
 	public void OrderStatus_Payed(OrderImpl ord)
 			throws UnreachableStatusException
@@ -143,7 +143,7 @@ public class OrderService
 	 * Sets the status of the order passed as parameter to <code>FINISHED</code>
 	 * if the order current status is <code>PAYED</code>.
 	 * @param ord	The order to change the status of.
-	 * @throws UnreachableStatusException	If the conditions to set the <code>IN_KITCHEN</code> aren't met.
+	 * @throws UnreachableStatusException	If the conditions to set the <code>FINISHED</code> status aren't met.
 	 */
 	public void OrderStatus_Finished(OrderImpl ord)
 			throws UnreachableStatusException
