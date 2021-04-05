@@ -30,18 +30,17 @@ public class OrderServiceTest
 		date = new Date(System.currentTimeMillis());
 		myOrder = (OrderImpl) OrderFactory.createOrder(date);
 		ordSer = new OrderService();
-		coffe.orderHistory.add(myOrder);
+		coffe.registerOrder(myOrder);
 		
 		// We introduce the products to the cafeteria with a certain stock
-		coffe.ProductRegister(product1, 8);
-		coffe.ProductRegister(product2, 35);
-		coffe.ProductRegister(product3, 30);
+		coffe.registerProductQuantity(product1, 8);
+		coffe.registerProductQuantity(product2, 35);
+		coffe.registerProductQuantity(product3, 30);
 	}
 	
 	@After
 	public void tearDown()
 	{
-		coffe.orderHistory.remove(myOrder);
 		coffe = null;
 		myOrder = null;
 	}
@@ -262,8 +261,8 @@ public class OrderServiceTest
 	{
 		OrderImpl auxOrder1 = (OrderImpl) OrderFactory.createOrder(date);
 		OrderImpl auxOrder2 = (OrderImpl) OrderFactory.createOrder(date);
-		coffe.orderHistory.add(auxOrder1);
-		coffe.orderHistory.add(auxOrder2);
+		coffe.registerOrder(auxOrder1);
+		coffe.registerOrder(auxOrder2);
 		
 		try {
 			ordSer.addProductToOrder(coffe, myOrder, 0, 3);
