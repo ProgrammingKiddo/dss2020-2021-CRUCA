@@ -1,14 +1,13 @@
-/**
- * @author Borja
- * @author María
- * @version 0.2
- * @see Order
- */
-
 package coreapi;
 
 import java.util.Date;
-
+import java.time.LocalDate;
+/**
+ * @author Borja
+ * @author Marï¿½a
+ * @version 0.2
+ * @see Order
+ */
 public class OrderFactory 
 {
 	
@@ -33,9 +32,9 @@ public class OrderFactory
 	 * @return the newly created instance of an order.
 	 * @see Order
 	 */
-	public static Order createOrder()
+	public static Order createOrder(Cafeteria assignedCafeteria)
 	{
-		return createOrder(new Date(System.currentTimeMillis()));
+		return createOrder(assignedCafeteria, LocalDate.now());
 	}
 
 	/**
@@ -46,7 +45,7 @@ public class OrderFactory
 	 * @see Order
 	 * @see Date
 	 */
-	public static Order createOrder(Date creationDate)
+	public static Order createOrder(Cafeteria assignedCafeteria, LocalDate creationDate)
 	{
 		return new OrderImpl(orderCount++, creationDate);
 	}
