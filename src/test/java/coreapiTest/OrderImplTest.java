@@ -18,14 +18,14 @@ import org.junit.Test;
 public class OrderImplTest {
 
 	private OrderImpl myOrder;
-	
+	private Cafeteria cafet = new Cafeteria(0, "Santa Fe");
 	private Product product1 = ProductCatalog.Instance().getProduct(0);
 	private Product product2 = ProductCatalog.Instance().getProduct(1);
 	
 	@Before
 	public void setUp()
 	{
-		myOrder = (OrderImpl) OrderFactory.createOrder();
+		myOrder = (OrderImpl) OrderFactory.createOrder(cafet);
 	}
 	
 	@After

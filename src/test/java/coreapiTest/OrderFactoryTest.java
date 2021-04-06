@@ -1,6 +1,7 @@
 package coreapiTest;
 
 import coreapi.OrderFactory;
+import coreapi.Cafeteria;
 import coreapi.Order;
 
 import java.util.Date;
@@ -13,12 +14,13 @@ import org.junit.Test;
 public class OrderFactoryTest 
 {
 	private Order ord1, ord2;
+	private Cafeteria cafet = new Cafeteria(0, "Santa Fe");
 	
 	@Before
 	public void setUp()
 	{
-		ord1 = OrderFactory.createOrder();
-		ord2 = OrderFactory.createOrder();
+		ord1 = OrderFactory.createOrder(cafet);
+		ord2 = OrderFactory.createOrder(cafet);
 	}
 	
 	@After

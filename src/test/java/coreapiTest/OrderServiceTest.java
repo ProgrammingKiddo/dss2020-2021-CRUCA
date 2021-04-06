@@ -3,7 +3,7 @@ package coreapiTest;
 import coreapi.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -17,7 +17,7 @@ public class OrderServiceTest
 	private Cafeteria coffe;
 	private OrderImpl myOrder;
 	private OrderService ordSer;
-	private Date date;
+	private LocalDate date;
 	private Product product1 = ProductCatalog.Instance().getProduct(0);
 	private Product product2 = ProductCatalog.Instance().getProduct(1);
 	private Product product3 = ProductCatalog.Instance().getProduct(2);
@@ -26,16 +26,16 @@ public class OrderServiceTest
 	@Before
 	public void setUp()
 	{
-		coffe = new Cafeteria();
-		date = new Date(System.currentTimeMillis());
-		myOrder = (OrderImpl) OrderFactory.createOrder(date);
+		coffe = new Cafeteria(0, "Cafeteria de Santa Fe");
+		date = LocalDate.now();
+		myOrder = (OrderImpl) OrderFactory.createOrder(coffe, date);
 		ordSer = new OrderService();
 		coffe.registerOrder(myOrder);
 		
 		// We introduce the products to the cafeteria with a certain stock
-		coffe.registerProductQuantity(product1, 8);
-		coffe.registerProductQuantity(product2, 35);
-		coffe.registerProductQuantity(product3, 30);
+		coffe.registerProduct(product1, 8);
+		coffe.registerProduct(product2, 35);
+		coffe.registerProduct(product3, 30);
 	}
 	
 	@After
@@ -54,7 +54,7 @@ public class OrderServiceTest
 	 * Check that the product has been added to the order correctly in case the product is not
 	 * in the basket and there is enough stock.
 	 */
-	public void addProductToOrder_Correctly_OrderService()
+	public void addProductToOrder_Correctly()
 	{
 		try
 		{
@@ -71,83 +71,14 @@ public class OrderServiceTest
 	/*
 	 * Check that the product is not added to the order if there is not enough stock.
 	 */
-	public void addProductToOrder_NoStock_OrderService()
+	public void addProductToOrder_NoStock()
 	{
 		Assert.assertThrows(InsufficientStockException.class, () -> {
 			ordSer.addProductToOrder(coffe, myOrder, 0, 10);
 		});
 		Assert.assertFalse(myOrder.containsProduct(0));
 	}
-	
-	@Test
-	/*
-	 * Check that the product is not added to the order if it is already in the basket.
-	 */
-	public void addProductToOrder_ProductInBasket_OrderService()
-	{
-		try {
-			ordSer.addProductToOrder(coffe, myOrder, 1, 1);
-		}
-		catch(Exception e)
-		{
-			System.err.println(e.getMessage());
-		}
-		
-		Assert.assertThrows(ProductAlreadyInOrderException.class, () -> {
-			ordSer.addProductToOrder(coffe, myOrder, 1, 1);
-		});	
-	}
-	
-	/*_____________________________MODIFY_PRODUCT_QUANTITY_CHECK__________________________________*/
-	
-	@Test
-	/*
-	 *Check that the quantity of the product is modified if it is in the basket 
-	 *and there is enough stock.
-	 */
-	public void modifyProductQuantity_Correctly_OrderService()
-	{
-		try
-		{
-			ordSer.addProductToOrder(coffe, myOrder, 2, 1);
-			ordSer.modifyProductQuantity(coffe, myOrder, 2, 10);
-		}
-		catch(Exception e) 
-		{
-			System.err.println(e.getMessage());
-		}
-		Assert.assertEquals(11, myOrder.checkProductQuantity(2));
-	}
-	
-	@Test
-	/*
-	 *Check that the product quantity is not modified if there is not enough stock.
-	 */
-	public void modifyProductQuantity_NoStock_OrderService()
-	{
-		try {
-			ordSer.addProductToOrder(coffe, myOrder, 2, 1);
-		}
-		catch(Exception e)
-		{
-			System.err.println(e.getMessage());
-		}
-		Assert.assertThrows(InsufficientStockException.class, () -> {
-			ordSer.modifyProductQuantity(coffe, myOrder, 2, 50);
-		});
-		Assert.assertEquals(1, myOrder.checkProductQuantity(2));;
-	}
-		
-	@Test
-	/*
-	 *Check that the quantity of the product is not modified if it is not in the basket.
-	 */
-	public void modifyProductQuantity_NotInBasket_OrderService()
-	{
-		Assert.assertThrows(ProductNotContainedInOrderException.class, () -> {
-			ordSer.modifyProductQuantity(coffe, myOrder, 0, 4);
-		});
-	}
+
 	
 	/*_____________________________REMOVE_PRODUCT_FROM_ORDER_CHECK__________________________________*/
 	
@@ -156,12 +87,12 @@ public class OrderServiceTest
 	 * Check that the indicated amount of product is eliminated since the product is in the basket 
 	 * with an amount equal to or greater than that indicated.
 	 */
-	public void removeProductFromOrder_Correctly_OrderService()
+	public void removeProductFromOrder_Correctly()
 	{
 		try
 		{
 			ordSer.addProductToOrder(coffe, myOrder, 2, 15);
-			ordSer.removeProductFromOrder(myOrder, 2, 10);
+			ordSer.removeProductFromOrder(coffe, myOrder, 2, 10);
 		}
 		catch(Exception e)
 		{
@@ -176,7 +107,7 @@ public class OrderServiceTest
 	 *Check that the amount of product indicated is not eliminated since the product is in the basket
 	 *with a smaller quantity than indicated.
 	 */
-	public void removeProductFromOrder_NotEnoughQuantity_OrderService()
+	public void removeProductFromOrder_NotEnoughQuantity()
 	{
 		try {
 			ordSer.addProductToOrder(coffe, myOrder, 2, 1);
@@ -186,7 +117,7 @@ public class OrderServiceTest
 			System.err.println(e.getMessage());
 		}
 		Assert.assertThrows(InsufficientStockException.class, () -> {
-			ordSer.removeProductFromOrder(myOrder, 2, 100);
+			ordSer.removeProductFromOrder(coffe, myOrder, 2, 100);
 		});
 		Assert.assertEquals(1, myOrder.checkProductQuantity(2));
 	}
@@ -196,10 +127,10 @@ public class OrderServiceTest
 	 *Check that the indicated amount of product is not eliminated, 
 	 *since the product is not in the basket
 	 */
-	public void removeProductFromOrder_NotInBasket_OrderService()
+	public void removeProductFromOrder_NotInBasket()
 	{
 		Assert.assertThrows(ProductNotContainedInOrderException.class, () -> {
-			ordSer.removeProductFromOrder(myOrder, 0, 4);
+			ordSer.removeProductFromOrder(coffe, myOrder, 0, 4);
 		});
 		
 	}
@@ -257,10 +188,10 @@ public class OrderServiceTest
 	/*
 	 *Check that the total of the orders for the date entered is correct.
 	 */
-	public void DailyRegisterCheck_OrderService()
+	public void testGetDailyRegister()
 	{
-		OrderImpl auxOrder1 = (OrderImpl) OrderFactory.createOrder(date);
-		OrderImpl auxOrder2 = (OrderImpl) OrderFactory.createOrder(date);
+		OrderImpl auxOrder1 = (OrderImpl) OrderFactory.createOrder(coffe, date);
+		OrderImpl auxOrder2 = (OrderImpl) OrderFactory.createOrder(coffe, date);
 		coffe.registerOrder(auxOrder1);
 		coffe.registerOrder(auxOrder2);
 		
