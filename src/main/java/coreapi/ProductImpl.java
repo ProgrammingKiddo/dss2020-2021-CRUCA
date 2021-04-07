@@ -15,6 +15,7 @@ public class ProductImpl implements Product {
 	private int id;
 	private BigDecimal price;
 	private String name;
+	private String type;
 	
 	/**
 	 * Creates a new instance of a specific product.
@@ -23,13 +24,15 @@ public class ProductImpl implements Product {
 	 * @param id		The identifier assigned to this product.
 	 * @param price		The cost of this product.
 	 * @param name		The name assigned to this product.
+	 * @param type		The name of the type product.
 	 * @see ProductCatalog
 	 */
-	public ProductImpl(int id, BigDecimal price, String name)
+	public ProductImpl(int id, BigDecimal price, String name, String type)
 	{
 		this.id = id;
 		this.price = price;
 		this.name = name;
+		this.type = type;
 	}
 	/**
 	 * Returns the unique id assigned by the product catalog to this specific catalog.
@@ -49,4 +52,9 @@ public class ProductImpl implements Product {
 	 * @see ProductCatalog
 	 */
 	public String getName() {return name;}
-}
+	
+	/**
+	 * Returns the name of the product category which belong.
+	 * @return Returns the tyoe of this product
+	 */
+	public String getType() {return type;}

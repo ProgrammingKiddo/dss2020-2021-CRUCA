@@ -31,4 +31,10 @@ public interface Product {
 	 */
 	public String getName();
 	
+	
+	/**
+	 * Returns the name of the product category which belong.
+	 * @return Returns the tyoe of this product
+	 */
+	public String getType();
 }
