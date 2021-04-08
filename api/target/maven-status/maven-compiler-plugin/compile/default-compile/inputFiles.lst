@@ -1,0 +1,14 @@
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\ProductCatalog.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\Order.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\Cafeteria.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\Menu.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\ProductImpl.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\Product.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\ProductNotContainedInOrderException.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\UnreachableStatusException.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\OrderImpl.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\OrderStatus.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\OrderService.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\OrderFactory.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\InsufficientStockException.java
+C:\Users\Ichig\Documents\Repositories\dss2020-2021-CRUCA\api\src\main\java\coreapi\package-info.java

@@ -20,6 +20,7 @@ public class Menu implements Product {
 	private LinkedHashMap<Product, Integer> productsMenu;
 	private int id;
 	private String name;
+	private String type;
 	
 	/**
 	 * Creates a new menu with the assigned numerical Id and name.
@@ -119,4 +120,6 @@ public class Menu implements Product {
 	{
 		productsMenu.put(product, Integer.valueOf(quantity));
 	}
+	
+	public String getType() {return type;}
 }

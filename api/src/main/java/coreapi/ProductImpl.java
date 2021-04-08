@@ -58,3 +58,4 @@ public class ProductImpl implements Product {
 	 * @return Returns the tyoe of this product
 	 */
 	public String getType() {return type;}
+}
