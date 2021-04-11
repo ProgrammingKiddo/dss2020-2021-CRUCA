@@ -1,6 +1,7 @@
 package terminalcli;
 import coreapi;
 import java.io.*;
+import java.util.Scanner;
 
 public class Screen
 {
@@ -19,7 +20,7 @@ public class Screen
             System.out.println("2. Consultar caja de hoy");
             System.out.println("Q. Salir");
             System.out.println("---------------------------------------------");
-            System.out.println("Introduzca una opción:”);
+            System.out.println("Introduzca una opcion:");
             op = keyboard.nextString();
             if(op.compareTo("Q"))
             {
@@ -31,16 +32,16 @@ public class Screen
             	switch(s)
                 {
                     case 1: 
-                        createOrder(coffe);
-                        //Llamar a interfaz de pedido en curso
+                        OrderInProgress_screen(coffe);
                         break;
                     
                     case 2: 
-                         //Llamar a interfaz de caja del dia
+                    	Date date;
+                    	DailyRegister_screen(coffe, date);
                          break;
                          
                     default:
-                        System.out.println("Introduzca una opción válida");
+                        System.out.println("Introduzca una opcion valida.");
                 }
             }
         }while(s != 1 || s != 2); 
@@ -56,15 +57,15 @@ public class Screen
         Order ord = createOrder(coffe);
         do
         {
-            System.out.println("Pedido en curso (" + ord.getOrderCount() + ")";
+            System.out.println("Pedido en curso (" + ord.getOrderCount() + ")");
             System.out.println("---------------------------------------------");
-            System.out.println("1. Añadir producto"); 
+            System.out.println("1. AÃ±adir producto"); 
             System.out.println("2. Eliminar producto");
             System.out.println("3. Finalizar pedido");
             System.out.println("----");
             System.out.println("R. Volver a la pantalla anterior");
             System.out.println("---------------------------------------------");
-            System.out.println("Introduzca una opción:");
+            System.out.println("Introduzca una opcion:");
             op = keyboard.nextString();
             if(op.compareTo("R"))
             {
@@ -76,19 +77,19 @@ public class Screen
             	switch(s)
                 {
 	                case 1: 
-	                    //Llamar a interfaz de tipo de productos
+	                    type_screen(coffe);
 	                    break;
 	                
 	                case 2: 
-	                     //Llamar a interfaz de eliminar producto
+	                	 Remove_Product_screen(ord);
 	                     break;
 	                
 	                case 3:
-	                     //Llamar interfaz finalizar pedido
+	                	 Finish_Order_screen(ord);
 	                     break;
 	                     
 	                default:
-	                    System.out.println("Introduzca una opción válida");
+	                    System.out.println("Introduzca una opcion valida.");
                 }
             }
         }while(s != 1 || s != 2 || op != 3);
@@ -114,7 +115,7 @@ public class Screen
 	        }
 	        System.out.println("R. Volver a pantalla anterior");
 	        System.out.println("---------------------------------------------");
-	        System.out.println("Introduzca una opción");
+	        System.out.println("Introduzca una opciï¿½n");
 	        op = keyboard.nextString();
 	        if(op.compareTo("R"))
 	        {
@@ -124,11 +125,11 @@ public class Screen
 	        {
 	        	s = Interger.parseInt(op);
 	        	if(s < 1 || s > range)
-	        		System.out.println("Introduzca una opción válida");
+	        		System.out.println("Introduzca una opciï¿½n vï¿½lida");
 	        	else
 		        {
-		            //Función Cafeteria que muestre los productos de ese tipo. Pondría product Screen y que
-	        		// esta recibiese el tipo también.
+		            //Funciï¿½n Cafeteria que muestre los productos de ese tipo. Pondrï¿½a product Screen y que
+	        		// esta recibiese el tipo tambiï¿½n.
 		        }
 	        }
 	    }while(s < 1 || s > range);
@@ -154,7 +155,7 @@ public class Screen
 	        }
 	        System.out.println("R. Volver a pantalla anterior");
 	        System.out.println("---------------------------------------------");
-	        System.out.println("Introduzca una opción");
+	        System.out.println("Introduzca una opciï¿½n");
 	        op = keyboard.nextString();
 	        if(op.compareTo("R"))
 	        {
@@ -164,10 +165,10 @@ public class Screen
 	        {
 	        	s = Interger.parseInt(op);
 	        	if(s < 1 || s > range)
-	        		System.out.println("Introduzca una opción válida");
+	        		System.out.println("Introduzca una opciï¿½n vï¿½lida");
 	        	else
 		        {
-		            //¿Funciones para un producto?
+		            //ï¿½Funciones para un producto?
 		        }
 	        }
 	    }while(s < 1 || s > range);
@@ -213,7 +214,7 @@ public class Screen
 	        }
 	        System.out.println("R. Volver a pantalla anterior");
 	        System.out.println("---------------------------------------------");
-	        System.out.println("Introduzca una opción");
+	        System.out.println("Introduzca una opciï¿½n");
 	        op = kayboard.nextString();
 	        if(op.compareTo("R"))
 	        {
@@ -224,11 +225,11 @@ public class Screen
 	        	s = Interger.parseTo(op);
 	        	if(op < 1 && op > range)
 	        	{
-	        		System.out.println("Introduzca una opción válida");
+	        		System.out.println("Introduzca una opciï¿½n vï¿½lida");
 	        	}
 	        	else
 	        	{
-	        		//Función para eliminar producto
+	        		//Funciï¿½n para eliminar producto
 	        	}
 	        }
 	    }while(op < 1 || op > range);
@@ -249,7 +250,7 @@ public class Screen
 	        System.out.println("1. Pagar y finalizar pedido");
 	        System.out.println("R. Volver a pantalla anterior");
 	        System.out.println("---------------------------------------------");
-	        System.out.println("Introduzca una opción");
+	        System.out.println("Introduzca una opciï¿½n");
 	        op = keyboard.nextString();
 	        if(op.comparteTo("R"))
 	        {
@@ -264,7 +265,7 @@ public class Screen
 	        	}
 	        	else
 	        	{
-	        		System.out.println("Introduzca una opción válida");
+	        		System.out.println("Introduzca una opciï¿½n vï¿½lida");
 	        	}
 	        }
 	    }while(s < 1 || s > range);
@@ -275,7 +276,7 @@ public class Screen
 	public void DailyRegister_screen(Cafeteria coffe, Date date)
 	{
 	    char op;
-	    int n_orders = //Nº pedidos
+	    int n_orders = //Nï¿½ pedidos
 	    BigDecimal daily = getDailyRegister(coffe,date);
 	    Scanner keyboard = new Scanner(System.in);
 	    do
@@ -286,11 +287,11 @@ public class Screen
 	        System.out.println("Caja: " + daily);
 	        System.out.println("R. Volver a pantalla anterior");
 	        System.out.println("---------------------------------------------");
-	        System.out.println("Introduzca una opción");
+	        System.out.println("Introduzca una opciï¿½n");
 	        op = keyboard.nextChar();
 	        if(op != 'R')
 	        {
-	            System.out.println("Introduzca una opción válida");
+	            System.out.println("Introduzca una opciï¿½n vï¿½lida");
 	        }
 	        else
 	        {
