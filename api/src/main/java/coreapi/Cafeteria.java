@@ -9,8 +9,9 @@ import java.util.List;
  * @author Borja
  * @version 0.1
  */
-public class Cafeteria 
+public class Cafeteria implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private LinkedHashMap<Product, Integer> productStock;
 	private List<Order> orderHistory;
 	private String name;
