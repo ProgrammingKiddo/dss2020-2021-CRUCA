@@ -1,3 +1,8 @@
+/**
+ * @author Maria
+ * @author Fran
+ */
+
 package terminalcli;
 import coreapi;
 import api.src.main.java.coreapi.*;
@@ -115,10 +120,10 @@ public class Screen
 	
 	/* ------------------------------SELECT_TYPE_SCREEN ------------------------------------- */
 	
-	public void type_screen(Cafeteria coffe, Order ord)//Terminar
+	public void type_screen(Cafeteria coffe, Order ord)
 	{
 		String op;
-	    int s = 0, range = 0;
+	    int s = 0, range = 0, cont = 0;
 	    Scanner keyboard = new Scanner(System.in);
 	    List<String> typeProduct = coffe.getTypes();
 	    do
@@ -145,7 +150,7 @@ public class Screen
 	        		System.out.println("Introduzca una opcion valida");
 	        	else
 		        {
-		            
+	        		product_screen(coffe,ord,typeProduct.get(s-1));
 		        }
 	        }
 	    }while(s < 1 || s > range);
@@ -153,10 +158,10 @@ public class Screen
 	
 	/*-------------------------------- SELECT_PRODUCT_SCREEN ------------------------------------ */
 	
-	public void product_screen(Cafeteria coffe, Order ord, String type)//Terminar
+	public void product_screen(Cafeteria coffe, Order ord, String type)
 	{
 		String op;
-		int s = 0, range = 0;
+		int s = 0, range = 0, q = 0;
 	    Scanner keyboard = new Scanner(System.in);
 	    List<Product> AvailableProduct = coffe.getAvailableProducts();
 	    do
@@ -165,7 +170,6 @@ public class Screen
 	        System.out.println("---------------------------------------------");
 	        for(Product p: AvailableProduct)
 	        {
-	            //Imprimir por id??
 	            range = range + 1;
 	            System.out.println(range + '.' + p.getName() + " (" + p.getPrice() + " euros)");
 	        }
@@ -184,7 +188,9 @@ public class Screen
 	        		System.out.println("Introduzca una opcion valida");
 	        	else
 		        {
-		            //ï¿½Funciones para un producto?
+	        		System.out.println("Introduce la cantidad de producto a añadir:");
+	        		q = kayboard.nextInt();
+	        		OrderService.addProductToOrder(coffe,ord,AvailableProduct.get(s-1).getId(),q)
 		        }
 	        }
 	    }while(s < 1 || s > range);
