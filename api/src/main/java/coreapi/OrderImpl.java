@@ -14,8 +14,9 @@ import java.time.LocalDate;
  * @author Borja
  * @version 0.2
  */
-public class OrderImpl implements Order {
+public class OrderImpl implements Order, Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private final int id;
 	private LocalDate creationDate;
 	// Map cannot take primitive types as the type of its mapped values

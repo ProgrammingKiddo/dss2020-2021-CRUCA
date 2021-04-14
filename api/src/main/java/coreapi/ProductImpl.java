@@ -10,8 +10,9 @@ import java.math.BigDecimal;
  * @author Borja
  * @version 0.2
  */
-public class ProductImpl implements Product {
-
+public class ProductImpl implements Product, Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private BigDecimal price;
 	private String name;
