@@ -23,21 +23,21 @@ public class OrderService
 	
 	/**
 	 * Adds the indicated amount of product to the order passed as an argument.
-	 * @param cafet 		The Cafeteria related to the order.
+	 * @param coffe		The Cafeteria related to the order.
 	 * @param ord 			The order to add the product to.
 	 * @param productId 	The id of the product to add to the order.
 	 * @param quantity 		The quantity of product to add to the order.
 	 * @throws InsufficientStockException	If there isn't enough stock of the product.
 	 */
-	public void addProductToOrder(Cafeteria cafet, OrderImpl ord, int productId, int quantity)
+	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int quantity)
 			throws InsufficientStockException
 	{
 		Product prod = ProductCatalog.Instance().getProduct(productId);
-		if(cafet.getAvailableProducts().contains(prod))
+		if(coffe.getAvailableProducts().contains(prod))
 		{
-			if(quantity > 0 && cafet.getProductQuantity(prod) >= quantity)
+			if(quantity > 0 && coffe.getProductQuantity(prod) >= quantity)
 			{
-				cafet.removeStock(prod, quantity);
+				coffe.removeStock(prod, quantity);
 				ord.addProduct(productId, quantity);
 			}
 			else

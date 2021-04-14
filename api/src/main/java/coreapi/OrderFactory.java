@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * The static factory to use in the creation of new order objects.
  * @author Borja
- * @author Mar�a
+ * @author Maria
  * @version 0.2
  * @see Order
  */
