@@ -181,6 +181,7 @@ public class OrderService
 		return dailyRegister;
 	}
 	
+	
 	/**
 	 * Returns the cash register from the indicated cafeteria on the designated day.
 	 * @param coffe		The cafeteria from which to calculate the cash register.
