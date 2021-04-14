@@ -161,12 +161,12 @@ public class OrderService
 	
 
 	/**
-	 * Returns the cash register from the indicated cafeteria on the designated day.
+	 * Returns the number of orders register from the indicated cafeteria on the designated day.
 	 * @param coffe		The cafeteria from which to calculate the cash register.
 	 * @param date		The day to which calculate the cash register.
 	 * @return 			Returns the combined cost of all orders made on the specified date.
 	 */
-	public BigDecimal getDailyRegister(Cafeteria coffe, LocalDate date)
+	public BigDecimal getTotalDailyRegister(Cafeteria coffe, LocalDate date)
 	{
 		BigDecimal dailyRegister = BigDecimal.ZERO;
 		
@@ -181,6 +181,25 @@ public class OrderService
 		return dailyRegister;
 	}
 	
-	
+	/**
+	 * Returns the cash register from the indicated cafeteria on the designated day.
+	 * @param coffe		The cafeteria from which to calculate the cash register.
+	 * @param date		The day to which calculate the cash register.
+	 * @return 			Returns the number of orders that have been on the specified date.
+	 */
+	public BigDecimal getNumberOfOrdersDailyRegister(Cafeteria coffe, LocalDate date)
+	{
+		int n_orders = 0;
+		
+		//We go through the order history of the establishment
+		for(Order ord: coffe.getOrders())
+		{
+			if(ord.getDate() == date)
+			{
+				dailyRegister++;
+			}
+		}
+		return dailyRegister;
+	}
 	
 }
