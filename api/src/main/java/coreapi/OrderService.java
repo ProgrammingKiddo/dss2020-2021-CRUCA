@@ -49,14 +49,13 @@ public class OrderService
 
 	/**
 	 * Removes the indicated amount of product from the order passed as an argument.
-	 * @param cafet			The cafeteria related to the order.
 	 * @param ord 			The order to remove the product from.
 	 * @param productId		The id of the product to remove from the order.
 	 * @param quantity		The quantity of product to remove from the order.
 	 * @throws InsufficientStockException			If the quantity to remove is bigger than the quantity which is stock in the order
 	 * @throws ProductNotContainedInOrderException	If the product isn't in the basket
 	 */
-	public void removeProductFromOrder(Cafeteria cafet, OrderImpl ord, int productId, int quantity)
+	public void removeProductFromOrder(OrderImpl ord, int productId, int quantity)
 			throws InsufficientStockException, ProductNotContainedInOrderException
 	{
 		int quantbasket = ord.checkProductQuantity(productId);
