@@ -1,7 +1,10 @@
 package terminalcli;
+
+import coreapi.Product;
+import coreapi.Cafeteria;
+import coreapi.Order;
 import java.io.ObjectOutputStream;
 
-import coreapi;
 
 public class Save
 {

@@ -4,9 +4,12 @@
  */
 
 package terminalcli;
-import coreapi;
-import api.src.main.java.coreapi.*;
 
+import coreapi.Product;
+import coreapi.Cafeteria;
+import coreapi.Order;
+import coreapi.OrderService;
+import coreapi.OrderFactory;
 import java.io.*;
 import java.util.*;
 import java.time.LocalDate;
@@ -188,7 +191,7 @@ public class Screen
 	        		System.out.println("Introduzca una opcion valida");
 	        	else
 		        {
-	        		System.out.println("Introduce la cantidad de producto a añadir:");
+	        		System.out.println("Introduce la cantidad de producto a aï¿½adir:");
 	        		q = kayboard.nextInt();
 	        		OrderService.addProductToOrder(coffe,ord,AvailableProduct.get(s-1).getId(),q)
 		        }

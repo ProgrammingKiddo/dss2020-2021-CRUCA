@@ -1,5 +1,8 @@
 package terminalcli;
-import coreapi;
+
+import coreapi.Product;
+import coreapi.Cafeteria;
+import coreapi.Order;
 import java.io.*;
 
 public class Load
