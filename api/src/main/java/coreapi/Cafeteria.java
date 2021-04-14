@@ -16,6 +16,7 @@ public class Cafeteria implements Serializable
 	private List<Order> orderHistory;
 	private String name;
 	private int id;
+	private List<String> types;
 	
 	/**
 	 * Creates a new instance of a cafeteria, with its own name and an identifier to
@@ -59,6 +60,16 @@ public class Cafeteria implements Serializable
 	{
 		return List.copyOf(new ArrayList<Product>(productStock.keySet()));
 	}
+	
+	/**
+	 * Return the list of the differents types of products
+	 * 
+	 *  @return Return the list of the differents types of products
+	 */
+	public List<String> getTypes()
+	{
+		return List.copyOf(types);
+	}
 	/**
 	 * Registers a new product as available on this cafeteria.
 	 * @param prod		A reference to the product to add to this cafeteria. 
@@ -89,6 +100,7 @@ public class Cafeteria implements Serializable
 	{
 		if (quantity > 0)
 		{
+			AddType(prod.getType());
 			if (productStock.containsKey(prod) == false)
 			{
 				productStock.put(prod, quantity);
@@ -123,6 +135,7 @@ public class Cafeteria implements Serializable
 		}
 		else
 		{
+			DeleteType(prod.getType());
 			Integer newQuantity = Integer.valueOf(productStock.get(prod).intValue() - quantity);
 			productStock.replace(prod, newQuantity);
 		}
@@ -150,5 +163,39 @@ public class Cafeteria implements Serializable
 	public List<Order> getOrders()
 	{
 		return List.copyOf(orderHistory);
+	}
+	 /**
+	  * Add a new type to the types list in case that this type
+	  * doesn't exist in the list.
+	  * 
+	  * @param String which contains the type to add
+	  */
+	public void AddType(String t)
+	{
+		if(types.contains(t) != true)
+		{
+			types.add(t);
+		}
+	}
+	
+	/**
+	 * Delete a type of the types list.
+	 * 
+	 * @param String which contains the type to delete.
+	 */
+	public void DeleteType(String t)
+	{
+		boolean find = false;
+		for(Map.Entry<Product, Integer> entry : productStock.entrySet())
+		{
+			if(entry.getValue().getType() == t)
+			{
+				find = true;
+			}
+		}
+		if(find == false)
+		{
+			types.remove(t);
+		}
 	}
 }
