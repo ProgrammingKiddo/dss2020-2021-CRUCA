@@ -1,48 +1,71 @@
-package terminalcli;
+package filepersistence;
 
 import coreapi.Product;
+import coreapi.ProductImpl;
+import coreapi.ProductCatalog;
 import coreapi.Cafeteria;
 import coreapi.Order;
+import coreapi.OrderImpl;
+
 import java.io.*;
 
 public class Load
 {
+	private String path;
+	
+	public Load(String path)
+	{
+		this.path = path;
+	}
+	
 	public void LoadProducts()
 	{
-		FileInputStream products = new FileInputStream("Products.txt");
-		ObjectInputStream ProductRead = new ObjectInputStream(products);
-		Product p = (Product)ProductRead.readObject();
-		while(p != null)
+		try {
+			FileInputStream products = new FileInputStream(path + "Products.txt");
+			ObjectInputStream ProductRead = new ObjectInputStream(products);
+			Product p = (Product)ProductRead.readObject();
+			while(p != null)
+			{
+				//Guardar en memoria
+				ProductCatalog.Instance().addProduct(p);
+				p = (ProductImpl)ProductRead.readObject();
+			}
+			ProductRead.close();			
+		} catch (Exception ex)
 		{
-			//Guardar en memoria
-			p = (Product)ProductRead.readObject();
+			System.err.println(ex.getMessage());
 		}
-		ProductRead.close();
 	}
 	
-	public void LoadCafeterias()
+	public void LoadCafeteria(Cafeteria coffee)
 	{
-		FileInputStream cafeterias = new FileInputStream("Cafeterias.txt");
-		ObjectInputStream CafeteriaRead = new ObjectInputStream(cafeterias);
-		Cafeteria c = (Cafeteria)CafeteriaRead.readObject();
-		while(c != null)
+		try {
+			FileInputStream cafeterias = new FileInputStream(path + "Cafeterias.txt");
+			ObjectInputStream CafeteriaRead = new ObjectInputStream(cafeterias);
+			coffee = (Cafeteria)CafeteriaRead.readObject();
+			CafeteriaRead.close();		
+		} catch (Exception ex)
 		{
-			//Guardar en memoria
-			c = (Cafeteria)CafeteriaRead.readObject();
+			System.err.println(ex.getMessage());
 		}
-		CafeteriaRead.close();
 	}
 	
-	public void LoadOrders()
+	public void LoadOrders(Cafeteria coffee)
 	{
-		FileInputStream orders = new FileInputStream("Orders.txt");
-		ObjectInputStream OrderRead = new ObjectInputStream(orders);
-		Order o = (Order)OrderRead.readObject();
-		while(p != null)
+		try {
+			FileInputStream orders = new FileInputStream(path + "Orders.txt");
+			ObjectInputStream OrderRead = new ObjectInputStream(orders);
+			Order o = (Order)OrderRead.readObject();
+			while(o != null)
+			{
+				coffee.registerOrder(o);
+				//Guardar en memoria
+				o = (OrderImpl)OrderRead.readObject();
+			}
+			OrderRead.close();
+		} catch (Exception ex)
 		{
-			//Guardar en memoria
-			o = (Order)OrderRead.readObject();
+			System.err.println(ex.getMessage());
 		}
-		OrderRead.close();
 	}
 }

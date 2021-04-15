@@ -79,11 +79,14 @@ public class Screen
                     	
                     DailyRegisterScreen(coffee, date);
                     break;
-                    
+                case 'q':
+                case 'Q':
+                	break;
                 default:
                         System.out.println("\tIntroduzca una opcion valida.");
             }
         } while (option != 'q' && option != 'Q');
+        System.out.println("Saliendo del menu... Hasta luego!");
         keyboard.close();
     }
 	
