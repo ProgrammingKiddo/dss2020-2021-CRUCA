@@ -29,16 +29,18 @@ public class OrderService
 	 * @param quantity 		The quantity of product to add to the order.
 	 * @throws InsufficientStockException	If there isn't enough stock of the product.
 	 */
-	public void addProductToOrder(Cafeteria coffe, OrderImpl ord, int productId, int quantity)
+	public void addProductToOrder(Cafeteria coffe, Order ord, int productId, int quantity)
 			throws InsufficientStockException
 	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
 		Product prod = ProductCatalog.Instance().getProduct(productId);
+		
 		if(coffe.getAvailableProducts().contains(prod))
 		{
 			if(quantity > 0 && coffe.getProductQuantity(prod) >= quantity)
 			{
 				coffe.removeStock(prod, quantity);
-				ord.addProduct(productId, quantity);
+				orderDownCast.addProduct(productId, quantity);
 			}
 			else
 			{
@@ -55,15 +57,16 @@ public class OrderService
 	 * @throws InsufficientStockException			If the quantity to remove is bigger than the quantity which is stock in the order
 	 * @throws ProductNotContainedInOrderException	If the product isn't in the basket
 	 */
-	public void removeProductFromOrder(OrderImpl ord, int productId, int quantity)
+	public void removeProductFromOrder(Order ord, int productId, int quantity)
 			throws InsufficientStockException, ProductNotContainedInOrderException
 	{
-		int quantbasket = ord.checkProductQuantity(productId);
-		if(ord.containsProduct(productId))
+		OrderImpl orderDownCast = (OrderImpl) ord;
+		int quantbasket = orderDownCast.checkProductQuantity(productId);
+		if(orderDownCast.containsProduct(productId))
 		{
 			if(quantity > 0 && quantity <= quantbasket)
 			{
-				ord.removeProduct(productId, quantity);
+				orderDownCast.removeProduct(productId, quantity);
 				
 			}
 			else
@@ -85,13 +88,14 @@ public class OrderService
 	 * @param ord	The order to change the status of.
 	 * @throws UnreachableStatusException	If the conditions to set the <code>IN_KITCHEN</code> status aren't met.
 	 */
-	public void OrderStatus_InKitchen(OrderImpl ord)
+	public void OrderStatus_InKitchen(Order ord)
 			throws UnreachableStatusException
 	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
 		//There must be products in the basket and the order be in the open state
 		if(!ord.getProducts().isEmpty() && ord.getStatus() == OrderStatus.OPEN)
 		{
-			ord.setStatus(OrderStatus.IN_KITCHEN);
+			orderDownCast.setStatus(OrderStatus.IN_KITCHEN);
 		}
 		else
 		{
@@ -105,13 +109,14 @@ public class OrderService
 	 * @param ord	The order to change the status of.
 	 * @throws UnreachableStatusException	If the conditions to set the <code>DELIVERED</code> status aren't met.
 	 */
-	public void OrderStatus_Delivered(OrderImpl ord)
+	public void OrderStatus_Delivered(Order ord)
 			throws UnreachableStatusException
 	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
 		//The state must be in the kitchen to be delivered
-		if(ord.getStatus() == OrderStatus.IN_KITCHEN)
+		if(orderDownCast.getStatus() == OrderStatus.IN_KITCHEN)
 		{
-			ord.setStatus(OrderStatus.DELIVERED);
+			orderDownCast.setStatus(OrderStatus.DELIVERED);
 		}
 		else
 		{
@@ -124,13 +129,14 @@ public class OrderService
 	 * @param ord	The order to change the status of.
 	 * @throws UnreachableStatusException	If the conditions to set the <code>PAYED</code> status aren't met.
 	 */
-	public void OrderStatus_Payed(OrderImpl ord)
+	public void OrderStatus_Payed(Order ord)
 			throws UnreachableStatusException
 	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
 		//The state must be delivered or in the kitchen in order to be paid
-		if(ord.getStatus() == OrderStatus.IN_KITCHEN || ord.getStatus() == OrderStatus.DELIVERED)
+		if(orderDownCast.getStatus() == OrderStatus.IN_KITCHEN || ord.getStatus() == OrderStatus.DELIVERED)
 		{
-			ord.setStatus(OrderStatus.PAYED);
+			orderDownCast.setStatus(OrderStatus.PAYED);
 		}
 		else
 		{
@@ -144,13 +150,14 @@ public class OrderService
 	 * @param ord	The order to change the status of.
 	 * @throws UnreachableStatusException	If the conditions to set the <code>FINISHED</code> status aren't met.
 	 */
-	public void OrderStatus_Finished(OrderImpl ord)
+	public void OrderStatus_Finished(Order ord)
 			throws UnreachableStatusException
 	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
 		// The state must be charged in order to be finalized
-		if(ord.getStatus() == OrderStatus.PAYED)
+		if(orderDownCast.getStatus() == OrderStatus.PAYED)
 		{
-			ord.setStatus(OrderStatus.FINISHED);
+			orderDownCast.setStatus(OrderStatus.FINISHED);
 		}
 		else
 		{
