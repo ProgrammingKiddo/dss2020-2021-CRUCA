@@ -1,7 +1,7 @@
 package coreapi;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +37,7 @@ public interface Order {
 	 * @return	Returns the day of creation of the order
 	 * @see LocalDate
 	 */
-	public LocalDate getDate();
+	public LocalDateTime getDate();
 	/**
 	 * Returns the constant corresponding to the current state of the order,
 	 * as determined by the Enum <code>OrderStatus</code>.

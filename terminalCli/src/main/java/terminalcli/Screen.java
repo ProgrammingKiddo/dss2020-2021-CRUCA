@@ -13,7 +13,10 @@ import coreapi.OrderFactory;
 import java.io.*;
 import java.util.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.lang.*;
+import java.math.BigDecimal;
 
 public class Screen
 {
@@ -59,7 +62,8 @@ public class Screen
                     	d = keyboard.nextInt();
                     	m = keyboard.nextInt();
                     	y = keyboard.nextInt();
-                    	LocalDate date = LocalDate.of(y,m,d);
+                    	// We create a complete timestamp from the introduced date and the current time.
+                    	LocalDateTime date = LocalDateTime.of(LocalDate.of(y,m,d), LocalTime.now());
                     	
                     	DailyRegister_screen(coffe, date);
                          break;
@@ -313,7 +317,7 @@ public class Screen
 	public void DailyRegister_screen(Cafeteria coffe, LocalDate date)
 	{
 	    char op;
-	    int n_orders = OrderService.getNumberOfOrdersDailyRegister(coffe, date);
+	    int n_orders = OrderService.getNumberOfDailyOrders(coffe, date);
 	    BigDecimal daily = getDailyRegister(coffe,date);
 	    Scanner keyboard = new Scanner(System.in);
 	    

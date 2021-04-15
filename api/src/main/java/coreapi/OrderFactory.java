@@ -1,7 +1,7 @@
 package coreapi;
 
-import java.util.Date;
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 /**
  * The static factory to use in the creation of new order objects.
  * @author Borja
@@ -38,7 +38,7 @@ public class OrderFactory
 	 */
 	public static Order createOrder(Cafeteria assignedCafeteria)
 	{
-		return createOrder(assignedCafeteria, LocalDate.now());
+		return createOrder(assignedCafeteria, LocalDateTime.now());
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class OrderFactory
 	 * @see Order
 	 * @see Date
 	 */
-	public static Order createOrder(Cafeteria assignedCafeteria, LocalDate creationDate)
+	public static Order createOrder(Cafeteria assignedCafeteria, LocalDateTime creationDate)
 	{
 		OrderImpl createdOrder = new OrderImpl(orderCount++, creationDate);
 		assignedCafeteria.registerOrder(createdOrder);

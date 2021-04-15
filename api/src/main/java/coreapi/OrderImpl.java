@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.LinkedHashMap;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Implementation of the <code>Order</code> interface.
@@ -19,7 +19,7 @@ public class OrderImpl implements Order, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private final int id;
-	private LocalDate creationDate;
+	private LocalDateTime creationDate;
 	// Map cannot take primitive types as the type of its mapped values
 	private LinkedHashMap<Product, Integer> basket;
 	private OrderStatus orderStatus;
@@ -29,7 +29,7 @@ public class OrderImpl implements Order, Serializable {
 	 * @param assignedId	The identifier assigned to this order.
 	 * @param creationDate	The timestamp representing the day this order was created.
 	 */
-	OrderImpl(int assignedId, LocalDate assignedDate)
+	OrderImpl(int assignedId, LocalDateTime assignedDate)
 	{
 		id = assignedId;
 		creationDate = assignedDate;
@@ -48,7 +48,7 @@ public class OrderImpl implements Order, Serializable {
 	 * @return	Returns the day of creation of the order
 	 * @see LocalDate
 	 */
-	public LocalDate getDate() { return creationDate; }
+	public LocalDateTime getDate() { return creationDate; }
 	/**
 	 * Returns the constant corresponding to the current state of the order,
 	 * as determined by the Enum <code>OrderStatus</code>.

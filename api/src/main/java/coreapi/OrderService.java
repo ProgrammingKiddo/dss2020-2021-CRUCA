@@ -169,10 +169,9 @@ public class OrderService
 	{
 		BigDecimal dailyRegister = BigDecimal.ZERO;
 		
-		//We go through the order history of the establishment
 		for(Order ord: coffe.getOrders())
 		{
-			if(ord.getDate() == date)
+			if(ord.getDate().toLocalDate().equals(date))
 			{
 				dailyRegister = dailyRegister.add(ord.totalCost());
 			}
@@ -183,23 +182,23 @@ public class OrderService
 	
 	/**
 	 * Returns the cash register from the indicated cafeteria on the designated day.
-	 * @param coffe		The cafeteria from which to calculate the cash register.
+	 * @param coffee		The cafeteria from which to calculate the cash register.
 	 * @param date		The day to which calculate the cash register.
 	 * @return 			Returns the number of orders that have been on the specified date.
 	 */
-	public BigDecimal getNumberOfOrdersDailyRegister(Cafeteria coffe, LocalDate date)
+	public int getNumberOfDailyOrders(Cafeteria coffee, LocalDate date)
 	{
-		int n_orders = 0;
+		int numberOfOrders = 0;
 		
 		//We go through the order history of the establishment
-		for(Order ord: coffe.getOrders())
+		for(Order ord: coffee.getOrders())
 		{
-			if(ord.getDate() == date)
+			if(ord.getDate().toLocalDate().equals(date))
 			{
-				dailyRegister++;
+				numberOfOrders++;
 			}
 		}
-		return dailyRegister;
+		return numberOfOrders;
 	}
 	
 }
