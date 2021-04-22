@@ -33,6 +33,7 @@ public class Cafeteria implements Serializable
 		orderHistory = new ArrayList<Order>();
 		id = assignedId;
 		name = givenName;
+		types = new ArrayList<String>();
 	}
 	/**
 	 * Returns the unique id assigned by the info database to this specific cafeteria.
@@ -136,7 +137,7 @@ public class Cafeteria implements Serializable
 		}
 		else
 		{
-			DeleteType(prod.getType());
+			//DeleteType(prod.getType());
 			Integer newQuantity = Integer.valueOf(productStock.get(prod).intValue() - quantity);
 			productStock.replace(prod, newQuantity);
 		}
@@ -184,19 +185,8 @@ public class Cafeteria implements Serializable
 	 * 
 	 * @param String which contains the type to delete.
 	 */
-	public void DeleteType(String t)
+	public void DeleteType(String type)
 	{
-		boolean find = false;
-		for(Map.Entry<Product, Integer> entry : productStock.entrySet())
-		{
-			if(entry.getValue().getType() == t)
-			{
-				find = true;
-			}
-		}
-		if(find == false)
-		{
-			types.remove(t);
-		}
+		types.remove(type);
 	}
 }

@@ -1,8 +1,8 @@
 package coreapi;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +15,9 @@ import java.util.Map;
  * @author Borja
  * @version 0.2
  */
-public class Menu implements Product {
+public class Menu implements Product, Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private LinkedHashMap<Product, Integer> productsMenu;
 	private int id;
 	private String name;
@@ -30,10 +31,11 @@ public class Menu implements Product {
 	 * @param assignedId	The numerical identifier to assign to this menu.
 	 * @param assignedName	The name to assign to this menu.
 	 */
-	public Menu(int assignedId, String assignedName)
+	public Menu(int assignedId, String assignedName, String assignedType)
 	{
 		id = assignedId;
 		name = assignedName;
+		type = assignedType;
 		productsMenu = new LinkedHashMap<Product, Integer>();
 	}
 	

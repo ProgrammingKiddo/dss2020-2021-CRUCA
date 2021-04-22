@@ -1,6 +1,8 @@
 package coreapi;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class works as a placeholder for product data representation,
@@ -11,7 +13,7 @@ import java.math.BigDecimal;
  */
 public class ProductCatalog {
 
-	private static Product[] products = new Product[10];
+	private static List<Product> products;
 	private static ProductCatalog uniqueInstance;
 	
 	/**
@@ -33,6 +35,8 @@ public class ProductCatalog {
 	 */
 	private ProductCatalog()
 	{
+		products = new ArrayList<Product>();
+		/*
 		products[0] = new ProductImpl(0, new BigDecimal(1.2), "Patatas fritas", "Comida");
 		products[1] = new ProductImpl(1, new BigDecimal(1.7), "Bacon-queso-huevo","Menu");
 		products[2] = new ProductImpl(2, new BigDecimal(0.9), "Café con leche","Bebida");
@@ -43,6 +47,7 @@ public class ProductCatalog {
 		products[7] = new ProductImpl(7, new BigDecimal(0.7), "Donut blanco","Comida");
 		products[8] = new ProductImpl(8, new BigDecimal(0.75), "Donut de chocolate","Comida");
 		products[9] = new ProductImpl(9, new BigDecimal(1.4), "Sándwich de roquefort","Menu");
+		*/
 	}
 	/**
 	 * Returns the corresponding reference to a certain product, determined by its identifier.
@@ -51,13 +56,26 @@ public class ProductCatalog {
 	 */
 	public Product getProduct(int id)
 	{
-		if (id <= 9 && id >= 0)
+		boolean found = false;
+		int i = 0;
+		Product prod = null;
+		
+		while (i < products.size() && found == false)
 		{
-			return products[id];
+			if (products.get(i).getId() == id)
+			{
+				found = true;
+				prod = products.get(i);
+			}
+			else {
+				i++;
+			}
 		}
-		else
-		{
-			return null;
-		}
+		return prod;
+	}
+	
+	public void addProduct(Product prod)
+	{
+		products.add(prod);
 	}
 }
