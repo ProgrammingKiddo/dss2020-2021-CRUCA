@@ -18,6 +18,7 @@ public class Cafeteria implements Serializable
 	private String name;
 	private int id;
 	private List<String> types;
+	private String email;
 	
 	/**
 	 * Creates a new instance of a cafeteria, with its own name and an identifier to
@@ -27,13 +28,14 @@ public class Cafeteria implements Serializable
 	 * @param assignedId	the identifier assigned to this cafeteria.
 	 * @param givenName		the name assigned to this cafeteria.
 	 */
-	public Cafeteria(int assignedId, String givenName)
+	public Cafeteria(int assignedId, String givenName, String Email)
 	{
 		productStock = new LinkedHashMap<Product, Integer>();
 		orderHistory = new ArrayList<Order>();
 		id = assignedId;
 		name = givenName;
 		types = new ArrayList<String>();
+		email = Email;
 	}
 	/**
 	 * Returns the unique id assigned by the info database to this specific cafeteria.
@@ -50,6 +52,15 @@ public class Cafeteria implements Serializable
 	public String getName()
 	{
 		return name;
+	}
+	
+	/**
+	 * Returns the email assigned by the info database to this specific cafeteria.
+	 * @return Returns the email of the cafeteria.
+	 */
+	public String getEmail()
+	{
+		return email;
 	}
 	/**
 	 * Returns the list of available products in this cafeteria.
