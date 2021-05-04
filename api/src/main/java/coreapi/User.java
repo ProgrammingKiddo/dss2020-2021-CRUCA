@@ -24,7 +24,7 @@ public class User, Serializable {
 	private string name;
 	private string surname;
 	
-	public User(string name, string surname, string n_card, LocalDate birth_date)
+	public User(string name, string surname, String n_card, LocalDate birth_date)
 	{
 		this.BirthDate = birth_date;
 		this.n_card = Interger.parseUnsignedInt(n_card);
@@ -36,9 +36,19 @@ public class User, Serializable {
 	
 	public string get_name(){ return name; }
 	
-	public int get_age(){ return age; } //Cambiar
+	public int get_age(){
+		
+		LocalDate result;
+		return age; 
+	} //Cambiar a diferencia entre fechas
 	
 	public string get_surname(){ return surname; }
 	
-	//public set_name
+	public void set_name(String Name) {this.name = Name;}
+	
+	public void set_surname(String Surname) {this.surname = Surname;}
+	
+	public void set_n_card(String N_card) {this.n_card = Interger.parseUnsignedInt(N_card);}
+	
+	public void set_BirthDate(LocalDate newDate) {this.BirthDate = newDate;}
 }
