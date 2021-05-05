@@ -5,11 +5,11 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>CRUCA Terminal Client</name>
   
-  <dependencies>
-	 <dependency>
-	    <groupId>es.uca.dss.cruca</groupId>
-	    <artifactId>projectcruca</artifactId>
-	    <version>0.0.1-SNAPSHOT</version>
-	 </dependency>
+  	<dependencies>
+	 	<dependency>
+	    	<groupId>es.uca.dss.cruca</groupId>
+	    	<artifactId>projectcruca</artifactId>
+	    	<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

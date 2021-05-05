@@ -1,0 +1,13 @@
+coreapi\ProductNotContainedInOrderException.class
+coreapi\Product.class
+coreapi\ProductCatalog.class
+coreapi\InsufficientStockException.class
+coreapi\Cafeteria.class
+coreapi\Order.class
+coreapi\ProductImpl.class
+coreapi\OrderStatus.class
+coreapi\OrderFactory.class
+coreapi\OrderImpl.class
+coreapi\UnreachableStatusException.class
+coreapi\Menu.class
+coreapi\OrderService.class

@@ -1,19 +1,11 @@
 package terminalcli;
 
-import coreapi.Product;
-import coreapi.ProductNotContainedInOrderException;
-import coreapi.UnreachableStatusException;
+import java.util.Scanner;
+
 import coreapi.Cafeteria;
-import coreapi.InsufficientStockException;
 import coreapi.Order;
 import coreapi.OrderService;
-import coreapi.OrderFactory;
-
-import java.util.*;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.math.BigDecimal;
+import coreapi.UnreachableStatusException;
 
 
 /**
