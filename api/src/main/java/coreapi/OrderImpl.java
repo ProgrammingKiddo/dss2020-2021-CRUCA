@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Implementation of the <code>Order</code> interface.
@@ -20,6 +21,7 @@ public class OrderImpl implements Order, Serializable {
 	private static final long serialVersionUID = 1L;
 	private final int id;
 	private LocalDateTime creationDate;
+	private LocalDateTime programmingDate;
 	// Map cannot take primitive types as the type of its mapped values
 	private LinkedHashMap<Product, Integer> basket;
 	private OrderStatus orderStatus;
@@ -33,6 +35,7 @@ public class OrderImpl implements Order, Serializable {
 	{
 		id = assignedId;
 		creationDate = assignedDate;
+		programmingDate = LocalTime.now();
 		basket = new LinkedHashMap<Product, Integer>();
 		orderStatus = OrderStatus.OPEN;
 	}
