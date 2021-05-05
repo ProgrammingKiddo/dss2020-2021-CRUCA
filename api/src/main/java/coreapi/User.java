@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.*;
 
 /**
  * Implementation of the <code>Product</code> interface representing a menu comprised of multiple products.
@@ -14,6 +15,7 @@ import java.util.Map;
  * Users of the API shouldn't use this class directly.
  * @author Fran
  * @author Borja
+ * @author Maria
  * @version 0.2
  */
 public class User, Serializable {
@@ -23,6 +25,8 @@ public class User, Serializable {
 	private int n_card;
 	private string name;
 	private string surname;
+	//This list stores all the orders that the user has made
+	private List<Order> UserOrderList;
 	
 	public User(string name, string surname, String n_card, LocalDate birth_date)
 	{
@@ -36,13 +40,29 @@ public class User, Serializable {
 	
 	public string get_name(){ return name; }
 	
-	public int get_age(){
+	/**
+	* Calculates and returns the user's age.
+	* @return Returns user's age.
+	*/
+	public Period get_age(){
 		
-		LocalDate result;
-		return age; 
-	} //Cambiar a diferencia entre fechas
+		LocalDate today = LocalDate.now();
+		Period age = today.until(BrithDate);
+		
+		return age.getYears(); 
+	} 
 	
 	public string get_surname(){ return surname; }
+	
+	/**
+	* Returns the list of orders made by the user.
+	* @return Returns the list of orders made by the user.
+	*/
+	public List<Order> get_UserOrderList()
+	{
+		return List.copyOf(UserOrderList);
+	}
+	
 	
 	public void set_name(String Name) {this.name = Name;}
 	
@@ -51,4 +71,6 @@ public class User, Serializable {
 	public void set_n_card(String N_card) {this.n_card = Interger.parseUnsignedInt(N_card);}
 	
 	public void set_BirthDate(LocalDate newDate) {this.BirthDate = newDate;}
+	
+
 }
