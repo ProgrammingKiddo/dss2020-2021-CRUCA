@@ -23,12 +23,12 @@ public class User, Serializable {
 	private static final long serialVersionUID = 1L;
 	private LocalDate BirthDate;
 	private int n_card;
-	private string name;
-	private string surname;
+	private String name;
+	private String surname;
 	//This list stores all the orders that the user has made
 	private List<Order> UserOrderList;
 	
-	public User(string name, string surname, String n_card, LocalDate birth_date)
+	public User(String name, String surname, String n_card, LocalDate birth_date)
 	{
 		this.BirthDate = birth_date;
 		this.n_card = Interger.parseUnsignedInt(n_card);
@@ -38,7 +38,7 @@ public class User, Serializable {
 	
 	public int get_n_card(){ return n_card; }
 	
-	public string get_name(){ return name; }
+	public String get_name(){ return name; }
 	
 	/**
 	* Calculates and returns the user's age.
@@ -52,7 +52,7 @@ public class User, Serializable {
 		return age.getYears(); 
 	} 
 	
-	public string get_surname(){ return surname; }
+	public String get_surname(){ return surname; }
 	
 	/**
 	* Returns the list of orders made by the user.
