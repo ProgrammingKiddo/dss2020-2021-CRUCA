@@ -8,7 +8,7 @@ public class OrderController {
 
 	private final OrderService OService;
 	
-	Orderhttp(OrderService os){
+	public Orderhttp(OrderService os){
 		this.OService = os;
 	}
 	
