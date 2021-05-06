@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  * @author Fran
  * @version 0.2
  */
-
+@Component
 public interface Product {
 	
 	/**

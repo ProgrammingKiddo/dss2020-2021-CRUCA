@@ -19,6 +19,7 @@ import java.time.*;
  * @author Maria
  * @version 0.2
  */
+@Component
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

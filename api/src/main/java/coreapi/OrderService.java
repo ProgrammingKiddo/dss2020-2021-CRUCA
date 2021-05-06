@@ -13,6 +13,7 @@ import java.time.LocalDate;
  *  @author Borja
  *  @version 0.2
  */
+@Service
 public class OrderService
 {
 	//Create a new object of OrderService

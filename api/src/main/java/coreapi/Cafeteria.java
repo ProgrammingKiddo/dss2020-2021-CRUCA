@@ -10,6 +10,7 @@ import java.util.List;
  * @author Borja
  * @version 0.1
  */
+@Repository
 public class Cafeteria implements Serializable
 {
 	private static final long serialVersionUID = 1L;
