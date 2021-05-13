@@ -68,4 +68,19 @@ public class Load
 			System.err.println(ex.getMessage());
 		}
 	}
+	
+	public User LoadUser(int dni)
+    {
+        try 
+        {
+            FileInputStream currentUser = new FileInputStream(path + "user" + dni + ".txt");
+            ObjectInputStream UserRead = new ObjectInputStream(currentUser);
+            User u = (User)UserRead.readObject();
+            UserRead.close();
+            return u;
+        } catch (Exception ex)
+        {
+            System.err.println(ex.getMessage());
+        }
+    }
 }
