@@ -19,11 +19,8 @@ public class OrderController {
 
 	private final OrderService OService;
 	
-<<<<<<< Updated upstream
-	public Orderhttp(OrderService os){
-=======
-	OrderController(OrderService os){
->>>>>>> Stashed changes
+	OrderController(OrderService os)
+	{
 		this.OService = os;
 	}
 	
