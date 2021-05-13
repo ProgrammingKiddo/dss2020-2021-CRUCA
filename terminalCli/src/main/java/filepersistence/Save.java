@@ -20,19 +20,13 @@ public class Save
 		this.path = path;
 	}
 	
-	public void SaveProducts()
+	public void SaveProduct(Product prod)
 	{
-		try {
-			FileOutputStream products = new FileOutputStream(path + "Products.txt");
+		try 
+		{
+			FileOutputStream products = new FileOutputStream(path + "Product" + prod.getId() + ".txt");
 			ObjectOutputStream ProductWrite = new ObjectOutputStream(products);
-			int i = 0;
-			Product p = ProductCatalog.Instance().getProduct(i);
-			while (p != null)
-			{
-				ProductWrite.writeObject(p);
-				i++;
-				p = ProductCatalog.Instance().getProduct(i);
-			}
+			ProductWrite.writeObject(prod);
 			ProductWrite.close();
 		} catch (Exception ex)
 		{
@@ -43,7 +37,7 @@ public class Save
 	public void SaveCafeteria(Cafeteria coffee)
 	{
 		try {
-			FileOutputStream cafeterias = new FileOutputStream(path + "Cafeterias.txt");
+			FileOutputStream cafeterias = new FileOutputStream(path + "Cafeteria" + coffee.getId() + ".txt");
 			ObjectOutputStream CafeteriaWrite = new ObjectOutputStream(cafeterias);
 			CafeteriaWrite.writeObject(coffee);
 			CafeteriaWrite.close();			
@@ -53,19 +47,12 @@ public class Save
 		}
 	}
 	
-	public void SaveOrders(Cafeteria coffee)
+	public void SaveOrder(Order ord)
 	{
 		try {
-			FileOutputStream orders = new FileOutputStream(path + "Orders.txt");
+			FileOutputStream orders = new FileOutputStream(path + "Order" + ord.getId() + ".txt");
 			ObjectOutputStream OrderWrite = new ObjectOutputStream(orders);
-
-			List<Order> coffeeOrders = coffee.getOrders();
-			Iterator<Order> orderIterator = coffeeOrders.iterator();
-
-			while (orderIterator.hasNext())
-			{
-				OrderWrite.writeObject(orderIterator.next());
-			}
+			OrderWrite.writeObject(ord);
 			OrderWrite.close();
 		} catch (Exception ex)
 		{
