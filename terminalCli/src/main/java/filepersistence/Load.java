@@ -18,51 +18,44 @@ public class Load
 		this.path = path;
 	}
 	
-	public void LoadProducts()
+	public Product LoadProduct(int id)
 	{
-		try {
-			FileInputStream products = new FileInputStream(path + "Products.txt");
+		try 
+		{
+			FileInputStream products = new FileInputStream(path + "Product" + id + ".txt");
 			ObjectInputStream ProductRead = new ObjectInputStream(products);
-			Product p = (Product)ProductRead.readObject();
-			while(p != null)
-			{
-				//Guardar en memoria
-				ProductCatalog.Instance().addProduct(p);
-				p = (ProductImpl)ProductRead.readObject();
-			}
-			ProductRead.close();			
+			Product p = (ProductImpl)ProductRead.readObject();
+			ProductRead.close();
+			return p;	
 		} catch (Exception ex)
 		{
 			System.err.println(ex.getMessage());
 		}
 	}
 	
-	public void LoadCafeteria(Cafeteria coffee)
+	public Cafeteria LoadCafeteria(int id)
 	{
-		try {
-			FileInputStream cafeterias = new FileInputStream(path + "Cafeterias.txt");
+		try 
+		{
+			FileInputStream cafeterias = new FileInputStream(path + "Cafeteria" + id + ".txt");
 			ObjectInputStream CafeteriaRead = new ObjectInputStream(cafeterias);
-			coffee = (Cafeteria)CafeteriaRead.readObject();
+			Cafeteria coffee = (Cafeteria)CafeteriaRead.readObject();
 			CafeteriaRead.close();		
+			return coffee;
 		} catch (Exception ex)
 		{
 			System.err.println(ex.getMessage());
 		}
 	}
 	
-	public void LoadOrders(Cafeteria coffee)
+	public Order LoadOrder(int id)
 	{
 		try {
-			FileInputStream orders = new FileInputStream(path + "Orders.txt");
+			FileInputStream orders = new FileInputStream(path + "Order" + id + ".txt");
 			ObjectInputStream OrderRead = new ObjectInputStream(orders);
-			Order o = (Order)OrderRead.readObject();
-			while(o != null)
-			{
-				coffee.registerOrder(o);
-				//Guardar en memoria
-				o = (OrderImpl)OrderRead.readObject();
-			}
+			Order o = (OrderImpl)OrderRead.readObject();
 			OrderRead.close();
+			return o;
 		} catch (Exception ex)
 		{
 			System.err.println(ex.getMessage());
