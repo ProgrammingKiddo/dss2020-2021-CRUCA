@@ -72,4 +72,19 @@ public class Save
 			System.err.println(ex.getMessage());
 		}
 	}
+	
+	public void SaveUser(User user)
+	{
+		try {
+			FileOutputStream currentUser = new FileOutputStream(path + "user" + user.getDni() + ".txt");
+			ObjectOutputStream UserWrite = new ObjectOutputStream(currentUser);
+			UserWrite.writeObject(user);
+			UserWrite.close();
+		} catch (Exception ex)
+		{
+			System.err.println(ex.getMessage());
+		}
+	}
+	
+	
 }
