@@ -20,13 +20,16 @@ import java.time.*;
  * @version 0.2
  */
 @Component
-public class User implements Serializable {
+public class User implements Serializable 
+{
 	
 	private static final long serialVersionUID = 1L;
+	private int dni;
 	private LocalDate BirthDate;
 	private int n_card;
 	private String name;
 	private String surname;
+	
 <<<<<<< Updated upstream
 	//This list stores all the orders that the user has made
 	private List<Order> UserOrderList;
@@ -39,39 +42,34 @@ public class User implements Serializable {
 		this.n_card = Integer.parseUnsignedInt(n_card);
 		this.name = name;
 		this.surname = surname;
+		this.dni = dni;
 	}
+
+	public int getDni() {return dni; }
 	
-	public int get_n_card(){ return n_card; }
+	public int getNcard(){ return n_card; }
 	
-	public String get_name(){ return name; }
+	public String getName(){ return name; }
 	
 <<<<<<< Updated upstream
-	/**
-	* Calculates and returns the user's age.
-	* @return Returns user's age.
-	*/
-	public Period get_age(){
-		
-		LocalDate today = LocalDate.now();
-		Period age = today.until(BrithDate);
-		
-		return age.getYears(); 
-	} 
 	
-	public String get_surname(){ return surname; }
+	public String getSurname(){ return surname; }
 	
 	/**
 	* Returns the list of orders made by the user.
 	* @return Returns the list of orders made by the user.
 	*/
-	public List<Order> get_UserOrderList()
+	public List<Order> getUserOrderList()
 	{
 		return List.copyOf(UserOrderList);
 	}
 	
 =======
-	
-	public int get_age()
+	/**
+	* Calculates and returns the user's age.
+	* @return Returns user's age.
+	*/
+	public int getAge()
 	{
 		LocalDate today = LocalDate.now();
 		int age = today.getYear() - BirthDate.getYear();
@@ -89,18 +87,19 @@ public class User implements Serializable {
 			}
 		}
 		return age; 
-	} //Cambiar a diferencia entre fechas
+	} 
 	
-	public String get_surname(){ return surname; }
+	public String getSurname(){ return surname; }
+	
 >>>>>>> Stashed changes
 	
-	public void set_name(String Name) {this.name = Name;}
+	public void setName(String Name) {this.name = Name;}
 	
-	public void set_surname(String Surname) {this.surname = Surname;}
+	public void setSurname(String Surname) {this.surname = Surname;}
 	
-	public void set_n_card(String N_card) {this.n_card = Integer.parseUnsignedInt(N_card);}
+	public void setNcard(String N_card) {this.n_card = Integer.parseUnsignedInt(N_card);}
 	
-	public void set_BirthDate(LocalDate newDate) {this.BirthDate = newDate;}
+	public void setBirthDate(LocalDate newDate) {this.BirthDate = newDate;}
 	
 
 }
