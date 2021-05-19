@@ -33,7 +33,7 @@ public class User implements Serializable
 	//This list stores all the orders that the user has made
 	private List<Order> UserOrderList;
 	
-	public User(String name, String surname, String n_card, LocalDate birth_date)
+	public User(String name, String surname, String n_card, LocalDate birth_date, int dni)
 	{
 		this.BirthDate = birth_date;
 		this.n_card = Integer.parseUnsignedInt(n_card);
