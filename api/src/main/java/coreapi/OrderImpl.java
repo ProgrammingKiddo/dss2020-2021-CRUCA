@@ -1,6 +1,7 @@
 package coreapi;
 
 import java.io.Serializable;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import filepersistence.*;
 
 /**
  * Implementation of the <code>Order</code> interface.
@@ -121,7 +123,7 @@ public class OrderImpl implements Order, Serializable {
 	 */
 	public boolean containsProduct(int id)
 	{
-		return basket.containsKey(ProductCatalog.Instance().getProduct(id));
+		return basket.containsKey(Load.LoadProduct(id));
 	}
 
 	/**
@@ -136,7 +138,7 @@ public class OrderImpl implements Order, Serializable {
 		
 		if (this.containsProduct(id))
 		{
-			quantity = basket.get(ProductCatalog.Instance().getProduct(id)).intValue();
+			quantity = basket.get(Load.LoadProduct(id)).intValue();
 		}
 		else
 		{
@@ -161,7 +163,7 @@ public class OrderImpl implements Order, Serializable {
 	{
 		if (quantity > 0)
 		{
-			Product prod = ProductCatalog.Instance().getProduct(newProductId);
+			Product prod = Load.LoadProduct(newProductId);
 			if (this.containsProduct(newProductId))
 			{
 				int actualQuantity = basket.get(prod).intValue();
@@ -181,7 +183,7 @@ public class OrderImpl implements Order, Serializable {
 	 */
 	public void removeProduct(int productId)
 	{
-		basket.remove(ProductCatalog.Instance().getProduct(productId));
+		basket.remove(Load.LoadProduct(productId));
 	}
 	/**
 	 * Removes a certain amount of units of the product determined by the id from this order.
@@ -195,7 +197,7 @@ public class OrderImpl implements Order, Serializable {
 	{
 		if (quantity > 0)
 		{
-			Product prod = ProductCatalog.Instance().getProduct(productId);
+			Product prod = Load.LoadProduct(productId);
 			if (basket.get(prod).intValue() <= quantity)
 			{
 				this.removeProduct(productId);
