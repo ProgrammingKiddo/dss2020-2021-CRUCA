@@ -34,7 +34,7 @@ public class OrderService
 			throws InsufficientStockException
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
-		Product prod = ProductCatalog.Instance().getProduct(productId);
+		Product prod = Load.LoadProduct(productId);
 		
 		if(coffe.getAvailableProducts().contains(prod))
 		{
@@ -42,6 +42,8 @@ public class OrderService
 			{
 				coffe.removeStock(prod, quantity);
 				orderDownCast.addProduct(productId, quantity);
+				Save.SaveCafeteria(coffe);
+				Save.SaveOrder(orderDownCast);
 			}
 			else
 			{
@@ -55,10 +57,11 @@ public class OrderService
 	 * @param ord 			The order to remove the product from.
 	 * @param productId		The id of the product to remove from the order.
 	 * @param quantity		The quantity of product to remove from the order.
+	 * @param coffe			The coffee which restock the product.
 	 * @throws InsufficientStockException			If the quantity to remove is bigger than the quantity which is stock in the order
 	 * @throws ProductNotContainedInOrderException	If the product isn't in the basket
 	 */
-	public void removeProductFromOrder(Order ord, int productId, int quantity)
+	public void removeProductFromOrder(Cafeteria coffe, Order ord, int productId, int quantity)
 			throws InsufficientStockException, ProductNotContainedInOrderException
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
@@ -68,7 +71,9 @@ public class OrderService
 			if(quantity > 0 && quantity <= quantbasket)
 			{
 				orderDownCast.removeProduct(productId, quantity);
-				
+				coffe.addProductStock(Load.LoadProduct(productId), quantity);
+				Save.SaveCafeteria(coffe);
+				Save.SaveOrder(orderDownCast);
 			}
 			else
 			{
@@ -97,6 +102,7 @@ public class OrderService
 		if(!ord.getProducts().isEmpty() && ord.getStatus() == OrderStatus.OPEN)
 		{
 			orderDownCast.setStatus(OrderStatus.IN_KITCHEN);
+			Save.SaveOrder(orderDownCast);
 		}
 		else
 		{
@@ -118,6 +124,7 @@ public class OrderService
 		if(orderDownCast.getStatus() == OrderStatus.IN_KITCHEN)
 		{
 			orderDownCast.setStatus(OrderStatus.DELIVERED);
+			Save.SaveOrder(orderDownCast);
 		}
 		else
 		{
@@ -138,6 +145,7 @@ public class OrderService
 		if(orderDownCast.getStatus() == OrderStatus.IN_KITCHEN || ord.getStatus() == OrderStatus.DELIVERED)
 		{
 			orderDownCast.setStatus(OrderStatus.PAYED);
+			Save.SaveOrder(orderDownCast);
 		}
 		else
 		{
@@ -159,6 +167,7 @@ public class OrderService
 		if(orderDownCast.getStatus() == OrderStatus.PAYED)
 		{
 			orderDownCast.setStatus(OrderStatus.FINISHED);
+			Save.SaveOrder(orderDownCast);
 		}
 		else
 		{
