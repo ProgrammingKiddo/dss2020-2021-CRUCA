@@ -1,11 +1,6 @@
 package filepersistence;
 
-import coreapi.Product;
-import coreapi.ProductImpl;
-import coreapi.ProductCatalog;
-import coreapi.Cafeteria;
-import coreapi.Order;
-import coreapi.OrderImpl;
+import coreapi.*;
 
 import java.io.*;
 
@@ -20,60 +15,64 @@ public class Load
 	
 	public Product LoadProduct(int id)
 	{
+		Product p = null;
 		try 
 		{
 			FileInputStream products = new FileInputStream(path + "Product" + id + ".txt");
 			ObjectInputStream ProductRead = new ObjectInputStream(products);
-			Product p = (ProductImpl)ProductRead.readObject();
+			p = (ProductImpl)ProductRead.readObject();
 			ProductRead.close();
-			return p;	
 		} catch (Exception ex)
 		{
 			System.err.println(ex.getMessage());
 		}
+		return p;	
 	}
 	
 	public Cafeteria LoadCafeteria(int id)
 	{
+		Cafeteria coffee = null;
 		try 
 		{
 			FileInputStream cafeterias = new FileInputStream(path + "Cafeteria" + id + ".txt");
 			ObjectInputStream CafeteriaRead = new ObjectInputStream(cafeterias);
-			Cafeteria coffee = (Cafeteria)CafeteriaRead.readObject();
+			coffee = (Cafeteria)CafeteriaRead.readObject();
 			CafeteriaRead.close();		
-			return coffee;
 		} catch (Exception ex)
 		{
 			System.err.println(ex.getMessage());
 		}
+		return coffee;
 	}
 	
 	public Order LoadOrder(int id)
 	{
+		Order o = null;
 		try {
 			FileInputStream orders = new FileInputStream(path + "Order" + id + ".txt");
 			ObjectInputStream OrderRead = new ObjectInputStream(orders);
-			Order o = (OrderImpl)OrderRead.readObject();
+			o = (OrderImpl)OrderRead.readObject();
 			OrderRead.close();
-			return o;
 		} catch (Exception ex)
 		{
 			System.err.println(ex.getMessage());
 		}
+		return o;
 	}
 	
 	public User LoadUser(int dni)
     {
+		User u = null;
         try 
         {
             FileInputStream currentUser = new FileInputStream(path + "user" + dni + ".txt");
             ObjectInputStream UserRead = new ObjectInputStream(currentUser);
-            User u = (User)UserRead.readObject();
+            u = (User)UserRead.readObject();
             UserRead.close();
-            return u;
         } catch (Exception ex)
         {
             System.err.println(ex.getMessage());
         }
+        return u;
     }
 }

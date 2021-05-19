@@ -1,9 +1,6 @@
 package filepersistence;
 
-import coreapi.Product;
-import coreapi.Cafeteria;
-import coreapi.Order;
-import coreapi.ProductCatalog;
+import coreapi.*;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
