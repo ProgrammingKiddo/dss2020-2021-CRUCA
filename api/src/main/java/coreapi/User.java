@@ -30,11 +30,8 @@ public class User implements Serializable
 	private String name;
 	private String surname;
 	
-<<<<<<< Updated upstream
 	//This list stores all the orders that the user has made
 	private List<Order> UserOrderList;
-=======
->>>>>>> Stashed changes
 	
 	public User(String name, String surname, String n_card, LocalDate birth_date)
 	{
@@ -51,8 +48,6 @@ public class User implements Serializable
 	
 	public String getName(){ return name; }
 	
-<<<<<<< Updated upstream
-	
 	public String getSurname(){ return surname; }
 	
 	/**
@@ -64,7 +59,6 @@ public class User implements Serializable
 		return List.copyOf(UserOrderList);
 	}
 	
-=======
 	/**
 	* Calculates and returns the user's age.
 	* @return Returns user's age.
@@ -88,10 +82,6 @@ public class User implements Serializable
 		}
 		return age; 
 	} 
-	
-	public String getSurname(){ return surname; }
-	
->>>>>>> Stashed changes
 	
 	public void setName(String Name) {this.name = Name;}
 	
