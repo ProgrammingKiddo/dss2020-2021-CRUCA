@@ -24,5 +24,10 @@ public class UserController
     {
         Save.saveUser(user);
     }
-	
+    
+    @GetMapping("/users/getorders/{dni}")
+    List<Order> getOrders(@PathVariable int dni)
+    {
+    	return User.getUserOrderList(dni);
+    }
 }
