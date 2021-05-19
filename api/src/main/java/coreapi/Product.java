@@ -1,6 +1,7 @@
 package coreapi;
 
 import java.math.BigDecimal;
+import filepersistence.Load;
 
 /**
  * This interface is the handler for the usage of all products.

@@ -90,12 +90,12 @@ public class Menu implements Product, Serializable {
 	 */
 	public int getProductQuantity(int productId)
 	{
-		Product productToCheck = ProductCatalog.Instance().getProduct(productId);
+		Product productToCheck = Load.LoadProduct(productId);
 		int productQuantity;
 		
 		if (productsMenu.containsKey(productToCheck))
 		{
-			productQuantity = productsMenu.get(ProductCatalog.Instance().getProduct(productId)).intValue();			
+			productQuantity = productsMenu.get(productToCheck).intValue();			
 		}
 		else
 		{
