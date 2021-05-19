@@ -1,13 +1,17 @@
 package coreapi;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class representing a Cafeteria with associated orders and its own stock of products.
  * @author Borja
+ * @author María
+ * @author Fran
  * @version 0.1
  */
 @Repository
@@ -127,7 +131,7 @@ public class Cafeteria implements Serializable
 		}
 		else
 		{
-			//TO-DO Maybe implement new exception just for this?
+			throw new InvalidQuantity("You must introduce a quantity greater than 0");
 		}
 	}
 	/**
@@ -149,7 +153,6 @@ public class Cafeteria implements Serializable
 		}
 		else
 		{
-			//DeleteType(prod.getType());
 			Integer newQuantity = Integer.valueOf(productStock.get(prod).intValue() - quantity);
 			productStock.replace(prod, newQuantity);
 		}
@@ -160,7 +163,9 @@ public class Cafeteria implements Serializable
 	 */
 	public void removeProduct(Product prod)
 	{
+		String t = prod.getType();
 		productStock.remove(prod);
+		DeleteType(t);
 	}
 	/**
 	 * Registers an order as pertaining to this cafeteria.
@@ -199,6 +204,17 @@ public class Cafeteria implements Serializable
 	 */
 	public void DeleteType(String type)
 	{
-		types.remove(type);
+		boolean find = false;
+		for (Map.Entry<Product, Integer> entry : productStock.entrySet())
+		{
+			if(entry.getKey().getType() == type)
+			{
+				find = true;
+			}
+		}
+		if(find == false)
+		{
+			types.remove(type);
+		}
 	}
 }
