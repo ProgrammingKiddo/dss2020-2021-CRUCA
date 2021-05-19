@@ -232,4 +232,25 @@ public class OrderImpl implements Order, Serializable {
 			
 		}
 	}
+	
+	public boolean validationStock(Cafeteria coffee)
+	{
+		boolean comprobation = true;
+		List<Product> coffeStock = coffee.getAvailableProducts();
+		for (Map.Entry<Product, Integer> entry : basket.entrySet())
+		{
+			if(coffeStock.contains(entry.getKey()))
+			{
+				if(coffee.getProductQuantity(entry.getKey()) < entry.getValue())
+				{
+					comprobation = false;
+				}
+			}
+			else
+			{
+				comprobation = false;
+			}
+		}
+		return comprobation;
+	}
 }

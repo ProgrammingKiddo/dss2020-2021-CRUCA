@@ -57,9 +57,16 @@ public class OrderController {
 			switch(status)
 			{
 				case IN_KITCHEN:
-					OService.OrderStatus_InKitchen(ord);
-					MailService.sendEmail(coffee.getEmail(),"Pedido " + ord.getId(), "Este pedido está programado"
-							+ " para la fecha: " + ord.getProgrammingDate());
+					if(ord.validationStock(coffee))
+					{	
+						OService.OrderStatus_InKitchen(ord);
+						MailService.sendEmail(coffee.getEmail(),"Order " + ord.getId(), "This order is programming"
+							+ " to the date: " + ord.getProgrammingDate());
+					}
+					else
+					{
+						throw UnreachableStatusException("There isn't enough stock of any of your products");
+					}
 					break;
 				case DELIVERED:
 					OService.OrderStatus_Delivered(ord);
