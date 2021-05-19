@@ -154,7 +154,14 @@ public class Cafeteria implements Serializable
 		else
 		{
 			Integer newQuantity = Integer.valueOf(productStock.get(prod).intValue() - quantity);
-			productStock.replace(prod, newQuantity);
+			if(newQuantity == 0)
+			{
+				productStock.remove(prod);
+			}
+			else
+			{
+				productStock.replace(prod, newQuantity);
+			}
 		}
 	}
 	/**
