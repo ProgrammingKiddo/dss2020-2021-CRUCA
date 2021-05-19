@@ -51,13 +51,15 @@ public class OrderController {
 	}
 	
 	@PatchMapping("/orders/{parameters}")
-	public void changeStatus(@PathVariable("parameters") Order ord, OrderStatus status)
+	public void changeStatus(@PathVariable("parameters") Order ord, OrderStatus status, Cafeteria coffee)
 	{
 		try {
 			switch(status)
 			{
 				case IN_KITCHEN:
 					OService.OrderStatus_InKitchen(ord);
+					MailService.sendEmail(coffee.getEmail(),"Pedido " + ord.getId(), "Este pedido está programado"
+							+ " para la fecha: " + ord.getProgrammingDate());
 					break;
 				case DELIVERED:
 					OService.OrderStatus_Delivered(ord);
