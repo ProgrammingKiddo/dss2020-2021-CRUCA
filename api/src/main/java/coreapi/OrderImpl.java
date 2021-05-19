@@ -209,4 +209,27 @@ public class OrderImpl implements Order, Serializable {
 			}
 		}
 	}
+	
+	public LocalDateTime getProgrammingDate()
+	{
+		return programmingDate;
+	}
+	
+	public void setProgrammingDate(LocalDateTime pDate)
+	{
+		try
+		{
+			if((compareTo(LocalDateTime.now() pDate) <= 0))
+			{
+				programmingDate = pDate;
+			}
+			else
+			{
+				throw invalidDate("Assigned date is not valid");
+			}
+		}catch(invalidDate ex)
+		{
+			
+		}
+	}
 }
