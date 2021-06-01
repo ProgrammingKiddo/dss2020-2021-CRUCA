@@ -29,17 +29,19 @@ public class User implements Serializable
 	private int n_card;
 	private String name;
 	private String surname;
+	private String email;
 	
 	//This list stores all the orders that the user has made
 	private List<Order> UserOrderList;
 	
-	public User(String name, String surname, String n_card, LocalDate birth_date, int dni)
+	public User(String name, String surname, String n_card, LocalDate birth_date, int dni, String email)
 	{
 		this.BirthDate = birth_date;
 		this.n_card = Integer.parseUnsignedInt(n_card);
 		this.name = name;
 		this.surname = surname;
 		this.dni = dni;
+		this.email = email;
 	}
 
 	public int getDni() {return dni; }
@@ -49,6 +51,8 @@ public class User implements Serializable
 	public String getName(){ return name; }
 	
 	public String getSurname(){ return surname; }
+	
+	public String getEmail() { return email; }
 	
 	/**
 	* Returns the list of orders made by the user.
@@ -90,6 +94,8 @@ public class User implements Serializable
 	public void setNcard(String N_card) {this.n_card = Integer.parseUnsignedInt(N_card);}
 	
 	public void setBirthDate(LocalDate newDate) {this.BirthDate = newDate;}
+	
+	public void setEmail(String newEmail) { this.email = newEmail; }
 	
 
 }
