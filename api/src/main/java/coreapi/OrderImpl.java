@@ -16,6 +16,8 @@ import filepersistence.*;
  * 
  * Users of the API shouldn't use this class directly.
  * @author Borja
+ * @author María
+ * @author Fran
  * @version 0.2
  */
 public class OrderImpl implements Order, Serializable {
@@ -27,6 +29,7 @@ public class OrderImpl implements Order, Serializable {
 	// Map cannot take primitive types as the type of its mapped values
 	private LinkedHashMap<Product, Integer> basket;
 	private OrderStatus orderStatus;
+	private String validationCode;
 	
 	/**
 	 * Creates a new <code>OrderImpl</code> instance.
@@ -252,5 +255,10 @@ public class OrderImpl implements Order, Serializable {
 			}
 		}
 		return comprobation;
+	}
+	
+	public void setCode(String vC)
+	{
+		validationCode = vC;
 	}
 }
