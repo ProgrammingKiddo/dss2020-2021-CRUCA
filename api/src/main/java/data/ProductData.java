@@ -1,5 +1,11 @@
 package data;
 
+/**
+ * 
+ * @author Borja
+ *
+ */
+
 import coreapi.Product;
 
 public interface ProductData {
