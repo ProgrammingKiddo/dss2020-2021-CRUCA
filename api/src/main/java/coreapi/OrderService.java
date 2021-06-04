@@ -191,6 +191,7 @@ public class OrderService
 	 * @param coffe		The cafeteria from which to calculate the cash register.
 	 * @param date		The day to which calculate the cash register.
 	 * @return 			Returns the combined cost of all orders made on the specified date.
+	 * @throws invalidDate	If the date is greater than the system date.
 	 */
 	public BigDecimal getTotalDailyRegister(Cafeteria coffe, LocalDate date) throws invalidDate
 	{
@@ -219,6 +220,7 @@ public class OrderService
 	 * @param coffee		The cafeteria from which to calculate the cash register.
 	 * @param date		The day to which calculate the cash register.
 	 * @return 			Returns the number of orders that have been on the specified date.
+	 * @throws invalidDate	If the date is greater than the system date.
 	 */
 	public int getNumberOfDailyOrders(Cafeteria coffee, LocalDate date) throws invalidDate
 	{
