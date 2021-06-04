@@ -3,11 +3,11 @@ package coreapi;
 import java.math.BigDecimal;
 
 /**
- * 
+ * Class that represents the users' university card with its associated card number,
+ * DNI of the user to which it belongs and balance.
  * @author Fran
  * @author Mar�a
  * @author Borja
- *
  */
 
 public class Card {
@@ -16,23 +16,57 @@ public class Card {
 	private int cardNumber;
 	private BigDecimal balance;
 	
+	/**
+	 * Create new Card instances, with the associated card number 
+	 * and DNI of the corresponding user.
+	 * @param dni		DNI of the user to whom the university card belongs.
+	 * @param cNumber	associated card number, this is unique.
+	 */
 	public Card(int dni, int cNumber)
 	{
 		this.userDni = dni;
 		this.cardNumber = cNumber;
 	}
 	
-	public int getUserDni() { return userDni; }
+	/**
+	 * Returns the DNI associated with the user to which a certain card belongs.
+	 * @return	the  DNI associated with the user of this card.
+	 */
+	public int getUserDni() 
+	{ 
+		return userDni; 
+	}
 	
-	public int getCardNumber() { return cardNumber; }
+	/**
+	 * Returns the card number associated with a specific card.
+	 * @return	the card number associated with this card.
+	 */
+	public int getCardNumber() 
+	{ 
+		return cardNumber; 
+	}
 	
-	public BigDecimal getBalance() { return balance; }
+	/**
+	 * Returns the card balance associated with a specific card.
+	 * @return the balance associated with this card.
+	 */
+	public BigDecimal getBalance() 
+	{ 
+		return balance; 
+	}
 	
+	/**
+	 * Add the balance desired by the card user to the card.
+	 * @param uDni		DNI of the user to whom the university card belongs.
+	 * @param cNumber	associated card number, this is unique.
+	 * @param bAdded	amount of balance to add to the card.
+	 * @throws WrongTransactionException	If the operation to be performed 
+	 * 										fails because the data entered is incorrect.
+	 */
 	public void addBalance(int uDni, int cNumber, BigDecimal bAdded) throws WrongTransactionException
 	{
 		if(uDni == userDni && cNumber == cardNumber)
 		{
-			// bAdded > 0
 			if(bAdded.compareTo(BigDecimal.ZERO) == 1)
 			{
 				balance = balance.add(bAdded);
@@ -47,11 +81,18 @@ public class Card {
 		}
 	}
 	
+	/**
+	 * Eliminate a certain amount of balance to the card of the certain user.
+	 * @param uDni		DNI of the user to whom the university card belongs.
+	 * @param cNumber	associated card number, this is unique.
+	 * @param bPay		amount of balance to withdraw.
+	 * @throws WrongTransactionException	If the operation to be performed 
+	 * 										fails because the data entered is incorrect.
+	 */
 	public void deleteBalance(int uDni, int cNumber, BigDecimal bPay) throws WrongTransactionException
 	{
 		if(uDni == userDni && cNumber == cardNumber)
 		{
-			//bPay > 0
 			if(bPay.compareTo(BigDecimal.ZERO) == 1)
 			{
 				balance = balance.add(bPay.negate());
