@@ -23,12 +23,12 @@ import java.math.BigDecimal;
  * @author Borja
  * @version 0.1
  */
-public class removeProductScreen
+public class RemoveProductScreen
 {
 	private Scanner keyboard;
 	private OrderService ordSer;
 	
-	removeProductScreen()
+	RemoveProductScreen()
 	{
 		keyboard = new Scanner(System.in);
 		ordSer = new OrderService();
