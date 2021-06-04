@@ -19,14 +19,14 @@ import data.*;
 public class OrderService
 {
 	CafeteriaData cData;
-	ProductData pData;
 	OrderData oData;
+	ProductData pData;
 	//Create a new object of OrderService
-	public OrderService(CafeteriaData cData, ProductData pData, OrderData oData)
+	public OrderService(CafeteriaData cData, OrderData oData, ProductData pData)
 	{
 		this.cData = cData;
-		this.pData = pData;
 		this.oData = oData;
+		this.pData = pData;
 	}
 
 	
@@ -34,17 +34,16 @@ public class OrderService
 	
 	/**
 	 * Adds the indicated amount of product to the order passed as an argument.
-	 * @param coffe		The Cafeteria related to the order.
+	 * @param coffe			The Cafeteria related to the order.
 	 * @param ord 			The order to add the product to.
-	 * @param productId 	The id of the product to add to the order.
+	 * @param prod		 	The product to add to the order.
 	 * @param quantity 		The quantity of product to add to the order.
 	 * @throws InsufficientStockException	If there isn't enough stock of the product.
 	 */
-	public void addProductToOrder(Cafeteria coffe, Order ord, int productId, int quantity)
+	public void addProductToOrder(Cafeteria coffe, Order ord, Product prod, int quantity)
 			throws InsufficientStockException
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
-		Product prod = pData.getProduct(productId);
 		
 		if(coffe.getAvailableProducts().contains(prod))
 		{
@@ -65,17 +64,17 @@ public class OrderService
 	/**
 	 * Removes the indicated amount of product from the order passed as an argument.
 	 * @param ord 			The order to remove the product from.
-	 * @param productId		The id of the product to remove from the order.
+	 * @param prod			The product to remove from the order.
 	 * @param quantity		The quantity of product to remove from the order.
 	 * @param coffe			The coffee which restock the product.
 	 * @throws InsufficientStockException			If the quantity to remove is bigger than the quantity which is stock in the order
 	 * @throws ProductNotContainedInOrderException	If the product isn't in the basket
 	 */
-	public void removeProductFromOrder(Cafeteria coffe, Order ord, int productId, int quantity)
+	public void removeProductFromOrder(Cafeteria coffe, Order ord, Product prod, int quantity)
 			throws InsufficientStockException, ProductNotContainedInOrderException
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
-		Product prod = pData.getProduct(productId);
+
 		int quantbasket = orderDownCast.checkProductQuantity(prod);
 		if(orderDownCast.containsProduct(prod))
 		{
