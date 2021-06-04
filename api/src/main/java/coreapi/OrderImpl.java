@@ -34,7 +34,7 @@ public class OrderImpl implements Order, Serializable {
 	/**
 	 * Creates a new <code>OrderImpl</code> instance.
 	 * @param assignedId	The identifier assigned to this order.
-	 * @param creationDate	The timestamp representing the day this order was created.
+	 * @param assignedDate	The timestamp representing the day this order was created.
 	 */
 	OrderImpl(int assignedId, LocalDateTime assignedDate)
 	{
@@ -50,26 +50,82 @@ public class OrderImpl implements Order, Serializable {
 	 * @return	Returns the order Id.
 	 * @see OrderFactory
 	 */
-	public int getId() { return id; }
+	public int getId() 
+	{ 
+		return id; 
+	}
+	
 	/**
 	 * Returns the date when the order was created.
 	 * @return	Returns the day of creation of the order
 	 * @see LocalDate
 	 */
-	public LocalDateTime getDate() { return creationDate; }
+	public LocalDateTime getDate() 
+	{ 
+		return creationDate; 
+	}
+	
 	/**
 	 * Returns the constant corresponding to the current state of the order,
 	 * as determined by the Enum <code>OrderStatus</code>.
 	 * @return	Returns the current state of the order.
 	 * @see OrderStatus
 	 */
-	public OrderStatus getStatus() { return OrderStatus.valueOf(orderStatus.name()); }
+	public OrderStatus getStatus() 
+	{ 
+		return OrderStatus.valueOf(orderStatus.name()); 
+	}
+	
+	/**
+	 * Returns the date for which the corresponding order has been scheduled.
+	 * @return	Returns the date and time of the scheduled order.
+	 */
+	public LocalDateTime getProgrammingDate()
+	{
+		return programmingDate;
+	}
+	
+	/**
+	 * Set the validation code of this order to the one passed by parameter.
+	 * @param vC	The new validation code to set this order.
+	 */
+	public void setCode(String vC)
+	{
+		validationCode = vC;
+	}
+	
 	/**
 	 * Sets the current status of this order to the one passed by parameter.
 	 * @param newStatus		The new status to set this order to.
 	 * @see OrderStatus
 	 */
-	public void setStatus(OrderStatus newStatus) { orderStatus = newStatus; }
+	public void setStatus(OrderStatus newStatus) 
+	{ 
+		orderStatus = newStatus; 
+	}
+	
+	/**
+	 * Sets the programming date of this order to the one passed by parameter.
+	 * @param pDate		The new programming date to set this order.
+	 * @throws invalidDate	If the date entered is before the current date.
+	 */
+	public void setProgrammingDate(LocalDateTime pDate) throws invalidDate
+	{
+		try
+		{
+			if((pDate.compareTo(LocalDateTime.now()) <= 0))
+			{
+				programmingDate = pDate;
+			}
+			else
+			{
+				throw new invalidDate("Assigned date is not valid");
+			}
+		}catch(invalidDate ex)
+		{
+			
+		}
+	}
 	
 	/**
 	 * Returns the combined cost of the whole order.
@@ -149,6 +205,7 @@ public class OrderImpl implements Order, Serializable {
 		}
 		return quantity;
 	}
+	
 	/**
 	 * Adds a single unit of the product determined by the id to this order.
 	 * @param prod	The product to add.
@@ -157,6 +214,7 @@ public class OrderImpl implements Order, Serializable {
 	{
 		addProduct(prod, 1);
 	}
+	
 	/**
 	 * Adds a certain amount of units of the product determined by the id to this order.
 	 * @param prod			The product to add.
@@ -177,6 +235,7 @@ public class OrderImpl implements Order, Serializable {
 			}	
 		}
 	}
+	
 	/**
 	 * Removes all amounts of the product determined by the id from this order.
 	 * 
@@ -187,6 +246,7 @@ public class OrderImpl implements Order, Serializable {
 	{
 		basket.remove(prod);
 	}
+	
 	/**
 	 * Removes a certain amount of units of the product determined by the id from this order.
 	 * 
@@ -211,30 +271,10 @@ public class OrderImpl implements Order, Serializable {
 		}
 	}
 	
-	public LocalDateTime getProgrammingDate()
-	{
-		return programmingDate;
-	}
-	/*
-	public void setProgrammingDate(LocalDateTime pDate)
-	{
-		try
-		{
-			if((compareTo(LocalDateTime.now() pDate) <= 0))
-			{
-				programmingDate = pDate;
-			}
-			else
-			{
-				throw invalidDate("Assigned date is not valid");
-			}
-		}catch(invalidDate ex)
-		{
-			
-		}
-	}
-	*/
-	
+
+
+//MIRAR DONDE VA ESTA FUNCIÓN Y SI ES NECESARIA
+
 	public boolean validationStock(Cafeteria coffee)
 	{
 		boolean comprobation = true;
@@ -256,8 +296,5 @@ public class OrderImpl implements Order, Serializable {
 		return comprobation;
 	}
 	
-	public void setCode(String vC)
-	{
-		validationCode = vC;
-	}
+
 }
