@@ -65,17 +65,17 @@ public interface Order {
 	 * Returns how much of a certain product is contained within this order.
 	 * 
 	 * If the product isn't contained in this order, the return value is zero.
-	 * @param id	The id of the product to check.
+	 * @param prod	The the product to check.
 	 * @return		Retunrs the amount of a certain product in this order.
 	 */
-	public int checkProductQuantity(int id);
+	public int checkProductQuantity(Product prod);
 	/**
 	 * Returns whether or not the product passed as parameter is contained in this order or not.
 	 * 
 	 * The return value is <code>true</code> if there is at least 1 unit of the product in this order,
 	 * and <code>false</code> if there is none.
-	 * @param id	The id of the product to check.
+	 * @param prod	The the product to check.
 	 * @return		Returns <code>true</code> if the order contains the specified product.
 	 */
-	public boolean containsProduct(int id);
+	public boolean containsProduct(Product prod);
 }

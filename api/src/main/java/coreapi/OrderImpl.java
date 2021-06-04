@@ -9,14 +9,14 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import filepersistence.*;
+import data.*;
 
 /**
  * Implementation of the <code>Order</code> interface.
  * 
  * Users of the API shouldn't use this class directly.
  * @author Borja
- * @author María
+ * @author Marï¿½a
  * @author Fran
  * @version 0.2
  */
@@ -124,9 +124,9 @@ public class OrderImpl implements Order, Serializable {
 	 * @param id	The identifier of the product to check for.
 	 * @return 		Returns whether or not the product represented by the id exists in this order.
 	 */
-	public boolean containsProduct(int id)
+	public boolean containsProduct(Product prod)
 	{
-		return basket.containsKey(Load.LoadProduct(id));
+		return basket.containsKey(prod);
 	}
 
 	/**
@@ -135,13 +135,13 @@ public class OrderImpl implements Order, Serializable {
 	 * Returns zero if the product in question isn't in this order.
 	 * @return	Returns the quantity of a product in this order.
 	 */
-	public int checkProductQuantity(int id)
+	public int checkProductQuantity(Product prod)
 	{
 		int quantity;
 		
-		if (this.containsProduct(id))
+		if (this.containsProduct(prod))
 		{
-			quantity = basket.get(Load.LoadProduct(id)).intValue();
+			quantity = basket.get(prod).intValue();
 		}
 		else
 		{
@@ -151,23 +151,22 @@ public class OrderImpl implements Order, Serializable {
 	}
 	/**
 	 * Adds a single unit of the product determined by the id to this order.
-	 * @param newProductId	The id of the product to add.
+	 * @param prod	The product to add.
 	 */
-	public void addProduct(int newProductId)
+	public void addProduct(Product prod)
 	{
-		addProduct(newProductId, 1);
+		addProduct(prod, 1);
 	}
 	/**
 	 * Adds a certain amount of units of the product determined by the id to this order.
-	 * @param newProductId	The id of the product to add.
+	 * @param prod			The product to add.
 	 * @param quantity		The amount of product to add.
 	 */
-	public void addProduct(int newProductId, int quantity)
+	public void addProduct(Product prod, int quantity)
 	{
 		if (quantity > 0)
 		{
-			Product prod = Load.LoadProduct(newProductId);
-			if (this.containsProduct(newProductId))
+			if (this.containsProduct(prod))
 			{
 				int actualQuantity = basket.get(prod).intValue();
 				basket.replace(prod, Integer.valueOf(actualQuantity + quantity));
@@ -182,28 +181,27 @@ public class OrderImpl implements Order, Serializable {
 	 * Removes all amounts of the product determined by the id from this order.
 	 * 
 	 * The product in question will no longer be contained within this order.
-	 * @param productId	The id of the product to remove.
+	 * @param prod	The product to remove.
 	 */
-	public void removeProduct(int productId)
+	public void removeProduct(Product prod)
 	{
-		basket.remove(Load.LoadProduct(productId));
+		basket.remove(prod);
 	}
 	/**
 	 * Removes a certain amount of units of the product determined by the id from this order.
 	 * 
 	 * If the amount to remove is equal to or greater that the amount of that product currently
 	 * in the order, the product in question is removed from the order entirely.
-	 * @param productId	The id of the product to remove.
+	 * @param prod		The the product to remove.
 	 * @param quantity	The amount of product to remove.
 	 */
-	public void removeProduct(int productId, int quantity)
+	public void removeProduct(Product prod, int quantity)
 	{
 		if (quantity > 0)
 		{
-			Product prod = Load.LoadProduct(productId);
 			if (basket.get(prod).intValue() <= quantity)
 			{
-				this.removeProduct(productId);
+				this.removeProduct(prod);
 			}
 			else
 			{
@@ -217,7 +215,7 @@ public class OrderImpl implements Order, Serializable {
 	{
 		return programmingDate;
 	}
-	
+	/*
 	public void setProgrammingDate(LocalDateTime pDate)
 	{
 		try
@@ -235,6 +233,7 @@ public class OrderImpl implements Order, Serializable {
 			
 		}
 	}
+	*/
 	
 	public boolean validationStock(Cafeteria coffee)
 	{
