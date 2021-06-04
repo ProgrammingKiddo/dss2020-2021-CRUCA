@@ -17,7 +17,7 @@ public class DiskOrderData implements OrderData
 {
 	private String path;
 	
-	DiskOrderData(String path)
+	public DiskOrderData(String path)
 	{
 		this.path = path;
 	}

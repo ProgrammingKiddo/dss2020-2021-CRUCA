@@ -20,7 +20,7 @@ public class DiskCafeteriaData implements CafeteriaData
 {
 	private String path;
 	
-	DiskCafeteriaData(String path)
+	public DiskCafeteriaData(String path)
 	{
 		this.path = path;
 	}

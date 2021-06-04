@@ -18,7 +18,7 @@ public class DiskUserData implements UserData
 {
 	private String path;
 	
-	DiskUserData(String path)
+	public DiskUserData(String path)
 	{
 		this.path = path;
 	}
