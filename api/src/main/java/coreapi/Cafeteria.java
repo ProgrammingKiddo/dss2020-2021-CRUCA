@@ -10,11 +10,11 @@ import java.util.Map;
 /**
  * Class representing a Cafeteria with associated orders and its own stock of products.
  * @author Borja
- * @author María
+ * @author Marï¿½a
  * @author Fran
  * @version 0.1
  */
-@Repository
+//@Repository
 public class Cafeteria implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -113,11 +113,10 @@ public class Cafeteria implements Serializable
 	 * Add the indicated amount of product stock to this cafeteria.
 	 * @param prod		The product for which to add stock. 
 	 * @param quantity	The quantity of product to add.
+	 * @throws InvalidQuantity 
 	 */
 	public void addProductStock(Product prod, int quantity)
 	{
-		if (quantity > 0)
-		{
 			AddType(prod.getType());
 			if (productStock.containsKey(prod) == false)
 			{
@@ -128,11 +127,7 @@ public class Cafeteria implements Serializable
 				Integer newQuantity = Integer.valueOf(productStock.get(prod).intValue() + quantity);
 				productStock.replace(prod, newQuantity);
 			}
-		}
-		else
-		{
-			throw new InvalidQuantity("You must introduce a quantity greater than 0");
-		}
+
 	}
 	/**
 	 * Removes the indicated amount of product stock from this cafeteria.
