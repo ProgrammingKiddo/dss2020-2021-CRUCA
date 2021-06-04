@@ -3,6 +3,8 @@ package coreapi;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import data.*;
+
 /**
  * This class acts as a service provider and interface for the client to work
  * with objects from the Order class.
@@ -13,11 +15,19 @@ import java.time.LocalDate;
  *  @author Borja
  *  @version 0.2
  */
-@Service
+//@Service
 public class OrderService
 {
+	CafeteriaData cData;
+	ProductData pData;
+	OrderData oData;
 	//Create a new object of OrderService
-	public OrderService() {}
+	public OrderService(CafeteriaData cData, ProductData pData, OrderData oData)
+	{
+		this.cData = cData;
+		this.pData = pData;
+		this.oData = oData;
+	}
 
 	
 	/*---------------------------ORDER_PRODUCTS------------------------------------------*/
@@ -34,16 +44,16 @@ public class OrderService
 			throws InsufficientStockException
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
-		Product prod = Load.LoadProduct(productId);
+		Product prod = pData.getProduct(productId);
 		
 		if(coffe.getAvailableProducts().contains(prod))
 		{
 			if(quantity > 0 && coffe.getProductQuantity(prod) >= quantity)
 			{
 				coffe.removeStock(prod, quantity);
-				orderDownCast.addProduct(productId, quantity);
-				Save.SaveCafeteria(coffe);
-				Save.SaveOrder(orderDownCast);
+				orderDownCast.addProduct(prod, quantity);
+				cData.saveCafeteria(coffe);
+				oData.saveOrder(ord);
 			}
 			else
 			{
@@ -65,15 +75,16 @@ public class OrderService
 			throws InsufficientStockException, ProductNotContainedInOrderException
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
-		int quantbasket = orderDownCast.checkProductQuantity(productId);
-		if(orderDownCast.containsProduct(productId))
+		Product prod = pData.getProduct(productId);
+		int quantbasket = orderDownCast.checkProductQuantity(prod);
+		if(orderDownCast.containsProduct(prod))
 		{
 			if(quantity > 0 && quantity <= quantbasket)
 			{
-				orderDownCast.removeProduct(productId, quantity);
-				coffe.addProductStock(Load.LoadProduct(productId), quantity);
-				Save.SaveCafeteria(coffe);
-				Save.SaveOrder(orderDownCast);
+				orderDownCast.removeProduct(prod, quantity);
+				coffe.addProductStock(prod, quantity);
+				cData.saveCafeteria(coffe);
+				oData.saveOrder(ord);
 			}
 			else
 			{
@@ -102,7 +113,7 @@ public class OrderService
 		if(!ord.getProducts().isEmpty() && ord.getStatus() == OrderStatus.OPEN)
 		{
 			orderDownCast.setStatus(OrderStatus.IN_KITCHEN);
-			Save.SaveOrder(orderDownCast);
+			oData.saveOrder(ord);
 		}
 		else
 		{
@@ -124,7 +135,7 @@ public class OrderService
 		if(orderDownCast.getStatus() == OrderStatus.IN_KITCHEN)
 		{
 			orderDownCast.setStatus(OrderStatus.DELIVERED);
-			Save.SaveOrder(orderDownCast);
+			oData.saveOrder(ord);
 		}
 		else
 		{
@@ -145,7 +156,7 @@ public class OrderService
 		if(orderDownCast.getStatus() == OrderStatus.IN_KITCHEN || ord.getStatus() == OrderStatus.DELIVERED)
 		{
 			orderDownCast.setStatus(OrderStatus.PAYED);
-			Save.SaveOrder(orderDownCast);
+			oData.saveOrder(ord);
 		}
 		else
 		{
@@ -167,7 +178,7 @@ public class OrderService
 		if(orderDownCast.getStatus() == OrderStatus.PAYED)
 		{
 			orderDownCast.setStatus(OrderStatus.FINISHED);
-			Save.SaveOrder(orderDownCast);
+			oData.saveOrder(ord);
 		}
 		else
 		{
