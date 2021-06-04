@@ -19,7 +19,7 @@ import java.time.*;
  * @author Maria
  * @version 0.2
  */
-@Component
+//@Component
 public class User implements Serializable 
 {
 	

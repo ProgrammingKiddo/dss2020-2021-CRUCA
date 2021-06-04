@@ -85,17 +85,16 @@ public class Menu implements Product, Serializable {
 	 * Returns how much of a product is contained in this menu.
 	 * 
 	 * If the product doesn't exist within this menu, the returned value is zero.
-	 * @param productId		The id of the product to check.
+	 * @param prod		The product to check.
 	 * @return 		Returns the quantity of the product contained in this menu.
 	 */
-	public int getProductQuantity(int productId)
+	public int getProductQuantity(Product prod)
 	{
-		Product productToCheck = Load.LoadProduct(productId);
 		int productQuantity;
 		
-		if (productsMenu.containsKey(productToCheck))
+		if (productsMenu.containsKey(prod))
 		{
-			productQuantity = productsMenu.get(productToCheck).intValue();			
+			productQuantity = productsMenu.get(prod).intValue();			
 		}
 		else
 		{

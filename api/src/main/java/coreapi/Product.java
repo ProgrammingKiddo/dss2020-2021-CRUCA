@@ -1,14 +1,13 @@
 package coreapi;
 
 import java.math.BigDecimal;
-import filepersistence.Load;
 
 /**
  * This interface is the handler for the usage of all products.
  * @author Fran
  * @version 0.2
  */
-@Component
+//@Component
 public interface Product {
 	
 	/**
@@ -35,7 +34,7 @@ public interface Product {
 	
 	/**
 	 * Returns the name of the product category which belong.
-	 * @return Returns the tyoe of this product
+	 * @return Returns the type of this product
 	 */
 	public String getType();
 }

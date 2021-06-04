@@ -1,9 +1,12 @@
 package coreapi;
 
+import java.math.BigDecimal;
+
 /**
  * 
  * @author Fran
- * @author María
+ * @author Marï¿½a
+ * @author Borja
  *
  */
 
@@ -17,7 +20,6 @@ public class Card {
 	{
 		this.userDni = dni;
 		this.cardNumber = cNumber;
-		this.balance = 0;
 	}
 	
 	public int getUserDni() { return userDni; }
@@ -26,39 +28,41 @@ public class Card {
 	
 	public BigDecimal getBalance() { return balance; }
 	
-	public void addBalance(int uDni, int cNumber, BigDecimal bAdded)
+	public void addBalance(int uDni, int cNumber, BigDecimal bAdded) throws WrongTransactionException
 	{
 		if(uDni == userDni && cNumber == cardNumber)
 		{
-			if(bAdded > 0)
+			// bAdded > 0
+			if(bAdded.compareTo(BigDecimal.ZERO) == 1)
 			{
-				balance += bAdded;
+				balance = balance.add(bAdded);
 			}
 			else
 			{
-				throw WrongTransactionException("Invalid Quantity");
+				throw new WrongTransactionException("Invalid Quantity");
 			}
 		}
 		else {
-			throw WrongTransactionException("Wrong Personal Data");
+			throw new WrongTransactionException("Wrong Personal Data");
 		}
 	}
 	
-	public void deleteBalance(int uDni, int cNumber, BigDecimal bPay)
+	public void deleteBalance(int uDni, int cNumber, BigDecimal bPay) throws WrongTransactionException
 	{
 		if(uDni == userDni && cNumber == cardNumber)
 		{
-			if(bPay > 0)
+			//bPay > 0
+			if(bPay.compareTo(BigDecimal.ZERO) == 1)
 			{
-				balance -= bPay;
+				balance = balance.add(bPay.negate());
 			}
 			else
 			{
-				throw WrongTransactionException("Invalid Quantity");
+				throw new WrongTransactionException("Invalid Quantity");
 			}
 		}
 		else {
-			throw WrongTransactionException("Wrong Personal Data");
+			throw new WrongTransactionException("Wrong Personal Data");
 		}
 	}
 }
