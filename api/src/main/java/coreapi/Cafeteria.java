@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Fran
  * @version 0.1
  */
-//@Repository
+
 public class Cafeteria implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -32,6 +32,7 @@ public class Cafeteria implements Serializable
 	 * To be used only by the designers of the information database.
 	 * @param assignedId	the identifier assigned to this cafeteria.
 	 * @param givenName		the name assigned to this cafeteria.
+	 * @param Email			the email assigned to this cafeteria.
 	 */
 	public Cafeteria(int assignedId, String givenName, String Email)
 	{
@@ -42,6 +43,8 @@ public class Cafeteria implements Serializable
 		types = new ArrayList<String>();
 		email = Email;
 	}
+	
+	
 	/**
 	 * Returns the unique id assigned by the info database to this specific cafeteria.
 	 * @return 	the identifier of this cafeteria.
@@ -50,6 +53,7 @@ public class Cafeteria implements Serializable
 	{
 		return id;
 	}
+	
 	/**
 	 * Returns the name assigned by the info database to this specific cafeteria.
 	 * @return Returns the name of this cafeteria.
@@ -67,6 +71,7 @@ public class Cafeteria implements Serializable
 	{
 		return email;
 	}
+	
 	/**
 	 * Returns the list of available products in this cafeteria.
 	 * 
@@ -81,13 +86,13 @@ public class Cafeteria implements Serializable
 	
 	/**
 	 * Return the list of the differents types of products
-	 * 
-	 *  @return Return the list of the differents types of products
+	 * @return Return the list of the differents types of products
 	 */
 	public List<String> getTypes()
 	{
 		return List.copyOf(types);
 	}
+	
 	/**
 	 * Registers a new product as available on this cafeteria.
 	 * @param prod		A reference to the product to add to this cafeteria. 
@@ -100,6 +105,7 @@ public class Cafeteria implements Serializable
 			productStock.put(prod, quantity);			
 		}
 	}
+	
 	/**
 	 * Returns the current stock of the indicated product available in this cafeteria.
 	 * @param prod	The identifier of the product to check for.
@@ -109,11 +115,11 @@ public class Cafeteria implements Serializable
 	{
 		return productStock.get(prod).intValue();
 	}
+	
 	/**
 	 * Add the indicated amount of product stock to this cafeteria.
 	 * @param prod		The product for which to add stock. 
 	 * @param quantity	The quantity of product to add.
-	 * @throws InvalidQuantity 
 	 */
 	public void addProductStock(Product prod, int quantity)
 	{
@@ -129,6 +135,7 @@ public class Cafeteria implements Serializable
 			}
 
 	}
+	
 	/**
 	 * Removes the indicated amount of product stock from this cafeteria.
 	 * 
@@ -159,6 +166,7 @@ public class Cafeteria implements Serializable
 			}
 		}
 	}
+	
 	/**
 	 * Removes the product from the list of available products from this cafeteria.
 	 * @param prod	The product to remove.
@@ -169,6 +177,7 @@ public class Cafeteria implements Serializable
 		productStock.remove(prod);
 		DeleteType(t);
 	}
+	
 	/**
 	 * Registers an order as pertaining to this cafeteria.
 	 * @param newOrder The order to register to this cafeteria.
@@ -177,6 +186,7 @@ public class Cafeteria implements Serializable
 	{
 		orderHistory.add(newOrder);
 	}
+	
 	/**
 	 * Returns the list of orders registered to this cafeteria.
 	 * @return Returns the list of orders registered to this cafeteria.
@@ -185,10 +195,10 @@ public class Cafeteria implements Serializable
 	{
 		return List.copyOf(orderHistory);
 	}
+	
 	 /**
 	  * Add a new type to the types list in case that this type
 	  * doesn't exist in the list.
-	  * 
 	  * @param String which contains the type to add
 	  */
 	public void AddType(String t)
@@ -201,7 +211,6 @@ public class Cafeteria implements Serializable
 	
 	/**
 	 * Delete a type of the types list.
-	 * 
 	 * @param String which contains the type to delete.
 	 */
 	public void DeleteType(String type)
