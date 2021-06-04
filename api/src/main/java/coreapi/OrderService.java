@@ -192,16 +192,23 @@ public class OrderService
 	 * @param date		The day to which calculate the cash register.
 	 * @return 			Returns the combined cost of all orders made on the specified date.
 	 */
-	public BigDecimal getTotalDailyRegister(Cafeteria coffe, LocalDate date)
+	public BigDecimal getTotalDailyRegister(Cafeteria coffe, LocalDate date) throws invalidDate
 	{
 		BigDecimal dailyRegister = BigDecimal.ZERO;
 		
-		for(Order ord: coffe.getOrders())
+		if(date.compareTo(LocalDate.now()) <= 0)
 		{
-			if(ord.getDate().toLocalDate().equals(date))
+			for(Order ord: coffe.getOrders())
 			{
-				dailyRegister = dailyRegister.add(ord.totalCost());
+				if(ord.getDate().toLocalDate().equals(date))
+				{
+					dailyRegister = dailyRegister.add(ord.totalCost());
+				}
 			}
+		}
+		else
+		{
+			throw new invalidDate ("The date entered is greater than the current one, so there is no record for that date.");
 		}
 		return dailyRegister;
 	}
@@ -213,17 +220,23 @@ public class OrderService
 	 * @param date		The day to which calculate the cash register.
 	 * @return 			Returns the number of orders that have been on the specified date.
 	 */
-	public int getNumberOfDailyOrders(Cafeteria coffee, LocalDate date)
+	public int getNumberOfDailyOrders(Cafeteria coffee, LocalDate date) throws invalidDate
 	{
 		int numberOfOrders = 0;
-		
-		//We go through the order history of the establishment
-		for(Order ord: coffee.getOrders())
+		if(date.compareTo(LocalDate.now()) <= 0)
 		{
-			if(ord.getDate().toLocalDate().equals(date))
+			//We go through the order history of the establishment
+			for(Order ord: coffee.getOrders())
 			{
-				numberOfOrders++;
+				if(ord.getDate().toLocalDate().equals(date))
+				{
+					numberOfOrders++;
+				}
 			}
+		}
+		else
+		{
+			throw new invalidDate ("The date entered is greater than the current one, so there is no record for that date.");
 		}
 		return numberOfOrders;
 	}
