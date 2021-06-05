@@ -7,13 +7,12 @@ import java.math.BigDecimal;
  * @author Fran
  * @version 0.2
  */
-//@Component
+
 public interface Product {
 	
 	/**
-	 * Returns the unique id assigned by the product catalog to this specific catalog.
+	 * Returns the unique id assigned to a specific product.
 	 * @return	Returns the id of this product.
-	 * @see ProductCatalog
 	 */
 	public int getId();
 	
@@ -25,9 +24,8 @@ public interface Product {
 	public BigDecimal getPrice();
 	
 	/**
-	 * Returns the name assigned by the product catalog to this specific catalog.
+	 * Returns the name assigned to a specific product.
 	 * @return	Returns the name of this product.
-	 * @see ProductCatalog
 	 */
 	public String getName();
 	
