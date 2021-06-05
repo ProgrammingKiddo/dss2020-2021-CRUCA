@@ -1,7 +1,8 @@
 package apihttp.src.main.java.apihttp;
 
 /**
- * @author María
+ * Class which contains the API HTTP functions for the user can manage his card
+ * @author Marï¿½a
  * @author Fran
  */
 import filepersistence;
@@ -20,6 +21,15 @@ import api.src.main.java.coreapi.String;
 @RestController
 public class CardController 
 {
+	/**
+	 * Return the balance of the user card
+	 * 
+	 * @param dni			the identifier of the user
+	 * @param Ncard			the identifier of the card
+	 * @see Card
+	 * @see User
+	 * @return				the current balance of an user in a card
+	 */
 	@GetMapping("/card/userbalance/{parameters}")
 	public BigDecimal userBalance(@PathVariable("parameters") int dni, int Ncard)
 	{
@@ -39,7 +49,15 @@ public class CardController
 		
 	}
 	
-	@PostMapping("/card/addbalance/{parameters}")
+	/**
+	 * Add balance to a current balance in a card user.
+	 * 
+	 * @param nCard			the identifier of the card
+	 * @param newbalance	the quantity of money which an user add to his balance.
+	 * @see Card
+	 * @see ReloadRepository
+	 */
+	@PutMapping("/card/addbalance/{parameters}")
 	public void addBalance(@PathVariable("parameters") int nCard, BigDecimal newbalance)
 	{
 		try
@@ -54,7 +72,16 @@ public class CardController
 		}
 	}
 	
-	@PatchMapping("/card/authpayment/{parameters}")
+	/**
+	 * Send to user and set to an order a validation code
+	 * 
+	 * @param dni			the identifier of the user
+	 * @param idOrd			the identifier of the order
+	 * @see Card
+	 * @see Order
+	 * @see User
+	 */
+	@PutMapping("/card/authpayment/{parameters}")
 	public void paymentAuthoritation(@PathVariable("parameters") int dni, int idOrd)
 	{
 		User u = Load.LoadUser(dni);
@@ -72,7 +99,18 @@ public class CardController
 		Save.SaveOrder(o);
 	}
 	
-	@PostMapping("/card/payment/{parameters}")
+	/**
+	 * Register a pay of an user at the data base
+	 * 
+	 * @param dni			the identifier of the user
+	 * @param concpt		justification of payment
+	 * @param nCard			the identifier of card
+	 * @param paybalance	the quantity of the payment
+	 * @see Card
+	 * @see Order
+	 * @see User
+	 */
+	@PutMapping("/card/payment/{parameters}")
 	public void PayRegister(@PathVariable("parameters") int dni, String concpt, int nCard, BigDecimal paybalance)
 	{
 		try

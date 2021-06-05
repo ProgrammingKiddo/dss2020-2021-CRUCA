@@ -1,6 +1,9 @@
 package filepersistence;
 
 /** 
+ * This class represent the functions for load or save the Order objects using files
+ * @author Maria
+ * @author Fran
  * @author Borja
  */
 
@@ -11,6 +14,7 @@ import java.io.ObjectOutputStream;
 
 import coreapi.Order;
 import coreapi.OrderImpl;
+import coreapi.User;
 import data.OrderData;
 
 public class DiskOrderData implements OrderData
@@ -22,6 +26,13 @@ public class DiskOrderData implements OrderData
 		this.path = path;
 	}
 	
+	/**
+	 * Obtain a specific Order by his id
+	 * 
+	 * @param dni	Identifier of an Order
+	 * @see Order
+	 * @return 		Return the specific Order object searched
+	 */
 	public Order getOrder(int id)
 	{
 		Order o = null;
@@ -39,6 +50,12 @@ public class DiskOrderData implements OrderData
 		return o;
 	}
 	
+	/**
+	 * Save in a file an User object
+	 * 
+	 * @param orderToSave	Order object will be saved
+	 * @see Order
+	 */
 	public void saveOrder(Order orderToSave)
 	{
 		try {

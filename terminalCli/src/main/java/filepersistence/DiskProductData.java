@@ -1,6 +1,9 @@
 package filepersistence;
 
 /** 
+ * This class represent the functions for load or save the Products objects using files
+ * @author Maria
+ * @author Fran
  * @author Borja
  */
 
@@ -13,6 +16,7 @@ import java.io.ObjectOutputStream;
 
 import coreapi.Product;
 import coreapi.ProductImpl;
+import coreapi.User;
 
 public class DiskProductData implements ProductData
 {
@@ -22,7 +26,14 @@ public class DiskProductData implements ProductData
 	{
 		this.path = path;
 	}
-
+	
+	/**
+	 * Obtain a specific Product by his id
+	 * 
+	 * @param id	Identifier of an product
+	 * @see Product
+	 * @return 		Return the specific Product object searched
+	 */
 	public Product getProduct(int id)
 	{
 		Product p = null;
@@ -41,6 +52,12 @@ public class DiskProductData implements ProductData
 		return p;
 	}
 	
+	/**
+	 * Save in a file an Product object
+	 * 
+	 * @param prod	Product object will be saved
+	 * @see Product
+	 */
 	public void saveProduct(Product prod)
 	{
 		try {

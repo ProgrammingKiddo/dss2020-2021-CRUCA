@@ -14,6 +14,13 @@ import java.io.ObjectOutputStream;
 import coreapi.User;
 import data.UserData;
 
+/**
+ * This class represent the functions for load or save the User objects using files
+ * @author Maria
+ * @author Fran
+ * @author Borja
+ *
+ */
 public class DiskUserData implements UserData
 {
 	private String path;
@@ -23,6 +30,13 @@ public class DiskUserData implements UserData
 		this.path = path;
 	}
 	
+	/**
+	 * Obtain a specific user by his id
+	 * 
+	 * @param dni	Identifier of an user
+	 * @see User
+	 * @return 		Return the specific User object searched
+	 */
 	public User getUser(int dni)
 	{
 		User u = null;
@@ -41,6 +55,12 @@ public class DiskUserData implements UserData
         return u;
 	}
 	
+	/**
+	 * Save in a file an User object
+	 * 
+	 * @param usr	User object will be saved
+	 * @see user
+	 */
 	public void saveUser(User usr)
 	{
 		try {
