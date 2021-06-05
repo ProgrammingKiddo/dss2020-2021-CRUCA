@@ -23,6 +23,7 @@ public interface Order {
 	 * @see BigDecimal
 	 */
 	public BigDecimal totalCost();
+	
 	/**
 	 * Returns the unique Id assigned to this order.
 	 * 
@@ -32,12 +33,14 @@ public interface Order {
 	 * @see OrderFactory
 	 */
 	public int getId();
+	
 	/**
 	 * Returns the date when the order was created.
 	 * @return	Returns the day of creation of the order
 	 * @see LocalDate
 	 */
 	public LocalDateTime getDate();
+	
 	/**
 	 * Returns the constant corresponding to the current state of the order,
 	 * as determined by the Enum <code>OrderStatus</code>.
@@ -45,6 +48,7 @@ public interface Order {
 	 * @see OrderStatus
 	 */
 	public OrderStatus getStatus();
+	
 	/**
 	 * Returns a read-only list of the products contained in this order.
 	 * 
@@ -54,6 +58,7 @@ public interface Order {
 	 * @see Product
 	 */
 	public List<Product> getProducts();
+	
 	/**
 	 * Returns a map containing the products contained in this order,
 	 * and how many of each of them is stored.
@@ -61,14 +66,16 @@ public interface Order {
 	 * @see Map
 	 */
 	public Map<Product, Integer> getBasket();
+	
 	/**
 	 * Returns how much of a certain product is contained within this order.
 	 * 
 	 * If the product isn't contained in this order, the return value is zero.
 	 * @param prod	The the product to check.
-	 * @return		Retunrs the amount of a certain product in this order.
+	 * @return		Returns the amount of a certain product in this order.
 	 */
 	public int checkProductQuantity(Product prod);
+	
 	/**
 	 * Returns whether or not the product passed as parameter is contained in this order or not.
 	 * 
