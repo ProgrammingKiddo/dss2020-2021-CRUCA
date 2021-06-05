@@ -30,6 +30,7 @@ public class Menu implements Product, Serializable {
 	 * and to provide a user-friendly name for display.
 	 * @param assignedId	The numerical identifier to assign to this menu.
 	 * @param assignedName	The name to assign to this menu.
+	 * @param assignedType 	The type of product to assign to this menu.
 	 */
 	public Menu(int assignedId, String assignedName, String assignedType)
 	{
@@ -43,12 +44,28 @@ public class Menu implements Product, Serializable {
 	 * Returns the identifier assigned to this menu.
 	 * @return	Returns the identifier assigned to this menu.
 	 */
-	public int getId() { return id; }
+	public int getId() 
+	{ 
+		return id;
+	}
+	
 	/**
 	 * Returns the name of this menu.
 	 * @return	Returns the name of this menu.
 	 */
-	public String getName() { return name; }
+	public String getName() 
+	{ 
+		return name; 
+	}
+	
+	/**
+	 * Returns the type of product of this menu.
+	 * @return 	Returns the type of menu.
+	 */
+	public String getType() 
+	{
+		return type;
+	}
 	
 	/**
 	 * Returns the combined cost of all products that make up this menu.
@@ -71,6 +88,7 @@ public class Menu implements Product, Serializable {
 		}
 		return sumCost;
 	}
+	
 	/**
 	 * Returns a read-only list containing the products that make up this menu.
 	 * @return	Returns a list containing the products in the menu.
@@ -81,6 +99,7 @@ public class Menu implements Product, Serializable {
 	{
 		return List.copyOf(new ArrayList<Product>(productsMenu.keySet()));
 	}
+	
 	/**
 	 * Returns how much of a product is contained in this menu.
 	 * 
@@ -102,6 +121,7 @@ public class Menu implements Product, Serializable {
 		}
 		return productQuantity;
 	}
+	
 	/**
 	 * Adds one unit of the specified product to the menu.
 	 * @param product 	The product to add to the menu.
@@ -111,6 +131,7 @@ public class Menu implements Product, Serializable {
 	{
 		this.addProductToMenu(product, 1);
 	}
+	
 	/**
 	 * Add the specified amount of units of  the specified product to the menu.
 	 * @param product	The product to add to the menu.
@@ -122,5 +143,5 @@ public class Menu implements Product, Serializable {
 		productsMenu.put(product, Integer.valueOf(quantity));
 	}
 	
-	public String getType() {return type;}
+	
 }
