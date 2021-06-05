@@ -19,7 +19,7 @@ import java.time.*;
  * @author Maria
  * @version 0.2
  */
-//@Component
+
 public class User implements Serializable 
 {
 	
@@ -34,6 +34,15 @@ public class User implements Serializable
 	//This list stores all the orders that the user has made
 	private List<Order> UserOrderList;
 	
+	/**
+	 * Creates a new instance of a specific user.
+	 * @param name			The name associated with this user.
+	 * @param surname		The surname associated with this user.
+	 * @param n_card		The university card number associated with this user.
+	 * @param birth_date	The birth date associated with this user.	
+	 * @param dni			The DNI associated with this user, this is unique.
+	 * @param email			The email associated with this user.
+	 */
 	public User(String name, String surname, String n_card, LocalDate birth_date, int dni, String email)
 	{
 		this.BirthDate = birth_date;
@@ -44,15 +53,50 @@ public class User implements Serializable
 		this.email = email;
 	}
 
-	public int getDni() {return dni; }
+	/**
+	 * Returns the DNI associated with a specific user.
+	 * @return	Returns the DNI associated with this user.
+	 */
+	public int getDni() 
+	{
+		return dni; 
+	}
 	
-	public int getNcard(){ return n_card; }
+	/**
+	 * Returns the university card number associated with a specific user.
+	 * @return	Return the university card number associated with this user.
+	 */
+	public int getNcard()
+	{ 
+		return n_card; 
+	}
 	
-	public String getName(){ return name; }
+	/**
+	 * Returns the name associated with a specific user.
+	 * @return	Return the name associated with this user.
+	 */
+	public String getName()
+	{ 
+		return name; 
+	}
 	
-	public String getSurname(){ return surname; }
+	/**
+	 * Returns the surname associated with a specific user.
+	 * @return	Return the surname associated with this user. 
+	 */
+	public String getSurname()
+	{ 
+		return surname; 
+	}
 	
-	public String getEmail() { return email; }
+	/**
+	  Returns the email associated with a specific user.
+	 * @return	Return the email associated with this user.
+	 */
+	public String getEmail() 
+	{ 
+		return email; 
+	}
 	
 	/**
 	* Returns the list of orders made by the user.
@@ -87,15 +131,50 @@ public class User implements Serializable
 		return age; 
 	} 
 	
-	public void setName(String Name) {this.name = Name;}
+	/**
+	 * Set the name of this user to the one passed by parameter.
+	 * @param Name	The new name to set this user.
+	 */
+	public void setName(String Name) 
+	{
+		this.name = Name;
+	}
 	
-	public void setSurname(String Surname) {this.surname = Surname;}
+	/**
+	 * Set the surname of this user to the one passed by parameter.
+	 * @param Surname	The new surname to set this user.
+	 */
+	public void setSurname(String Surname) 
+	{
+		this.surname = Surname;
+	}
 	
-	public void setNcard(String N_card) {this.n_card = Integer.parseUnsignedInt(N_card);}
+	/**
+	 * Set the university card number of this user to the one passed by parameter.
+	 * @param N_card	The new university card number to set this user.
+	 */
+	public void setNcard(String N_card) 
+	{
+		this.n_card = Integer.parseUnsignedInt(N_card);
+	}
 	
-	public void setBirthDate(LocalDate newDate) {this.BirthDate = newDate;}
+	/**
+	 * Set the birth date of this user to the one passed by parameter.
+	 * @param newDate	The new birth date to set this user.
+	 */
+	public void setBirthDate(LocalDate newDate) 
+	{
+		this.BirthDate = newDate;
+	}
 	
-	public void setEmail(String newEmail) { this.email = newEmail; }
+	/**
+	 * Set the email of this user to the one passed by parameter.
+	 * @param newEmail	The new email to set this user.
+	 */
+	public void setEmail(String newEmail) 
+	{ 
+		this.email = newEmail;
+	}
 	
 
 }
