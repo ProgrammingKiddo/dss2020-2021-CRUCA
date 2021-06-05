@@ -24,7 +24,7 @@ public class OrderService
 	
 	/**
 	 * Create a new object of type OrderService with the information of a Cafeteria,
-	 * order and specific products taken from files.
+	 * order and specific products.
 	 * @param cData		Data of a specific Cafeteria.
 	 * @param oData		Data of a order.
 	 * @param pData		Data of a specific products.
