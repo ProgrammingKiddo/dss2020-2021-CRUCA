@@ -5,6 +5,7 @@ package coreapi;
  * and therefore this cannot be carried out correctly.
  * @author Mar�a
  * @author Fran
+ * @see Card
  */
 
 public class WrongTransactionException extends Exception {
