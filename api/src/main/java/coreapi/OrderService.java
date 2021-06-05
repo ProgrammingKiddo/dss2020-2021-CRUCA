@@ -15,13 +15,20 @@ import data.*;
  *  @author Borja
  *  @version 0.2
  */
-//@Service
+
 public class OrderService
 {
 	CafeteriaData cData;
 	OrderData oData;
 	ProductData pData;
-	//Create a new object of OrderService
+	
+	/**
+	 * Create a new object of type OrderService with the information of a Cafeteria,
+	 * order and specific products taken from files.
+	 * @param cData		Data of a specific Cafeteria.
+	 * @param oData		Data of a order.
+	 * @param pData		Data of a specific products.
+	 */
 	public OrderService(CafeteriaData cData, OrderData oData, ProductData pData)
 	{
 		this.cData = cData;
