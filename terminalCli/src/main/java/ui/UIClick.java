@@ -1,5 +1,7 @@
 package terminalcli;
 
+import commands.Command;
+
 public class UIClick implements UIElement {
 
 	private String name;

@@ -4,26 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import commands.Command;
+
 public class UIMenu implements UIElement {
 
 	private String name;
 	private List<UIElement> options;
 	private int numberOfOptions;
 	private char exitKey = 'R';
-	private String exitText;
+	private String exitText = "Volver a pantalla anterior";
+	private Command action;
 	
-	public UIMenu(String name, String exitText)
+	public UIMenu(String name)
 	{
 		this.name = name;
-		this.exitText = exitText;
 		numberOfOptions = 0;
 		options = new ArrayList<UIElement>();
 	}
 	
 	public UIMenu(String name, String exitText, char exitKey)
 	{
-		this(name, exitText);
+		this(name);
+		this.exitText = exitText;
 		this.exitKey = exitKey;
+	}
+	
+	public UIMenu(String name, Command action)
+	{
+		this(name);
+		this.action = action;
 	}
 	
 	public void click()
@@ -33,7 +42,10 @@ public class UIMenu implements UIElement {
 		int numericOption;
 		do
 		{
+			// If this menu has an associated action, run it before writing to screen
+			if (action != null)	action.execute();
 			printMenu();
+			
 			option = keyboard.nextLine();
 			if (isExitKey(option) == false)
 			{
@@ -53,7 +65,10 @@ public class UIMenu implements UIElement {
 					System.out.println("\tIntroduzca una opcion valida.");
 				}
 			}
-			
+			// If the menu has an associated action (ie, it's not a static menu),
+			// we clear the elements that compose it after each run,
+			// in case the operation has generated new ones, or removed others.
+			if (action != null)	options.clear();
 		} while (isExitKey(option) == false);
 		keyboard.close();
 	}
