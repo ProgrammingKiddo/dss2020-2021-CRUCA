@@ -32,7 +32,7 @@ public class Terminal {
 	
 	public static void main(String[] args)
 	{
-		if (args.length != 0) path = args[0];
+		terminalParameters(args);
 
 		coffeeData = new DiskCafeteriaData(path);
 		orderData = new DiskOrderData(path);
@@ -42,7 +42,8 @@ public class Terminal {
 		
 		createObjects();
 
-		Screen terminal = new Screen();
+		Screen cli = new Screen(coffee, ordSer);
+		cli.main_screen();
 	}
 
 	
@@ -53,7 +54,7 @@ public class Terminal {
 			if (args[0].equals("-c"))
 			{
 				create = true;
-				if (args.length >= 2)
+				if (args.length > 1)
 				{
 					path = args[1];
 				}
