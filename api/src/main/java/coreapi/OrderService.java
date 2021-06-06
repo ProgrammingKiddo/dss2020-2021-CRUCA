@@ -268,4 +268,10 @@ public class OrderService
 		OrderImpl orderDownCast = (OrderImpl) ord;
 		return orderDownCast.getProgrammingDate();
 	}
+	
+	public void setCode(String c)
+	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
+		orderDownCast.setCode(c);
+	}
 }

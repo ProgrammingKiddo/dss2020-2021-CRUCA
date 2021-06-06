@@ -1,8 +1,9 @@
 package com.example.DataBaseCruca;
 
+import java.math.BigDecimal;
 /**
  * 
- * @author María
+ * @author Marï¿½a
  * @author Fran
  */
 import java.time.LocalDateTime;
@@ -12,12 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import coreapi.User;
+
 @Entity
-public class Payments {
+public class Payment{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Interger id;
+	private Integer id;
 	
 	private String concept;
 	private User user;

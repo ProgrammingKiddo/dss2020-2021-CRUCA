@@ -1,7 +1,9 @@
 package com.example.DataBaseCruca;
+import java.math.BigDecimal;
+
 /**
  * 
- * @author María
+ * @author Marï¿½a
  * @author Fran
  */
 import javax.persistence.Entity;
@@ -16,7 +18,7 @@ public class Reload {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Interger id;
+	private Integer id;
 	
 	private int dni;
 	private int nCard;

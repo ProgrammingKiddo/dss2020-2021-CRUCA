@@ -1,4 +1,4 @@
-package apihttp.src.main.java.apihttp;
+package apihttp;
 
 /**
  * Class which contains the API HTTP functions for the user can manage his card
@@ -21,16 +21,33 @@ import java.time.LocalDate;
 import java.time.Period;
 import coreapi.Order;
 import coreapi.OrderImpl;
+import coreapi.OrderService;
+
 import java.lang.String;
 import java.math.BigDecimal;
 import coreapi.User;
 import coreapi.Card;
 import coreapi.WrongTransactionException;
-import DataBaseCruca.*;
+import filepersistence.*;
+import com.example.DataBaseCruca.*;
 
 @RestController
 public class CardController 
 {
+	private DiskCardData DC;
+	private DiskUserData DU;
+	private DiskOrderData DO;
+	private OrderService OService;
+	private MailService MS;
+	public CardController(OrderService os)
+	{
+		this.DC = new DiskCardData("./");
+		this.DU = new DiskUserData("./");
+		this.DO = new DiskOrderData("./");
+		this.OService = os;
+		this.MS = new MailService();
+		
+	}
 	/**
 	 * Return the balance of the user card
 	 * 
@@ -43,8 +60,8 @@ public class CardController
 	@GetMapping("/card/userbalance/{parameters}")
 	public BigDecimal userBalance(@PathVariable("parameters") int dni, int Ncard)
 	{
-		Card c = Disk.LoadCard(Ncard);
-		User u = Load.LoadUser(dni);
+		Card c = DC.getCard(Ncard);
+		User u = DU.getUser(dni);
 		try
 		{
 			if(dni == c.getUserDni())
@@ -53,9 +70,12 @@ public class CardController
 			}
 			else
 			{
-				throw WrongTransactionException("User DNI and card user DNI are different");
+				throw new WrongTransactionException("User DNI and card user DNI are different");
 			}
 		}catch(WrongTransactionException e)
+		{
+			
+		}
 		
 	}
 	
@@ -68,14 +88,14 @@ public class CardController
 	 * @see ReloadRepository
 	 */
 	@PutMapping("/card/addbalance/{parameters}")
-	public void addBalance(@PathVariable("parameters") int nCard, BigDecimal newbalance)
+	public void addBalance(@PathVariable("parameters") int dni, int nCard, BigDecimal newbalance)
 	{
 		try
 		{
-			Card c = Load.LoadCard(nCard);
-			c.addBalance(newbalance);
+			Card c = DC.getCard(nCard);
+			c.addBalance(dni,nCard,newbalance);
 			ReloadRepository.save(new Reload(c.getUserDni(),nCard,newbalance,c.getBalance()));
-			Save.SaveCard(c);
+			DC.saveCard(c);
 		}catch(WrongTransactionException e)
 		{
 			
@@ -94,8 +114,8 @@ public class CardController
 	@PutMapping("/card/authpayment/{parameters}")
 	public void paymentAuthoritation(@PathVariable("parameters") int dni, int idOrd)
 	{
-		User u = Load.LoadUser(dni);
-		Order o = Load.LoadOrder(iOrd);
+		User u = DU.getUser(dni);
+		Order o = DO.getOrder(idOrd);
 		char[] chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUWXYZ".toCharArray();
 		int charsLength = chars.length;
 		Random r = new Random();
@@ -104,9 +124,9 @@ public class CardController
 		{
 			b.append(chars[r.nextInt(charsLength)]);
 		}
-		o.setCode(b.toString());
-		MailService.sendEmail(u.getEmail(), "Validation Code", "The code to validate the order is: " + b.toString());
-		Save.SaveOrder(o);
+		OService.setCode(b.toString());
+		MS.sendEmail(u.getEmail(), "Validation Code", "The code to validate the order is: " + b.toString());
+		DO.saveOrder(o);
 	}
 	
 	/**
@@ -125,11 +145,11 @@ public class CardController
 	{
 		try
 		{
-			Card c = Load.LoadCard(nCard);
-			User u = Load.LoadUser(dni);
-			c.deleteBalance(paybalance);
+			Card c = DC.getCard(nCard);
+			User u = DU.getUser(dni);
+			c.deleteBalance(dni,nCard,paybalance);
 			PaymentRepository.save(new Payment(concpt,u,paybalance));
-			Save.SaveCard(c);
+			DC.saveCard(c);
 		}catch(WrongTransactionException e)
 		{
 			
