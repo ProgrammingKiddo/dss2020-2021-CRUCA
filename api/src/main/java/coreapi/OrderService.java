@@ -199,9 +199,9 @@ public class OrderService
 	 * @param coffe		The cafeteria from which to calculate the cash register.
 	 * @param date		The day to which calculate the cash register.
 	 * @return 			Returns the combined cost of all orders made on the specified date.
-	 * @throws invalidDate	If the date is greater than the system date.
+	 * @throws InvalidDateException	If the date is greater than the system date.
 	 */
-	public BigDecimal getTotalDailyRegister(Cafeteria coffe, LocalDate date) throws invalidDate
+	public BigDecimal getTotalDailyRegister(Cafeteria coffe, LocalDate date) throws InvalidDateException
 	{
 		BigDecimal dailyRegister = BigDecimal.ZERO;
 		
@@ -217,7 +217,7 @@ public class OrderService
 		}
 		else
 		{
-			throw new invalidDate ("The date entered is greater than the current one, so there is no record for that date.");
+			throw new InvalidDateException ("The date entered is greater than the current one, so there is no record for that date.");
 		}
 		return dailyRegister;
 	}
@@ -228,9 +228,9 @@ public class OrderService
 	 * @param coffee		The cafeteria from which to calculate the cash register.
 	 * @param date		The day to which calculate the cash register.
 	 * @return 			Returns the number of orders that have been on the specified date.
-	 * @throws invalidDate	If the date is greater than the system date.
+	 * @throws InvalidDateException	If the date is greater than the system date.
 	 */
-	public int getNumberOfDailyOrders(Cafeteria coffee, LocalDate date) throws invalidDate
+	public int getNumberOfDailyOrders(Cafeteria coffee, LocalDate date) throws InvalidDateException
 	{
 		int numberOfOrders = 0;
 		if(date.compareTo(LocalDate.now()) <= 0)
@@ -246,7 +246,7 @@ public class OrderService
 		}
 		else
 		{
-			throw new invalidDate ("The date entered is greater than the current one, so there is no record for that date.");
+			throw new InvalidDateException ("The date entered is greater than the current one, so there is no record for that date.");
 		}
 		return numberOfOrders;
 	}

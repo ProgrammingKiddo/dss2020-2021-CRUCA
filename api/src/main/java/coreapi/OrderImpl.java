@@ -111,9 +111,9 @@ public class OrderImpl implements Order, Serializable {
 	/**
 	 * Sets the programming date of this order to the one passed by parameter.
 	 * @param pDate		The new programming date to set this order.
-	 * @throws invalidDate	If the date entered is before the current date.
+	 * @throws InvalidDateException	If the date entered is before the current date.
 	 */
-	public void setProgrammingDate(LocalDateTime pDate) throws invalidDate
+	public void setProgrammingDate(LocalDateTime pDate) throws InvalidDateException
 	{
 		try
 		{
@@ -123,9 +123,9 @@ public class OrderImpl implements Order, Serializable {
 			}
 			else
 			{
-				throw new invalidDate("Assigned date is not valid");
+				throw new InvalidDateException("Assigned date is not valid");
 			}
-		}catch(invalidDate ex)
+		}catch(InvalidDateException ex)
 		{
 			
 		}
