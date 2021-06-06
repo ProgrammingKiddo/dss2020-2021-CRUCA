@@ -7,9 +7,9 @@ package coreapi;
 * @see OrderService
 */
 
-public class InvalidQuantity extends Exception{
+public class InvalidQuantityException extends Exception{
 	
-	public InvalidQuantity(String message) {
+	public InvalidQuantityException(String message) {
 		super(message);
 	}
 }

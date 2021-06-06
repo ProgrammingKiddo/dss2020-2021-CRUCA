@@ -28,10 +28,10 @@ public class MainScreen
 	private Scanner keyboard;
 	private OrderService ordSer;
 	
-	MainScreen()
+	MainScreen(OrderService ordSer, Scanner keyboard)
 	{
-		keyboard = new Scanner(System.in);
-		ordSer = new OrderService();
+		this.keyboard = keyboard;
+		this.ordSer = ordSer;
 	}
 	/*--------------------------------------- MAIN_SCREEN --------------------------------------------- */
 	

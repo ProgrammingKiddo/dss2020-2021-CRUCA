@@ -1,18 +1,11 @@
 package terminalcli;
 
-import coreapi.Product;
-import coreapi.ProductNotContainedInOrderException;
-import coreapi.UnreachableStatusException;
 import coreapi.Cafeteria;
-import coreapi.InsufficientStockException;
-import coreapi.Order;
+import coreapi.InvalidDateException;
 import coreapi.OrderService;
-import coreapi.OrderFactory;
 
-import java.util.*;
-import java.time.DateTimeException;
+import java.util.Scanner;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
 
@@ -28,17 +21,24 @@ public class DailyRegisterScreen
 	private Scanner keyboard;
 	private OrderService ordSer;
 	
-	DailyRegisterScreen()
+	public DailyRegisterScreen(OrderService ordSer, Scanner keyboard)
 	{
-		keyboard = new Scanner(System.in);
-		ordSer = new OrderService();
+		this.keyboard = keyboard;
+		this.ordSer = ordSer;
 	}
 	
-	public void DailyRegisterScreen(Cafeteria coffee, LocalDate date)
+	public void showScreen(Cafeteria coffee, LocalDate date)
 	{
 	    char option;
-	    int numberOfOrders = ordSer.getNumberOfDailyOrders(coffee, date);
-	    BigDecimal daily = ordSer.getTotalDailyRegister(coffee, date);
+	    int numberOfOrders = 0;
+	    BigDecimal daily = BigDecimal.ZERO;
+	    try {
+	    	numberOfOrders = ordSer.getNumberOfDailyOrders(coffee, date);	    	
+	    	daily = ordSer.getTotalDailyRegister(coffee, date);
+	    } catch (InvalidDateException ex)
+	    {
+	    	System.out.println(ex.toString());
+	    }
 	    
 	    do
 	    {

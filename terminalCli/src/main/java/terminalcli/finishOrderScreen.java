@@ -20,10 +20,10 @@ public class finishOrderScreen
 	private Scanner keyboard;
 	private OrderService ordSer;
 	
-	finishOrderScreen()
+	finishOrderScreen(OrderService ordSer, Scanner keyboard)
 	{
-		keyboard = new Scanner(System.in);
-		ordSer = new OrderService();
+		this.keyboard = keyboard;
+		this.ordSer = ordSer;
 	}
 	
 	/*----------------------------------- FINISH_ORDER_SCREEM ----------------------------------- */
