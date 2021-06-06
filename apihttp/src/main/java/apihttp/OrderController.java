@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import coreapi.Cafeteria;
 import coreapi.Card;
 import coreapi.InsufficientStockException;
+import coreapi.InvalidDateException;
 import coreapi.OrderImpl;
 import coreapi.Order;
 import coreapi.OrderService;
@@ -22,7 +23,6 @@ import coreapi.OrderStatus;
 import coreapi.ProductNotContainedInOrderException;
 import coreapi.UnreachableStatusException;
 import coreapi.User;
-import coreapi.invalidDate;
 import filepersistence.DiskProductData;
 
 
@@ -169,7 +169,7 @@ public class OrderController {
 		try
 		{
 			return "La caja de la fecha introducida es: " + OService.getTotalDailyRegister(coffe, date) + " y el n�mero de pedidos ha sido: " + OService.getNumberOfDailyOrders(coffe,date);
-		}catch(invalidDate e)
+		}catch(InvalidDateException e)
 		{
 			return e.toString();
 		}
