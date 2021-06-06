@@ -1,19 +1,9 @@
 package terminalcli;
 
-import coreapi.Product;
-import coreapi.ProductNotContainedInOrderException;
-import coreapi.UnreachableStatusException;
+
 import coreapi.Cafeteria;
-import coreapi.InsufficientStockException;
 import coreapi.Order;
 import coreapi.OrderService;
-import coreapi.OrderFactory;
-
-import java.util.*;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.math.BigDecimal;
 
 
 /**
@@ -23,12 +13,35 @@ import java.math.BigDecimal;
  * @author Borja
  * @version 0.1
  */
-public interface Screen
+public class Screen
 {	
-	public void executeScreen();
+
+	public static Cafeteria activeCafeteria;
+	public static Order activeOrder;
+	public static OrderService ordSer;
+	public static String activeProductType;
 	
-	public void menuScreen();
+	public Screen()
+	{
+		this.activeCafeteria = Terminal.coffee;
+		this.ordSer = Terminal.ordSer; 
+	}
 	
-	public void option();
+	public void runCLI()
+	{
+		
+	}
 	
+	public void createUI()
+	{
+		UIElement mainScreen = new UIMenu("Software de Cafeteria UCA", "Salir", 'Q');
+		UIElement orderScreen = new UIMenu("Pedido en curso");
+		UIElement coffeeTypesScreen = new UIMenu("Tipo de productos");
+		UIElement coffeeProductsScreen = new UIMenu("Productos disponibles");
+		UIElement orderRemoveScreen = new UIMenu("Eliminar producto del pedido");
+		UIElement endOrderScreen = new UIMenu("Pedido en curso");
+		UIElement checkRegisterScreen = new UIMenu("Consulta de la caja de hoy");
+		
+		
+	}
 }
