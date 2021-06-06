@@ -1,40 +1,39 @@
 package apihttp;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.math.BigDecimal;
+import java.util.List;
+
+import coreapi.Cafeteria;
+import coreapi.Product;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import filepersistence.DiskProductData;
 
 @RestController
 public class ProductController {
-
-	private ProductImpl prod;
 	
-	public ProductController(ProductImpl p)
+	private Cafeteria coffee;
+	private DiskProductData DP;
+	
+	public ProductController(Cafeteria C)
 	{
-		this.prod = p;
+		this.coffee = C;
+		this.DP = new DiskProductData("./");
 	}
 	
-	@GetMapping("/products")
-	public int get_id() 
+	@GetMapping("/productstype/{type}")
+	public List<Product> getAvailabletypeProducts(@PathVariable String type) 
 	{
-		return prod.getId();
+		return coffee.getSpecificTypeProduct(type);
 	}
 	
-	@GetMapping("/products")
-	public BigDecimal get_price()
+	@GetMapping("/product/{id}")
+	public Product getSpecificProduct(@PathVariable int idP)
 	{
-		return prod.getPrice();
-	}
-	
-	@GetMapping("/products")
-	public String get_name()
-	{
-		return prod.getName();
-	}
-	
-	@GetMapping("/products")
-	public String get_type()
-	{
-		return prod.getType();
+		return DP.getProduct(idP);
 	}
 
 }

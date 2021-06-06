@@ -10,14 +10,21 @@ import java.time.LocalDateTime;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import coreapi.Cafeteria;
+import coreapi.Card;
 import coreapi.InsufficientStockException;
+import coreapi.OrderImpl;
 import coreapi.Order;
 import coreapi.OrderService;
 import coreapi.OrderStatus;
 import coreapi.ProductNotContainedInOrderException;
 import coreapi.UnreachableStatusException;
+import coreapi.User;
+import coreapi.invalidDate;
+import filepersistence.DiskProductData;
+
 
 /**
  * Class representing the functions which user can manage his orders
@@ -29,10 +36,13 @@ import coreapi.UnreachableStatusException;
 public class OrderController {
 
 	private final OrderService OService;
-	
+	private DiskProductData DP;
+	private MailService MS;
 	OrderController(OrderService os)
 	{
 		this.OService = os;
+		this.DP = new DiskProductData("./");
+		this.MS = new MailService();
 	}
 	
 	/**
@@ -50,7 +60,7 @@ public class OrderController {
 	public void addProductToOrder(@PathVariable("parameters") Cafeteria coffe, Order ord, int ProductId, int Quantity)
 	{
 		try {
-			OService.addProductToOrder(coffe,ord,ProductId,Quantity);			
+			OService.addProductToOrder(coffe,ord,DP.getProduct(ProductId),Quantity);			
 		} catch (InsufficientStockException ex)
 		{
 			
@@ -67,10 +77,10 @@ public class OrderController {
 	 * @see InsuffincientStockException
 	 */
 	@DeleteMapping("/orders/{parameters}")
-	public void removeProductFromOrder(@PathVariable("parameters") Order ord, int ProductId, int Quantity)
+	public void removeProductFromOrder(@PathVariable("parameters") Cafeteria coffee, Order ord, int ProductId, int Quantity)
 	{
 		try {
-			OService.removeProductFromOrder(ord,ProductId,Quantity);		
+			OService.removeProductFromOrder(coffee,ord,DP.getProduct(ProductId),Quantity);		
 		} catch (InsufficientStockException ex)
 		{
 			
@@ -102,22 +112,22 @@ public class OrderController {
 			switch(status)
 			{
 				case IN_KITCHEN:
-					if(ord.validationStock(coffee))
+					if(OService.getValidationStock(ord,coffee))
 					{	
 						OService.OrderStatus_InKitchen(ord);
-						MailService.sendEmail(coffee.getEmail(),"Order " + ord.getId(), "This order is programming"
-							+ " to the date: " + ord.getProgrammingDate());
+						MS.sendEmail(coffee.getEmail(),"Order " + ord.getId(), "This order is programming"
+							+ " to the date: " + OService.getProgrammingDate(ord));
 					}
 					else
 					{
-						throw UnreachableStatusException("There isn't enough stock of any of your products");
+						throw new UnreachableStatusException("There isn't enough stock of any of your products");
 					}
 					break;
 				case DELIVERED:
 					OService.OrderStatus_Delivered(ord);
 					break;
 				case PAYED:
-					RestTemplate rt = new RestTemplate();
+					/*RestTemplate rt = new RestTemplate();
 					boolean cft;
 					BigDecimal bl = rt.getForObject("http://localhost:8080/apihttp/card/userbalance/{parameters}",BigDecimal,user.getDni(),c.getCardNumber());
 					if((bl - ord.totalCost()) >= -10)
@@ -128,7 +138,8 @@ public class OrderController {
 						{
 							OService.OrderStatus_Payed(ord);
 						}
-					}
+					}*/
+					OService.OrderStatus_Payed(ord);
 					break;
 				case FINISHED:
 					OService.OrderStatus_Finished(ord);
@@ -155,7 +166,13 @@ public class OrderController {
 	@GetMapping("/orders/{parameters}")
 	public String DailyRegister(@PathVariable("parameters") Cafeteria coffe, LocalDate date)
 	{
-		return "La caja de la fecha introducida es: " + OService.getTotalDailyRegister(coffe, date) + " y el n�mero de pedidos ha sido: " + OService.getNumberOfDailyOrders(coffe,date);
+		try
+		{
+			return "La caja de la fecha introducida es: " + OService.getTotalDailyRegister(coffe, date) + " y el n�mero de pedidos ha sido: " + OService.getNumberOfDailyOrders(coffe,date);
+		}catch(invalidDate e)
+		{
+			return e.toString();
+		}
 	}
 	
 	/**
@@ -169,7 +186,7 @@ public class OrderController {
 	@GetMapping("/order/payauth/{parameters}")
 	public boolean payConfirmation(@PathVariable("parameters") Order Ord, String code)
 	{
-		return Ord.getCode().equalsIgnoreCase(code);
+		return OService.getValidationCode(Ord).equalsIgnoreCase(code);
 	}
 	
 	/**
@@ -181,6 +198,7 @@ public class OrderController {
 	 * @see Card
 	 * @see LocalDateTime
 	 */
+	/*
 	@DeleteMapping("/order/cancelorder/{parameters}")
 	public void cancelOrder(@PathVariable("parameters") Order ord, Card c)
 	{
@@ -204,6 +222,6 @@ public class OrderController {
 		{
 			
 		}
-	}
+	}*/
 	
 }

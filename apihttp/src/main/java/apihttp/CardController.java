@@ -5,18 +5,28 @@ package apihttp.src.main.java.apihttp;
  * @author Mar�a
  * @author Fran
  */
-import filepersistence;
+import filepersistence.*;
 
 import java.util.Random;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import api.src.main.java.coreapi.List;
-import api.src.main.java.coreapi.LocalDate;
-import api.src.main.java.coreapi.Order;
-import api.src.main.java.coreapi.Period;
-import api.src.main.java.coreapi.String;
+import java.util.List;
+import java.time.LocalDate;
+import java.time.Period;
+import coreapi.Order;
+import coreapi.OrderImpl;
+import java.lang.String;
+import java.math.BigDecimal;
+import coreapi.User;
+import coreapi.Card;
+import coreapi.WrongTransactionException;
+import DataBaseCruca.*;
 
 @RestController
 public class CardController 
@@ -33,7 +43,7 @@ public class CardController
 	@GetMapping("/card/userbalance/{parameters}")
 	public BigDecimal userBalance(@PathVariable("parameters") int dni, int Ncard)
 	{
-		Card c = Load.LoadCard(Ncard);
+		Card c = Disk.LoadCard(Ncard);
 		User u = Load.LoadUser(dni);
 		try
 		{
@@ -64,7 +74,7 @@ public class CardController
 		{
 			Card c = Load.LoadCard(nCard);
 			c.addBalance(newbalance);
-			ReloadRepository.save(new Reload(c.getUserDni,nCard,newbalance,c.getBalace()));
+			ReloadRepository.save(new Reload(c.getUserDni(),nCard,newbalance,c.getBalance()));
 			Save.SaveCard(c);
 		}catch(WrongTransactionException e)
 		{
@@ -117,7 +127,7 @@ public class CardController
 		{
 			Card c = Load.LoadCard(nCard);
 			User u = Load.LoadUser(dni);
-			c.deleteBalance(newbalance);
+			c.deleteBalance(paybalance);
 			PaymentRepository.save(new Payment(concpt,u,paybalance));
 			Save.SaveCard(c);
 		}catch(WrongTransactionException e)

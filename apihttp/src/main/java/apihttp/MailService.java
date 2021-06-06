@@ -1,11 +1,15 @@
-package apihttp.src.main.java.apihttp;
+package apihttp;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 /**
  * Class representing the mail service used for our application
  * @author María
  * 
  */
-import 
 
 @Service
 public class MailService 

@@ -228,4 +228,17 @@ public class Cafeteria implements Serializable
 			types.remove(type);
 		}
 	}
+	
+	public List<Product> getSpecificTypeProduct(String type)
+	{
+		List<Product> p = getAvailableProducts();
+		for(Product cP : p)
+		{
+			if(cP.getType() != type)
+			{
+				p.remove(cP);
+			}
+		}
+		return p;	
+	}
 }

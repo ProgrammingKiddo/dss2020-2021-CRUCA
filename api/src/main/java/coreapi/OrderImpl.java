@@ -85,6 +85,10 @@ public class OrderImpl implements Order, Serializable {
 		return programmingDate;
 	}
 	
+	public String getCode()
+	{
+		return validationCode;
+	}
 	/**
 	 * Set the validation code of this order to the one passed by parameter.
 	 * @param vC	The new validation code to set this order.

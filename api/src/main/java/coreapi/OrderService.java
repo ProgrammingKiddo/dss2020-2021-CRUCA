@@ -2,6 +2,7 @@ package coreapi;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import data.*;
 
@@ -250,4 +251,21 @@ public class OrderService
 		return numberOfOrders;
 	}
 	
+	public String getValidationCode(Order ord)
+	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
+		return orderDownCast.getCode();
+	}
+	
+	public boolean getValidationStock(Order ord, Cafeteria c)
+	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
+		return orderDownCast.validationStock(c);
+	}
+	
+	public LocalDateTime getProgrammingDate(Order ord)
+	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
+		return orderDownCast.getProgrammingDate();
+	}
 }

@@ -1,14 +1,20 @@
-package apihttp.src.main.java.apihttp;
-import filepersistence;
+package apihttp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import api.src.main.java.coreapi.List;
-import api.src.main.java.coreapi.LocalDate;
-import api.src.main.java.coreapi.Order;
-import api.src.main.java.coreapi.Period;
-import api.src.main.java.coreapi.String;
+import java.util.List;
+import java.time.LocalDate;
+import java.time.Period;
+import coreapi.Order;
+import java.lang.String;
+import coreapi.User;
+import filepersistence.DiskUserData;
  /**
   * This class contains the functions to obtain or change information about the system users
   * 
@@ -20,7 +26,12 @@ import api.src.main.java.coreapi.String;
 @RestController
 public class UserController 
 {
+	private DiskUserData DU;
 	
+	public UserController()
+	{
+		this.DU = new DiskUserData("./");
+	}
 	/**
 	 * Obtain a specific user object by the identifier
 	 * @param dni Identifier of the user
@@ -31,7 +42,7 @@ public class UserController
 	@GetMapping("/users/profile/{dni}")
     User getUser(@PathVariable int dni)
     {
-        return DiskUserData.getUser(dni);
+        return DU.getUser(dni);
     }
     
 	/**
@@ -44,7 +55,7 @@ public class UserController
     @PutMapping("/users/editProfile/{user}")
     void editProfile(@RequestBody User user)
     {
-    	DiskUserData.saveUser(user);
+    	DU.saveUser(user);
     }
     
     /**
@@ -58,6 +69,7 @@ public class UserController
     @GetMapping("/users/getorders/{dni}")
     List<Order> getOrders(@PathVariable int dni)
     {
-    	return User.getUserOrderList(dni);
+    	User u = DU.getUser(dni);
+    	return u.getUserOrderList();
     }
 }
