@@ -9,13 +9,13 @@ package coreapi;
 * @see OrderService
 */
 
-public class invalidDate extends Exception{
+public class InvalidDateException extends Exception{
 	/**
 	* Create a new exception of this type, detailing the message.
 	* the details of the date you are trying to assign.
 	* @param message 	The message detailing the details of the problem.
 	*/
-	public invalidDate(String message)
+	public InvalidDateException(String message)
 	{
 		super(message);
 	}
