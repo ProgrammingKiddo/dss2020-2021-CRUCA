@@ -5,8 +5,8 @@ package commands;
  */
 
 import terminalcli.Screen;
-import terminalcli.UIElement;
-import terminalcli.UIMenu;
+import ui.UIElement;
+import ui.UIMenu;
 
 import java.util.List;
 

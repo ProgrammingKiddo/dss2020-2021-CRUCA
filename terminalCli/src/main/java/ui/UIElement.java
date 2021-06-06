@@ -1,4 +1,4 @@
-package terminalcli;
+package ui;
 
 public interface UIElement {
 

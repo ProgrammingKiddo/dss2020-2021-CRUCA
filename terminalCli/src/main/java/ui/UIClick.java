@@ -1,4 +1,4 @@
-package terminalcli;
+package ui;
 
 import commands.Command;
 
