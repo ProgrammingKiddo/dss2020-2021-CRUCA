@@ -20,10 +20,10 @@ public class RemoveProduct implements Command {
 		this.prod = prod;
 	}
 	
-	public void execute()
+	public void execute(Screen context)
 	{
 		try {
-			Screen.ordSer.removeProductFromOrder(Screen.activeCafeteria, Screen.activeOrder, prod, 1);			
+			context.ordSer.removeProductFromOrder(context.activeCafeteria, context.activeOrder, prod, 1);			
 		} catch (InsufficientStockException ex)
 		{
 			System.err.println(ex.toString());

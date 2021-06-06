@@ -21,9 +21,9 @@ public abstract class ShowProductTypes implements Command {
 		productType = type;
 	}
 	
-	public void execute()
+	public void execute(Screen context)
 	{
-		List<String> types = Screen.activeCafeteria.getTypes();
+		List<String> types = context.activeCafeteria.getTypes();
 		
 		for(String type : types)
 		{

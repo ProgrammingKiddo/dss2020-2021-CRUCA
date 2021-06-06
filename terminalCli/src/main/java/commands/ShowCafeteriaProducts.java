@@ -10,7 +10,7 @@ import terminalcli.Screen;
 
 public class ShowCafeteriaProducts implements Command {
 
-	public void execute()
+	public void execute(Screen context)
 	{
 		
 	}
