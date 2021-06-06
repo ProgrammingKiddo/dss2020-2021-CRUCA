@@ -1,11 +1,13 @@
 package com.example.DataBaseCruca;
 /**
  * 
- * @author María
+ * @author Marï¿½a
  * @author Fran
  */
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ReloadRepository extends CrudRepository<Reload,Integer>{
 
 }

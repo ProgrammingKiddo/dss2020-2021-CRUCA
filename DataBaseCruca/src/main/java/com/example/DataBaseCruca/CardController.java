@@ -25,6 +25,7 @@ import coreapi.OrderService;
 
 import java.lang.String;
 import java.math.BigDecimal;
+import apihttp.MailService;
 import coreapi.User;
 import coreapi.Card;
 import coreapi.WrongTransactionException;
@@ -40,6 +41,8 @@ public class CardController
 	private OrderService OService;
 	private MailService MS;
 	private ReloadRepository RR;
+	private PaymentRepository PR;
+	
 	public CardController(OrderService os)
 	{
 		this.DC = new DiskCardData("./");
@@ -47,6 +50,8 @@ public class CardController
 		this.DO = new DiskOrderData("./");
 		this.OService = os;
 		this.MS = new MailService();
+		this.RR = context.getBean(ReloadRepository.class);
+		this.PR = context.getBean(PaymentRepository.class);
 		
 	}
 	/**
@@ -94,8 +99,9 @@ public class CardController
 		try
 		{
 			Card c = DC.getCard(nCard);
+			Reload r = new Reload(c.getUserDni(),nCard,newbalance,c.getBalance());
 			c.addBalance(dni,nCard,newbalance);
-			ReloadRepository.save(new Reload(c.getUserDni(),nCard,newbalance,c.getBalance()));
+			r = RR.save(r);
 			DC.saveCard(c);
 		}catch(WrongTransactionException e)
 		{
@@ -125,7 +131,7 @@ public class CardController
 		{
 			b.append(chars[r.nextInt(charsLength)]);
 		}
-		OService.setCode(b.toString());
+		OService.setCode(b.toString(),o);
 		MS.sendEmail(u.getEmail(), "Validation Code", "The code to validate the order is: " + b.toString());
 		DO.saveOrder(o);
 	}
@@ -148,8 +154,9 @@ public class CardController
 		{
 			Card c = DC.getCard(nCard);
 			User u = DU.getUser(dni);
+			Payment p = new Payment(concpt,u,paybalance)
 			c.deleteBalance(dni,nCard,paybalance);
-			PaymentRepository.save(new Payment(concpt,u,paybalance));
+			p = PR.save(p);
 			DC.saveCard(c);
 		}catch(WrongTransactionException e)
 		{
