@@ -23,7 +23,7 @@ public abstract class ShowProductTypes implements Command {
 	
 	public void execute(Screen context)
 	{
-		List<String> types = context.activeCafeteria.getTypes();
+		List<String> types = context.activeCoffee.getTypes();
 		
 		for(String type : types)
 		{

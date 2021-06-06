@@ -22,7 +22,7 @@ public class AddProduct implements Command {
 	public void execute(Screen context)
 	{
 		try {
-			context.ordSer.addProductToOrder(context.activeCafeteria, context.activeOrder, prod, 1);			
+			context.ordSer.addProductToOrder(context.activeCoffee, context.activeOrder, prod, 1);			
 		} catch (InsufficientStockException ex)
 		{
 			System.err.println(ex.toString());

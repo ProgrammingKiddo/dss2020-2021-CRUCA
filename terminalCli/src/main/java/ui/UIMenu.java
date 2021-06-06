@@ -43,7 +43,7 @@ public class UIMenu implements UIElement {
 		do
 		{
 			// If this menu has an associated action, run it before writing to screen
-			if (action != null)	action.execute();
+			//if (action != null)	action.execute();
 			printMenu();
 			
 			option = keyboard.nextLine();
