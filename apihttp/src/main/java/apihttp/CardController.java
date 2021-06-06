@@ -39,6 +39,7 @@ public class CardController
 	private DiskOrderData DO;
 	private OrderService OService;
 	private MailService MS;
+	private ReloadRepository RR;
 	public CardController(OrderService os)
 	{
 		this.DC = new DiskCardData("./");
