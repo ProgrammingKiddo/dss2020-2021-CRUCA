@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import coreapi.Cafeteria;
@@ -216,7 +217,7 @@ public class Screen
 	        {
 	        	if (p.getType().equals(type))
 	        	{
-	        		System.out.println(counter + ". " + p.getName() + " (" + p.getPrice() + " euros)");
+	        		System.out.println(counter + ". " + p.getName() + " (" + p.getPrice().doubleValue() + " euros)");
 	        		counter++;	        		
 	        	}
 	        }
@@ -226,11 +227,14 @@ public class Screen
 	        }
 	        System.out.println("R. Volver a pantalla anterior");
 	        System.out.println("---------------------------------------------");
-	        System.out.println("Introduzca una opcion");
-	        option = keyboard.nextLine();
+	        System.out.print("Introduzca una opcion: ");
+
+	        option = keyboard.nextLine();	        	
+
 	        
 	        if (!option.equalsIgnoreCase("R"))
 	        {
+	        	System.out.print("Introduzca una cantidad: ");
 	        	// Get the product and the quantity to add
 	        	try {
 	        		chosenProduct = Integer.parseInt(option);
@@ -257,6 +261,7 @@ public class Screen
 	        	// Add the amount of product to the order
 	        	if (correctChoice == true)
 	        	{
+	        		System.out.println("\nProcessing the product...");
 	        		try {
 	        			ordSer.addProductToOrder(activeCoffee, activeOrder, availableProducts.get(chosenProduct-1), productQuantity);
 	        		} catch (InsufficientStockException ex)
