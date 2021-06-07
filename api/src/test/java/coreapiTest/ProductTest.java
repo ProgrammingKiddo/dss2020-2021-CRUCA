@@ -16,7 +16,7 @@ import org.junit.Test;
 
 public class ProductTest
 {
-	private Product myProduct = ProductCatalog.Instance().getProduct(3);
+	private Product myProduct = new ProductImpl(3, new BigDecimal(0.5), "Doritos","Comida");
 	
 	@Test
 	public void IdCheckProduct()
@@ -34,5 +34,11 @@ public class ProductTest
 	public void NameCheckProduct()
 	{
 		Assert.assertEquals("DifferentNameAtProduct1", "Doritos", myProduct.getName());
+	}
+	
+	@Test
+	public void TypeCheckProduct()
+	{
+		Assert.assertEquals("DifferentTypeAtProduct1", "Comida", myProduct.getType());
 	}
 }

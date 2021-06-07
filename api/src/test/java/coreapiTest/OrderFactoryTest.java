@@ -14,7 +14,7 @@ import org.junit.Test;
 public class OrderFactoryTest 
 {
 	private Order ord1, ord2;
-	private Cafeteria cafet = new Cafeteria(0, "Santa Fe");
+	private Cafeteria cafet = new Cafeteria(0, "Santa Fe", "santafe@gmail.com");
 	
 	@Before
 	public void setUp()

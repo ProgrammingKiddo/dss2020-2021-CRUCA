@@ -36,5 +36,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path="/terminalcli"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
