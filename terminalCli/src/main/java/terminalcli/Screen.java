@@ -104,12 +104,12 @@ public class Screen
 	
 	public void orderInProgress_Screen()
     {
-		Order ord = OrderFactory.createOrder(activeCoffee, LocalDateTime.now());
+		activeOrder = OrderFactory.createOrder(activeCoffee, LocalDateTime.now());
         char option;
         
         do
         {
-            System.out.println("Pedido en curso (" + ord.getId() + ")");
+            System.out.println("Pedido en curso (" + activeOrder.getId() + ")");
             System.out.println("---------------------------------------------");
             System.out.println("1. Añadir producto."); 
             System.out.println("2. Eliminar producto.");
