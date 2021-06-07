@@ -10,19 +10,19 @@ import org.junit.Test;
 
 import coreapi.Menu;
 import coreapi.Product;
-import coreapi.ProductCatalog;
-
+import data.ProductData;
+import coreapi.ProductImpl;
 
 public class MenuTest
 {
 	private Menu myMenu;
-	private Product product1 = ProductCatalog.Instance().getProduct(0);
-	private Product product2 = ProductCatalog.Instance().getProduct(1);
+	private Product product1 = new ProductImpl(0,new BigDecimal(1),"Botella de agua 1l","Bebidas");
+	private Product product2 = new ProductImpl(1,new BigDecimal(1.75),"Bocadillo de Tortilla","Bocadillos");
 	
 	@Before
 	public void setUp()
 	{
-		myMenu = new Menu(1, "Oro");
+		myMenu = new Menu(1, "Oro", "Menu");
 	}
 	
 	@After
@@ -37,7 +37,7 @@ public class MenuTest
 		myMenu.addProductToMenu(product1, 1);
 		myMenu.addProductToMenu(product2, 4);
 		Assert.assertTrue(myMenu.getProductsInMenu().contains(product1));
-		Assert.assertEquals(4, myMenu.getProductQuantity(product2.getId()));
+		Assert.assertEquals(4, myMenu.getProductQuantity(product2));
 	}
 	
 	@Test

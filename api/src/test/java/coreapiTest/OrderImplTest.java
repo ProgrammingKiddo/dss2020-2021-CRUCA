@@ -18,9 +18,9 @@ import org.junit.Test;
 public class OrderImplTest {
 
 	private OrderImpl myOrder;
-	private Cafeteria cafet = new Cafeteria(0, "Santa Fe");
-	private Product product1 = ProductCatalog.Instance().getProduct(0);
-	private Product product2 = ProductCatalog.Instance().getProduct(1);
+	private Cafeteria cafet = new Cafeteria(0, "Santa Fe", "santafe@gmail.com");
+	private Product product1 = new ProductImpl(0, new BigDecimal(1.2), "Patatas fritas", "Comida");
+	private Product product2 = new ProductImpl(1, new BigDecimal(1.7), "Bacon-queso-huevo","Menu");
 	
 	@Before
 	public void setUp()
@@ -56,27 +56,27 @@ public class OrderImplTest {
 	@Test
 	public void ContainsProductCheck()
 	{
-		Assert.assertFalse(myOrder.containsProduct(product1.getId()));
-		myOrder.addProduct(product1.getId());
-		Assert.assertTrue(myOrder.containsProduct(product1.getId()));
+		Assert.assertFalse(myOrder.containsProduct(product1));
+		myOrder.addProduct(product1);
+		Assert.assertTrue(myOrder.containsProduct(product1));
 	}
 	
 	@Test
 	public void ProductQuantityCheck()
 	{
-		Assert.assertEquals(0,  myOrder.checkProductQuantity(product1.getId()));
-		myOrder.addProduct(product1.getId());
-		Assert.assertEquals(1,  myOrder.checkProductQuantity(product1.getId()));
+		Assert.assertEquals(0,  myOrder.checkProductQuantity(product1));
+		myOrder.addProduct(product1);
+		Assert.assertEquals(1,  myOrder.checkProductQuantity(product1));
 	}
 	
 	@Test
 	public void GetProductsCheck()
 	{
-		myOrder.addProduct(product1.getId());
-		myOrder.addProduct(product2.getId());
+		myOrder.addProduct(product1);
+		myOrder.addProduct(product2);
 		List<Product> tempList = myOrder.getProducts();
-		Assert.assertEquals(product1.getId(), tempList.get(tempList.indexOf(product1)).getId());
-		Assert.assertEquals(product2.getId(), tempList.get(tempList.indexOf(product2)).getId());
+		Assert.assertEquals(product1, tempList.get(tempList.indexOf(product1)));
+		Assert.assertEquals(product2, tempList.get(tempList.indexOf(product2)));
 	}
 	
 	@Test
@@ -88,8 +88,8 @@ public class OrderImplTest {
 	@Test
 	public void GetBasketCheck()
 	{
-		myOrder.addProduct(product1.getId(), 2);
-		myOrder.addProduct(product2.getId(), 4);
+		myOrder.addProduct(product1, 2);
+		myOrder.addProduct(product2, 4);
 		Map<Product, Integer> tempMap = myOrder.getBasket();
 		Assert.assertEquals(2, tempMap.get(product1).intValue());
 		Assert.assertEquals(4, tempMap.get(product2).intValue());
@@ -105,57 +105,54 @@ public class OrderImplTest {
 	@Test
 	public void AddSingleProductCheck()
 	{
-		//Assert.assertFalse(myOrder.containsProduct(Product1.getId()));
-		myOrder.addProduct(product1.getId());
-		Assert.assertTrue(myOrder.containsProduct(product1.getId()));
+		myOrder.addProduct(product1);
+		Assert.assertTrue(myOrder.containsProduct(product1));
 	}
 	
 	@Test
 	public void AddProductQuantityCheck()
 	{
-		//Assert.assertEquals(0, myOrder.checkProductQuantity(Product1.getId()));
-		myOrder.addProduct(product1.getId(), 4);
-		Assert.assertEquals(4,  myOrder.checkProductQuantity(product1.getId()));
+		myOrder.addProduct(product1, 4);
+		Assert.assertEquals(4,  myOrder.checkProductQuantity(product1));
 	}
 	
 	@Test
 	public void AddNonPositiveProductQuantityCheck()
 	{
-		//Assert.assertEquals(0, myOrder.checkProductQuantity(Product1.getId()));
-		myOrder.addProduct(product1.getId(), -4);
-		Assert.assertFalse(myOrder.containsProduct(product1.getId()));
-		myOrder.addProduct(product1.getId(), 0);
-		Assert.assertFalse(myOrder.containsProduct(product1.getId()));
+		myOrder.addProduct(product1, -4);
+		Assert.assertFalse(myOrder.containsProduct(product1));
+		myOrder.addProduct(product1, 0);
+		Assert.assertFalse(myOrder.containsProduct(product1));
 	}
 	
 	@Test
 	public void RemoveAllProductCheck()
 	{
-		myOrder.addProduct(product1.getId());
-		myOrder.removeProduct(product1.getId());
-		Assert.assertFalse(myOrder.containsProduct(product1.getId()));
+		myOrder.addProduct(product1);
+		myOrder.removeProduct(product1);
+		Assert.assertFalse(myOrder.containsProduct(product1));
 		
-		myOrder.addProduct(product1.getId(), 4);
-		myOrder.removeProduct(product1.getId(), 5);
-		Assert.assertFalse(myOrder.containsProduct(product1.getId()));
+		myOrder.addProduct(product1, 4);
+		myOrder.removeProduct(product1, 5);
+		Assert.assertFalse(myOrder.containsProduct(product1));
 	}
 	
 	@Test
 	public void RemoveProductQuantityCheck()
 	{
-		myOrder.addProduct(product1.getId(), 4);
-		myOrder.removeProduct(product1.getId(), 1);
-		Assert.assertEquals(3, myOrder.checkProductQuantity(product1.getId()));
+		myOrder.addProduct(product1, 4);
+		myOrder.removeProduct(product1, 1);
+		Assert.assertEquals(3, myOrder.checkProductQuantity(product1));
 	}
 	
 	@Test
 	public void RemoveNonPositiveProductQuantityCheck()
 	{
-		myOrder.addProduct(product1.getId(), 4);
-		myOrder.removeProduct(product1.getId(), -4);
-		Assert.assertEquals(4, myOrder.checkProductQuantity(product1.getId()));
-		myOrder.removeProduct(product1.getId(), 0);
-		Assert.assertEquals(4, myOrder.checkProductQuantity(product1.getId()));
+		myOrder.addProduct(product1, 4);
+		myOrder.removeProduct(product1, -4);
+		Assert.assertEquals(4, myOrder.checkProductQuantity(product1));
+		myOrder.removeProduct(product1, 0);
+		Assert.assertEquals(4, myOrder.checkProductQuantity(product1));
 	}
 	
 	@Test
@@ -167,8 +164,8 @@ public class OrderImplTest {
 	@Test
 	public void TotalCostCheck()
 	{
-		myOrder.addProduct(product1.getId(), 2);
-		myOrder.addProduct(product2.getId(), 4);
+		myOrder.addProduct(product1, 2);
+		myOrder.addProduct(product2, 4);
 		
 		BigDecimal product1Cost = product1.getPrice();
 		BigDecimal product2Cost = product2.getPrice();

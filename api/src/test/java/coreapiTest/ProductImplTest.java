@@ -18,7 +18,7 @@ import org.junit.Test;
 
 public class ProductImplTest
 {
-	private ProductImpl myProduct = (ProductImpl) ProductCatalog.Instance().getProduct(0);
+	private ProductImpl myProduct = new ProductImpl(0, new BigDecimal(1.2), "Patatas fritas", "Comida");
 	
 	@Test
 	public void IdCheckProductImpl()
@@ -36,5 +36,11 @@ public class ProductImplTest
 	public void NameCheckProductImpl()
 	{
 		Assert.assertEquals("DifferentNameAtProductImpl1", "Patatas fritas", myProduct.getName());
+	}
+	
+	@Test
+	public void TypeCheckProductImpl()
+	{
+		Assert.assertEquals("DifferentTypeAtProductImpl1", "Comida", myProduct.getType());
 	}
 }

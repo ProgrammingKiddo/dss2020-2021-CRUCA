@@ -18,24 +18,24 @@ public class OrderServiceTest
 	private OrderImpl myOrder;
 	private OrderService ordSer;
 	private LocalDate date;
-	private Product product1 = ProductCatalog.Instance().getProduct(0);
-	private Product product2 = ProductCatalog.Instance().getProduct(1);
-	private Product product3 = ProductCatalog.Instance().getProduct(2);
+	private Product product0 = new ProductImpl(0, new BigDecimal(1.2), "Patatas fritas", "Comida");
+	private Product product1 = new ProductImpl(1, new BigDecimal(1.7), "Bacon-queso-huevo","Menu");
+	private Product product2 = new ProductImpl(2, new BigDecimal(0.9), "Café con leche","Bebida");
 
 	
 	@Before
 	public void setUp()
 	{
-		coffe = new Cafeteria(0, "Cafeteria de Santa Fe");
+		coffe = new Cafeteria(0, "Cafeteria de Santa Fe","santafe@gmail.com");
 		date = LocalDate.now();
-		myOrder = (OrderImpl) OrderFactory.createOrder(coffe, date);
+		myOrder = (OrderImpl) OrderFactory.createOrder(coffe);
 		ordSer = new OrderService();
 		coffe.registerOrder(myOrder);
 		
 		// We introduce the products to the cafeteria with a certain stock
-		coffe.registerProduct(product1, 8);
-		coffe.registerProduct(product2, 35);
-		coffe.registerProduct(product3, 30);
+		coffe.registerProduct(product0, 8);
+		coffe.registerProduct(product1, 35);
+		coffe.registerProduct(product2, 30);
 	}
 	
 	@After
@@ -58,13 +58,13 @@ public class OrderServiceTest
 	{
 		try
 		{
-			ordSer.addProductToOrder(coffe, myOrder, 1, 30);
+			ordSer.addProductToOrder(coffe, myOrder, product1, 30);
 		}
 		catch(Exception e) 
 		{
 			System.err.println(e.getMessage());
 		}
-		Assert.assertEquals(30, myOrder.checkProductQuantity(1));
+		Assert.assertEquals(30, myOrder.checkProductQuantity(product1));
 	}
 	
 	@Test
@@ -74,9 +74,9 @@ public class OrderServiceTest
 	public void addProductToOrder_NoStock()
 	{
 		Assert.assertThrows(InsufficientStockException.class, () -> {
-			ordSer.addProductToOrder(coffe, myOrder, 0, 10);
+			ordSer.addProductToOrder(coffe, myOrder, product0, 10);
 		});
-		Assert.assertFalse(myOrder.containsProduct(0));
+		Assert.assertFalse(myOrder.containsProduct(product0));
 	}
 
 	
@@ -91,15 +91,15 @@ public class OrderServiceTest
 	{
 		try
 		{
-			ordSer.addProductToOrder(coffe, myOrder, 2, 15);
-			ordSer.removeProductFromOrder(coffe, myOrder, 2, 10);
+			ordSer.addProductToOrder(coffe, myOrder, product2, 15);
+			ordSer.removeProductFromOrder(coffe, myOrder, product2, 10);
 		}
 		catch(Exception e)
 		{
 			System.err.println(e.getMessage());
 		}
 		Assert.assertEquals("The incorrect amount of product was removed from the order.", 5,
-				myOrder.checkProductQuantity(2));
+				myOrder.checkProductQuantity(product2));
 	}
 	
 	@Test
@@ -110,16 +110,16 @@ public class OrderServiceTest
 	public void removeProductFromOrder_NotEnoughQuantity()
 	{
 		try {
-			ordSer.addProductToOrder(coffe, myOrder, 2, 1);
+			ordSer.addProductToOrder(coffe, myOrder, product2, 1);
 		}
 		catch(Exception e)
 		{
 			System.err.println(e.getMessage());
 		}
 		Assert.assertThrows(InsufficientStockException.class, () -> {
-			ordSer.removeProductFromOrder(coffe, myOrder, 2, 100);
+			ordSer.removeProductFromOrder(coffe, myOrder, product2, 100);
 		});
-		Assert.assertEquals(1, myOrder.checkProductQuantity(2));
+		Assert.assertEquals(1, myOrder.checkProductQuantity(product2));
 	}
 	
 	@Test
@@ -130,7 +130,7 @@ public class OrderServiceTest
 	public void removeProductFromOrder_NotInBasket()
 	{
 		Assert.assertThrows(ProductNotContainedInOrderException.class, () -> {
-			ordSer.removeProductFromOrder(coffe, myOrder, 0, 4);
+			ordSer.removeProductFromOrder(coffe, myOrder, product0, 4);
 		});
 		
 	}
@@ -190,23 +190,23 @@ public class OrderServiceTest
 	 */
 	public void testGetDailyRegister()
 	{
-		OrderImpl auxOrder1 = (OrderImpl) OrderFactory.createOrder(coffe, date);
-		OrderImpl auxOrder2 = (OrderImpl) OrderFactory.createOrder(coffe, date);
+		OrderImpl auxOrder1 = (OrderImpl) OrderFactory.createOrder(coffe);
+		OrderImpl auxOrder2 = (OrderImpl) OrderFactory.createOrder(coffe);
 		coffe.registerOrder(auxOrder1);
 		coffe.registerOrder(auxOrder2);
 		
 		try {
-			ordSer.addProductToOrder(coffe, myOrder, 0, 3);
-			ordSer.addProductToOrder(coffe, myOrder, 1, 1);
-			ordSer.addProductToOrder(coffe, auxOrder1, 1, 4);
-			ordSer.addProductToOrder(coffe, auxOrder2, 2, 8);			
+			ordSer.addProductToOrder(coffe, myOrder, product0, 3);
+			ordSer.addProductToOrder(coffe, myOrder, product1, 1);
+			ordSer.addProductToOrder(coffe, auxOrder1, product1, 4);
+			ordSer.addProductToOrder(coffe, auxOrder2, product2, 8);			
 		}
 		catch (Exception e) { }
 		
 		BigDecimal expectedRegister = BigDecimal.ZERO;
 		expectedRegister = expectedRegister.add(myOrder.totalCost()).add(auxOrder1.totalCost()).add(auxOrder2.totalCost());
 
-		Assert.assertEquals(0, expectedRegister.compareTo(ordSer.getDailyRegister(coffe, date)));
+		Assert.assertEquals(0, expectedRegister.compareTo(ordSer.getTotalDailyRegister(coffe, date)));
 	
 	}
 }
