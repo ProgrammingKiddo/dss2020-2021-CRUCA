@@ -1,5 +1,7 @@
 package commands;
 
+import terminalcli.Screen;
+
 /**
  * @author Borja_FM
  */
@@ -7,5 +9,5 @@ package commands;
 
 public interface Command {
 
-	public void execute();
+	public void execute(Screen context);
 }

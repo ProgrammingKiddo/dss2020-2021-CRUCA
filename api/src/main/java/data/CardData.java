@@ -8,6 +8,6 @@ import coreapi.User;
 
 
 public interface CardData {
-	public User getCard(int nCard);
+	public Card getCard(int nCard);
 	public void saveCard(Card c);
 }

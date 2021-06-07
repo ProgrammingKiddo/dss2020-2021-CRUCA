@@ -19,10 +19,10 @@ public class AddProduct implements Command {
 		this.prod = prod;
 	}
 	
-	public void execute()
+	public void execute(Screen context)
 	{
 		try {
-			Screen.ordSer.addProductToOrder(Screen.activeCafeteria, Screen.activeOrder, prod, 1);			
+			context.ordSer.addProductToOrder(context.activeCoffee, context.activeOrder, prod, 1);			
 		} catch (InsufficientStockException ex)
 		{
 			System.err.println(ex.toString());
