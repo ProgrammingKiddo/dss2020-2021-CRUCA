@@ -43,10 +43,10 @@ public class User implements Serializable
 	 * @param dni			The DNI associated with this user, this is unique.
 	 * @param email			The email associated with this user.
 	 */
-	public User(String name, String surname, String n_card, LocalDate birth_date, int dni, String email)
+	public User(String name, String surname, int n_card, LocalDate birth_date, int dni, String email)
 	{
 		this.BirthDate = birth_date;
-		this.n_card = Integer.parseUnsignedInt(n_card);
+		this.n_card = n_card;
 		this.name = name;
 		this.surname = surname;
 		this.dni = dni;
@@ -153,9 +153,9 @@ public class User implements Serializable
 	 * Set the university card number of this user to the one passed by parameter.
 	 * @param N_card	The new university card number to set this user.
 	 */
-	public void setNcard(String N_card) 
+	public void setNcard(int N_card) 
 	{
-		this.n_card = Integer.parseUnsignedInt(N_card);
+		this.n_card = N_card;
 	}
 	
 	/**
@@ -176,5 +176,13 @@ public class User implements Serializable
 		this.email = newEmail;
 	}
 	
-
+	public void setDNI(int dni)
+	{
+		this.dni = dni;
+	}
+	
+	public LocalDate getBirthDate()
+	{
+		return BirthDate;
+	}
 }

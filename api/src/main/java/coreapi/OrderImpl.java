@@ -40,7 +40,6 @@ public class OrderImpl implements Order, Serializable {
 	{
 		id = assignedId;
 		creationDate = assignedDate;
-		programmingDate = LocalDateTime.now();
 		basket = new LinkedHashMap<Product, Integer>();
 		orderStatus = OrderStatus.OPEN;
 	}

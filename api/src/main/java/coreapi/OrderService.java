@@ -274,4 +274,16 @@ public class OrderService
 		OrderImpl orderDownCast = (OrderImpl) ord;
 		orderDownCast.setCode(s);
 	}
+	
+	public void setProgrammingDate(Order ord, LocalDateTime PD)
+	{
+		OrderImpl orderDownCast = (OrderImpl) ord;
+		try
+		{
+			orderDownCast.setProgrammingDate(PD);
+		}catch(InvalidDateException ex)
+		{
+			
+		}
+	}
 }
