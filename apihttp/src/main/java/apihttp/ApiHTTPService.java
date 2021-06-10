@@ -61,9 +61,9 @@ public class ApiHTTPService {
 	
 	/* AvailableProductsOfATypes */
 	
-	public Product getSpecificProduct(int idP)
+	public List<String> getSpecificProduct()
 	{
-		return DP.getProduct(idP);
+		return coffee.getTypes();
 	}
 	
 	/* AddProductToOrder */
