@@ -15,15 +15,28 @@ import filepersistence.DiskProductData;
 @RestController
 public class ProductController {
 	
-	private Cafeteria coffee;
-	private DiskProductData DP;
-	
-	public ProductController(Cafeteria C)
+	private ApiHTTPService APIService;
+	public ProductController()
 	{
-		this.coffee = C;
-		this.DP = new DiskProductData("./");
+		this.APIService = new ApiHTTPService();
 	}
 	
+	/* -------------------------- NEW CODE -------------------------- */
+	
+	@GetMapping("/productstypes")
+	public List<String> getTypes()
+	{
+		return APIService.getSpecificProduct();
+	}
+	
+	@GetMapping("/specifictypesproducts/{type}")
+	public List<Product> getTypeProducts(@PathVariable("type") String type)
+	{
+		return APIService.getAvailableTypeProducts(type);
+	}
+	
+	/* -------------------------- OLD CODE -------------------------- */
+	/*
 	@GetMapping("/productstype/{type}")
 	public List<Product> getAvailabletypeProducts(@PathVariable String type) 
 	{
@@ -34,6 +47,6 @@ public class ProductController {
 	public Product getSpecificProduct(@PathVariable int idP)
 	{
 		return DP.getProduct(idP);
-	}
+	}*/
 
 }

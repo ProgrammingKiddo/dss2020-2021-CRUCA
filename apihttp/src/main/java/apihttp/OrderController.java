@@ -6,6 +6,7 @@ import java.io.File;
  */
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,11 +19,13 @@ import coreapi.InsufficientStockException;
 import coreapi.InvalidDateException;
 import coreapi.OrderImpl;
 import coreapi.Order;
+import coreapi.OrderFactory;
 import coreapi.OrderService;
 import coreapi.OrderStatus;
 import coreapi.ProductNotContainedInOrderException;
 import coreapi.UnreachableStatusException;
 import coreapi.User;
+import filepersistence.DiskOrderData;
 import filepersistence.DiskProductData;
 
 
@@ -35,15 +38,59 @@ import filepersistence.DiskProductData;
 @RestController
 public class OrderController {
 
-	private final OrderService OService;
-	private DiskProductData DP;
-	private MailService MS;
-	OrderController(OrderService os)
+	private ApiHTTPService APIService;
+	public OrderController()
 	{
-		this.OService = os;
-		this.DP = new DiskProductData("./");
-		this.MS = new MailService();
+		this.APIService = new ApiHTTPService();
 	}
+	
+	/* -------------------------- NEW CODE -------------------------- */
+	
+	@PostMapping("/createorder")
+	public void createNewOrder()
+	{
+		APIService.createOrder();
+	}
+	
+	@PutMapping("/addproduct/{ordid}")
+	public void addProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid)
+	{
+		APIService.addProductToOrder(ordid, ordid, ordid);
+	}
+	
+	@PutMapping("/removeproduct/{ordid}")
+	public void removeProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid)
+	{
+		APIService.removeProductFromOrder(ordid, ordid, ordid);
+	}
+	
+	@PutMapping("/finishorder/{ordid}")
+	public void finishOrder(@PathVariable("ordid") int ordid)
+	{
+		APIService.closeOrder(ordid);
+	}
+	
+	@GetMapping("/dailyregister/{date}")
+	public String dailyRegister(@PathVariable("date") LocalDate date)
+	{
+		return APIService.DailyRegister(date);
+	}
+	
+	@PutMapping("/programmingdate/{ordid}")
+	public void programmingDate(@RequestBody LocalDateTime PD, @PathVariable("ordid") int ordid)
+	{
+		APIService.OrderProgramming(ordid, PD);
+	}
+	
+	@PutMapping("/kitchennotify/{ordid}")
+	public void kitchenNotify(@PathVariable("ordid") int ordid)
+	{
+		APIService.kitchenNotification(ordid);
+	}
+	
+	/* -------------------------- OLD CODE -------------------------- */
+	
+	//@PostMapping("/createorder/{coffee}")
 	
 	/**
 	 * Add a product to a current order
@@ -56,6 +103,7 @@ public class OrderController {
 	 * @see Order
 	 * @see Product
 	 */
+	/*
 	@PatchMapping("/orders/{parameters}")
 	public void addProductToOrder(@PathVariable("parameters") Cafeteria coffe, Order ord, int ProductId, int Quantity)
 	{
@@ -66,7 +114,7 @@ public class OrderController {
 			
 		}
 	}
-	
+	*/
 	/**
 	 * Delete a quantity of product from an order
 	 * @param ord			Contains the current Order object which the product will be deleted
@@ -76,6 +124,7 @@ public class OrderController {
 	 * @see Order
 	 * @see InsuffincientStockException
 	 */
+	/*
 	@DeleteMapping("/orders/{parameters}")
 	public void removeProductFromOrder(@PathVariable("parameters") Cafeteria coffee, Order ord, int ProductId, int Quantity)
 	{
@@ -89,7 +138,7 @@ public class OrderController {
 		{
 			
 		}
-	}
+	}*/
 	
 	/**
 	 * Change the status of an order
@@ -105,8 +154,9 @@ public class OrderController {
 	 * @see OrderStatus
 	 * @see Cafeteria
 	 */
+	/*
 	@PatchMapping("/orders/{parameters}")
-	public void changeStatus(@PathVariable("parameters") User user, Card c, Order ord, OrderStatus status, Cafeteria coffee)
+	public void changeStatus(@PathVariable("parameters") User user, Card c, Order ord, OrderStatus status, Cafeteria coffee, LocalDateTime PD)
 	{
 		try {
 			switch(status)
@@ -115,6 +165,7 @@ public class OrderController {
 					if(OService.getValidationStock(ord,coffee))
 					{	
 						OService.OrderStatus_InKitchen(ord);
+						OService.setProgrammingDate(ord,PD);
 						MS.sendEmail(coffee.getEmail(),"Order " + ord.getId(), "This order is programming"
 							+ " to the date: " + OService.getProgrammingDate(ord));
 					}
@@ -127,7 +178,7 @@ public class OrderController {
 					OService.OrderStatus_Delivered(ord);
 					break;
 				case PAYED:
-					/*RestTemplate rt = new RestTemplate();
+					RestTemplate rt = new RestTemplate();
 					boolean cft;
 					BigDecimal bl = rt.getForObject("http://localhost:8080/apihttp/card/userbalance/{parameters}",BigDecimal,user.getDni(),c.getCardNumber());
 					if((bl - ord.totalCost()) >= -10)
@@ -138,7 +189,7 @@ public class OrderController {
 						{
 							OService.OrderStatus_Payed(ord);
 						}
-					}*/
+					}
 					OService.OrderStatus_Payed(ord);
 					break;
 				case FINISHED:
@@ -151,7 +202,7 @@ public class OrderController {
 		{
 			
 		}
-	}
+	}*/
 	
 	/**
 	 * Show the number of the orders registered and the total amount of money earned
@@ -163,6 +214,7 @@ public class OrderController {
 	 * @see LocalDate
 	 * @see OrderService
 	 */
+	/*
 	@GetMapping("/orders/{parameters}")
 	public String DailyRegister(@PathVariable("parameters") Cafeteria coffe, LocalDate date)
 	{
@@ -174,7 +226,7 @@ public class OrderController {
 			return e.toString();
 		}
 	}
-	
+	*/
 	/**
 	 * Compare the Order validation code with a validation coder introduced by the user
 	 * 
@@ -183,12 +235,13 @@ public class OrderController {
 	 * @see Order
 	 * @return true if the received code and the order code are equal and false otherwise
 	 */
+	/*
 	@GetMapping("/order/payauth/{parameters}")
 	public boolean payConfirmation(@PathVariable("parameters") Order Ord, String code)
 	{
 		return OService.getValidationCode(Ord).equalsIgnoreCase(code);
 	}
-	
+	*/
 	/**
 	 * Cancel an user's order
 	 * 
@@ -198,6 +251,7 @@ public class OrderController {
 	 * @see Card
 	 * @see LocalDateTime
 	 */
+	
 	/*
 	@DeleteMapping("/order/cancelorder/{parameters}")
 	public void cancelOrder(@PathVariable("parameters") Order ord, Card c)
