@@ -7,6 +7,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 		{
+			CardTest.class,
+			UserTest.class,
 			ProductImplTest.class,
 			ProductTest.class,
 			OrderImplTest.class,
