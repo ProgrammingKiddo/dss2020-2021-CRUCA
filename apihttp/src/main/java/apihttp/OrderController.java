@@ -44,45 +44,45 @@ public class OrderController {
 	}
 	
 	/* -------------------------- NEW CODE -------------------------- */
-
+	
 	@PostMapping("/createorder")
 	public void createNewOrder()
 	{
 		APIService.createOrder();
 	}
-
+	
 	@PutMapping("/addproduct/{ordid}")
 	public void addProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid)
 	{
 		Map.Entry<Integer, Integer> entry = pq.entrySet().iterator().next();
 		APIService.addProductToOrder(ordid, entry.getKey().intValue(), entry.getValue().intValue());
 	}
-
+	
 	@PutMapping("/removeproduct/{ordid}")
 	public void removeProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid)
 	{
 		Map.Entry<Integer, Integer> entry = pq.entrySet().iterator().next();
 		APIService.removeProductFromOrder(ordid, entry.getKey().intValue(), entry.getValue().intValue());
 	}
-
+	
 	@PutMapping("/finishorder/{ordid}")
 	public void finishOrder(@PathVariable("ordid") int ordid)
 	{
 		APIService.closeOrder(ordid);
 	}
-
+	
 	@GetMapping("/dailyregister/{date}")
 	public String dailyRegister(@PathVariable("date") LocalDate date)
 	{
 		return APIService.DailyRegister(date);
 	}
-
+	
 	@PutMapping("/programmingdate/{ordid}")
 	public void programmingDate(@RequestBody LocalDateTime PD, @PathVariable("ordid") int ordid)
 	{
 		APIService.OrderProgramming(ordid, PD);
 	}
-
+	
 	@PutMapping("/kitchennotify/{ordid}")
 	public void kitchenNotify(@PathVariable("ordid") int ordid)
 	{
