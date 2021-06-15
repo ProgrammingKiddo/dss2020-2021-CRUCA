@@ -79,11 +79,23 @@
 	          <archive>
 	            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 	            <manifest>
+	            <mainClass>apihttp.ApihttpApplication</mainClass>
+	          </manifest>
+	          </archive>
+	        </configuration>
+	      </plugin>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-jar-plugin</artifactId>
+	        <version>2.4</version>
+	        <configuration>
+	          <archive>
+	            <manifest>
 	            <addClasspath>true</addClasspath>
 	            <mainClass>apihttp.ApihttpApplication</mainClass>
 	            <classpathPrefix>dependency-jars/</classpathPrefix>
-	          </manifest>
-	          </archive>
+	            </manifest>
+			</archive>
 	        </configuration>
 	      </plugin>
 	
@@ -91,7 +103,7 @@
 	      <plugin>
 	        <groupId>org.apache.maven.plugins</groupId>
 	        <artifactId>maven-dependency-plugin</artifactId>
-	        <version>3.1.2</version>
+	        <version>2.5.1</version>
 	        <executions>
 	          <execution>
 	            <id>copy-dependencies</id>
@@ -111,3 +123,4 @@
 	</build>
 
 </project>
+	        
