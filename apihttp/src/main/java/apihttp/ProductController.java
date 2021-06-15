@@ -22,13 +22,14 @@ public class ProductController {
 	}
 	
 	/* -------------------------- NEW CODE -------------------------- */
-	
+
 	@GetMapping("/productstypes")
 	public List<String> getTypes()
 	{
 		return APIService.getSpecificProduct();
 	}
 	
+
 	@GetMapping("/specifictypesproducts/{type}")
 	public List<Product> getTypeProducts(@PathVariable("type") String type)
 	{

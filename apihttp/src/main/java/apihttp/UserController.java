@@ -35,7 +35,7 @@ public class UserController
 	}
 	
 	/* -------------------------- NEW CODE -------------------------- */
-	
+
 	@PostMapping("/newuser")
 	public void addUser(@RequestBody User u)
 	{
@@ -47,7 +47,7 @@ public class UserController
 	{
 		APIService.userUpdate(u, userid);
 	}
-	
+
 	@GetMapping("/getuserorders/{userid}")
 	public List<Order> userOrders(@PathVariable int userid)
 	{
