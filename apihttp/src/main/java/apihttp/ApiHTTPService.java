@@ -36,7 +36,7 @@ public class ApiHTTPService {
 	
 	public ApiHTTPService()
 	{
-		this.coffee = new Cafeteria(1,"ESI","cambiar");
+		this.coffee = new Cafeteria(1,"ESI","cambiar"); // Valor predeterminado
 		this.DO = new DiskOrderData("./");
 		this.DP = new DiskProductData("./");
 		this.DU = new DiskUserData("./");

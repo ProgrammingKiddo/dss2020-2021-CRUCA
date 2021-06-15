@@ -1,5 +1,4 @@
 package apihttp;
-import java.io.File;
 /**
  * @author Mar�a
  * @author Fran
@@ -55,13 +54,15 @@ public class OrderController {
 	@PutMapping("/addproduct/{ordid}")
 	public void addProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid)
 	{
-		APIService.addProductToOrder(ordid, ordid, ordid);
+		Map.Entry<Integer, Integer> entry = pq.entrySet().iterator().next();
+		APIService.addProductToOrder(ordid, entry.getKey().intValue(), entry.getValue().intValue());
 	}
 	
 	@PutMapping("/removeproduct/{ordid}")
 	public void removeProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid)
 	{
-		APIService.removeProductFromOrder(ordid, ordid, ordid);
+		Map.Entry<Integer, Integer> entry = pq.entrySet().iterator().next();
+		APIService.removeProductFromOrder(ordid, entry.getKey().intValue(), entry.getValue().intValue());
 	}
 	
 	@PutMapping("/finishorder/{ordid}")
