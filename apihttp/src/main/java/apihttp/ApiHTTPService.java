@@ -19,10 +19,7 @@ import coreapi.User;
 import data.OrderData;
 import data.ProductData;
 import data.UserData;
-import filepersistence.DiskCafeteriaData;
-import filepersistence.DiskOrderData;
-import filepersistence.DiskProductData;
-import filepersistence.DiskUserData;
+
 
 @Service
 public class ApiHTTPService {
@@ -34,15 +31,14 @@ public class ApiHTTPService {
 	private MailService MS;
 	private OrderService OService;
 	
-	public ApiHTTPService()
+	public ApiHTTPService(Cafeteria cf, OrderData dord,ProductData dp,  UserData du, MailService ml, OrderService os)
 	{
-		this.coffee = new Cafeteria(1,"ESI","cambiar"); // Valor predeterminado
-		this.DO = new DiskOrderData("./");
-		this.DP = new DiskProductData("./");
-		this.DU = new DiskUserData("./");
-		this.MS = new MailService();
-		this.OService = new OrderService(new DiskCafeteriaData("./"),DO,DP);
-		
+		this.coffee = cf;
+		this.DO = dord;
+		this.DP = dp;
+		this.DU = du;
+		this.MS = ml;
+		this.OService = os;
 	}
 	
 	/* CreateNewOrder */
