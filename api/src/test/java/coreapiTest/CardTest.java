@@ -41,7 +41,7 @@ public class CardTest
 		BigDecimal bAdded = new BigDecimal(100.00);
 		try
 		{
-			card.addBalance(user.getDni(), user.getNcard(), bAdded);
+			card.addBalance(user.getNcard(), bAdded);
 		}
 		catch(Exception e) 
 		{

@@ -63,21 +63,15 @@ public class Card {
 	 * @throws WrongTransactionException	If the operation to be performed 
 	 * 										fails because the data entered is incorrect.
 	 */
-	public void addBalance(int uDni, int cNumber, BigDecimal bAdded) throws WrongTransactionException
+	public void addBalance(int cNumber, BigDecimal bAdded) throws WrongTransactionException
 	{
-		if(uDni == userDni && cNumber == cardNumber)
+		if(bAdded.compareTo(BigDecimal.ZERO) == 1)
 		{
-			if(bAdded.compareTo(BigDecimal.ZERO) == 1)
-			{
-				balance = balance.add(bAdded);
-			}
-			else
-			{
-				throw new WrongTransactionException("Invalid Quantity");
-			}
+			balance = balance.add(bAdded);
 		}
-		else {
-			throw new WrongTransactionException("Wrong Personal Data");
+		else
+		{
+			throw new WrongTransactionException("Invalid Quantity");
 		}
 	}
 	
