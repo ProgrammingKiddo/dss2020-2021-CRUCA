@@ -1,6 +1,7 @@
 package apihttp;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import coreapi.User;
 @RestController
 public class UserController 
 {
+	@Autowired
 	private ApiHTTPService APIService;
 	public UserController(ApiHTTPService as)
 	{

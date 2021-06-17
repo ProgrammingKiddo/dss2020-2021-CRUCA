@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class OrderController {
-
+	
+	@Autowired
 	private ApiHTTPService APIService;
 	public OrderController(ApiHTTPService as)
 	{

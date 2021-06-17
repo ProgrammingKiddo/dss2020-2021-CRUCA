@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import coreapi.Cafeteria;
@@ -24,11 +25,17 @@ import data.UserData;
 @Service
 public class ApiHTTPService {
 	
+	@Autowired
 	private Cafeteria coffee;
+	@Autowired
 	private OrderData DO;
+	@Autowired
 	private ProductData DP;
+	@Autowired
 	private UserData DU;
+	@Autowired
 	private MailService MS;
+	@Autowired
 	private OrderService OService;
 	
 	public ApiHTTPService(Cafeteria cf, OrderData dord,ProductData dp,  UserData du, MailService ml, OrderService os)
