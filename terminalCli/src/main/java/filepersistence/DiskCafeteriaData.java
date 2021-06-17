@@ -14,7 +14,6 @@ import java.util.List;
 
 import coreapi.Cafeteria;
 import coreapi.Product;
-import coreapi.User;
 import data.CafeteriaData;
 
 /** 

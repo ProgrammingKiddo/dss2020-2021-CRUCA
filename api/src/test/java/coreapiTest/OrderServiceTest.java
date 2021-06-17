@@ -29,7 +29,7 @@ public class OrderServiceTest
 		coffe = new Cafeteria(0, "Cafeteria de Santa Fe","santafe@gmail.com");
 		date = LocalDate.now();
 		myOrder = (OrderImpl) OrderFactory.createOrder(coffe);
-		ordSer = new OrderService();
+		//ordSer = new OrderService();
 		coffe.registerOrder(myOrder);
 		
 		// We introduce the products to the cafeteria with a certain stock
@@ -199,14 +199,16 @@ public class OrderServiceTest
 			ordSer.addProductToOrder(coffe, myOrder, product0, 3);
 			ordSer.addProductToOrder(coffe, myOrder, product1, 1);
 			ordSer.addProductToOrder(coffe, auxOrder1, product1, 4);
-			ordSer.addProductToOrder(coffe, auxOrder2, product2, 8);			
+			ordSer.addProductToOrder(coffe, auxOrder2, product2, 8);
+			
+
+			BigDecimal expectedRegister = BigDecimal.ZERO;
+			expectedRegister = expectedRegister.add(myOrder.totalCost()).add(auxOrder1.totalCost()).add(auxOrder2.totalCost());
+
+			Assert.assertEquals(0, expectedRegister.compareTo(ordSer.getTotalDailyRegister(coffe, date)));
+		
 		}
 		catch (Exception e) { }
 		
-		BigDecimal expectedRegister = BigDecimal.ZERO;
-		expectedRegister = expectedRegister.add(myOrder.totalCost()).add(auxOrder1.totalCost()).add(auxOrder2.totalCost());
-
-		Assert.assertEquals(0, expectedRegister.compareTo(ordSer.getTotalDailyRegister(coffe, date)));
-	
 	}
 }

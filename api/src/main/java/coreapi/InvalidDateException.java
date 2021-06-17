@@ -8,7 +8,7 @@ package coreapi;
 * @see OrderImpl
 * @see OrderService
 */
-
+@SuppressWarnings("serial")
 public class InvalidDateException extends Exception{
 	/**
 	* Create a new exception of this type, detailing the message.

@@ -14,7 +14,6 @@ import java.io.ObjectOutputStream;
 
 import coreapi.Order;
 import coreapi.OrderImpl;
-import coreapi.User;
 import data.OrderData;
 
 public class DiskOrderData implements OrderData

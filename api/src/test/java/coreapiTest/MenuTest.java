@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import coreapi.Menu;
 import coreapi.Product;
-import data.ProductData;
 import coreapi.ProductImpl;
 
 public class MenuTest

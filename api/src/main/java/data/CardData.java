@@ -4,7 +4,6 @@ package data;
  * @author Fran
  */
 import coreapi.Card;
-import coreapi.User;
 
 
 public interface CardData {

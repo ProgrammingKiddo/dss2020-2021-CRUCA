@@ -6,7 +6,7 @@ package coreapi;
 * @author Fran
 * @see OrderService
 */
-
+@SuppressWarnings("serial")
 public class InvalidQuantityException extends Exception{
 	
 	public InvalidQuantityException(String message) {

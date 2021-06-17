@@ -10,6 +10,7 @@ package coreapi;
  * @see Cafeteria
  * @see OrderService
  */
+@SuppressWarnings("serial")
 public class InsufficientStockException extends Exception {
 
 	/**

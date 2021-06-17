@@ -8,6 +8,7 @@ package coreapi;
  * @version 0.1
  * @see OrderService
  */
+@SuppressWarnings("serial")
 public class ProductNotContainedInOrderException extends Exception
 {
 	/** Create a new exception of this type, detailing on the message

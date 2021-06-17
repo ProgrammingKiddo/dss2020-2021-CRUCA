@@ -10,6 +10,7 @@ package coreapi;
  * @version 0.1
  * @see OrderService
  */
+@SuppressWarnings("serial")
 public class UnreachableStatusException extends Exception
 {
 	/**

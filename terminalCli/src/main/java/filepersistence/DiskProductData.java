@@ -16,7 +16,7 @@ import java.io.ObjectOutputStream;
 
 import coreapi.Product;
 import coreapi.ProductImpl;
-import coreapi.User;
+
 
 public class DiskProductData implements ProductData
 {

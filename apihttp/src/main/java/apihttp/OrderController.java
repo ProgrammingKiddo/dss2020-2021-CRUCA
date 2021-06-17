@@ -7,25 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import coreapi.Cafeteria;
-import coreapi.Card;
-import coreapi.InsufficientStockException;
-import coreapi.InvalidDateException;
-import coreapi.OrderImpl;
-import coreapi.Order;
-import coreapi.OrderFactory;
-import coreapi.OrderService;
-import coreapi.OrderStatus;
-import coreapi.ProductNotContainedInOrderException;
-import coreapi.UnreachableStatusException;
-import coreapi.User;
-import filepersistence.DiskOrderData;
-import filepersistence.DiskProductData;
 
 
 /**
@@ -38,51 +21,51 @@ import filepersistence.DiskProductData;
 public class OrderController {
 
 	private ApiHTTPService APIService;
-	public OrderController()
+	public OrderController(ApiHTTPService as)
 	{
-		this.APIService = new ApiHTTPService();
+		this.APIService = as;
 	}
 	
 	/* -------------------------- NEW CODE -------------------------- */
-	
+
 	@PostMapping("/createorder")
 	public void createNewOrder()
 	{
 		APIService.createOrder();
 	}
-	
+
 	@PutMapping("/addproduct/{ordid}")
 	public void addProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid)
 	{
 		Map.Entry<Integer, Integer> entry = pq.entrySet().iterator().next();
 		APIService.addProductToOrder(ordid, entry.getKey().intValue(), entry.getValue().intValue());
 	}
-	
+
 	@PutMapping("/removeproduct/{ordid}")
 	public void removeProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid)
 	{
 		Map.Entry<Integer, Integer> entry = pq.entrySet().iterator().next();
 		APIService.removeProductFromOrder(ordid, entry.getKey().intValue(), entry.getValue().intValue());
 	}
-	
+
 	@PutMapping("/finishorder/{ordid}")
 	public void finishOrder(@PathVariable("ordid") int ordid)
 	{
 		APIService.closeOrder(ordid);
 	}
-	
+
 	@GetMapping("/dailyregister/{date}")
 	public String dailyRegister(@PathVariable("date") LocalDate date)
 	{
 		return APIService.DailyRegister(date);
 	}
-	
+
 	@PutMapping("/programmingdate/{ordid}")
 	public void programmingDate(@RequestBody LocalDateTime PD, @PathVariable("ordid") int ordid)
 	{
 		APIService.OrderProgramming(ordid, PD);
 	}
-	
+
 	@PutMapping("/kitchennotify/{ordid}")
 	public void kitchenNotify(@PathVariable("ordid") int ordid)
 	{

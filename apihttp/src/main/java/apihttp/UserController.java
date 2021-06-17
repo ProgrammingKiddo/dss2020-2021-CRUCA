@@ -1,7 +1,6 @@
 package apihttp;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,12 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.time.LocalDate;
-import java.time.Period;
 import coreapi.Order;
-import java.lang.String;
 import coreapi.User;
-import filepersistence.DiskUserData;
+
 
  /**
   * This class contains the functions to obtain or change information about the system users
@@ -29,13 +25,13 @@ import filepersistence.DiskUserData;
 public class UserController 
 {
 	private ApiHTTPService APIService;
-	public UserController()
+	public UserController(ApiHTTPService as)
 	{
-		this.APIService = new ApiHTTPService();
+		this.APIService = as;
 	}
 	
 	/* -------------------------- NEW CODE -------------------------- */
-	
+
 	@PostMapping("/newuser")
 	public void addUser(@RequestBody User u)
 	{
@@ -47,7 +43,7 @@ public class UserController
 	{
 		APIService.userUpdate(u, userid);
 	}
-	
+
 	@GetMapping("/getuserorders/{userid}")
 	public List<Order> userOrders(@PathVariable int userid)
 	{

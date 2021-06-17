@@ -11,8 +11,6 @@ import org.junit.Assert;
 
 import java.math.BigDecimal;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ProductImplTest

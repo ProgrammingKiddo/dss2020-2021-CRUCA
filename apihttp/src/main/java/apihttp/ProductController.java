@@ -1,34 +1,35 @@
 package apihttp;
 
-import java.math.BigDecimal;
+
 import java.util.List;
 
-import coreapi.Cafeteria;
+
 import coreapi.Product;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import filepersistence.DiskProductData;
+
 
 @RestController
 public class ProductController {
 	
 	private ApiHTTPService APIService;
-	public ProductController()
+	public ProductController(ApiHTTPService as)
 	{
-		this.APIService = new ApiHTTPService();
+		this.APIService = as;
 	}
 	
 	/* -------------------------- NEW CODE -------------------------- */
-	
+
 	@GetMapping("/productstypes")
 	public List<String> getTypes()
 	{
 		return APIService.getSpecificProduct();
 	}
 	
+
 	@GetMapping("/specifictypesproducts/{type}")
 	public List<Product> getTypeProducts(@PathVariable("type") String type)
 	{

@@ -7,7 +7,7 @@ package coreapi;
  * @author Fran
  * @see Card
  */
-
+@SuppressWarnings("serial")
 public class WrongTransactionException extends Exception {
 
 	/**
