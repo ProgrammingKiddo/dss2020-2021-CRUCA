@@ -22,7 +22,7 @@ import filepersistence.*;
 @Configuration
 @RestController
 @EnableSwagger2
-@ComponentScan(basePackages = "coreapi")
+@ComponentScan(basePackages =  {"coreapi","data","filepersistence","apihttp"})
 public class ApihttpApplication {
 
 	@Bean
@@ -57,12 +57,6 @@ public class ApihttpApplication {
 	public UserData newUserData()
 	{
 		return new DiskUserData("./");
-	}
-	
-	@Bean
-	public MailService newMailService()
-	{
-		return new MailService();
 	}
 	
 	@Bean
