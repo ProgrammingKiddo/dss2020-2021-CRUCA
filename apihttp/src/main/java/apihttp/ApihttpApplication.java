@@ -25,11 +25,12 @@ import filepersistence.*;
 @ComponentScan(basePackages =  {"coreapi","data","filepersistence","apihttp"})
 public class ApihttpApplication {
 
+	/*
 	@Bean
 	public Docket api()
 	{
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build();
-	}
+	}*/
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApihttpApplication.class, args);

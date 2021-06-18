@@ -17,7 +17,7 @@ public class MailService
 	// We do the JavaMailSender dependency injection
 	@Autowired
     private JavaMailSender mailSender;
-	
+
 	/**
 	 * Send an email to an concrete address
 	 * @param to			contains a destination address
