@@ -39,8 +39,14 @@ public class Terminal {
 		productData = new DiskProductData(path);
 		ordSer = new OrderService(coffeeData, orderData, productData);
 		
-		
-		createObjects();
+		if (create)
+		{
+			createObjects();
+		}
+		else
+		{
+			coffee = coffeeData.getCafeteria(0);
+		}
 
 		Screen cli = new Screen(coffee, ordSer);
 		cli.main_screen();

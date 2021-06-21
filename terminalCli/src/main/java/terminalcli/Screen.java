@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -59,8 +60,9 @@ public class Screen
             System.out.println("Q. Salir.");
             System.out.println("---------------------------------------------");
             System.out.print("Introduzca una opcion: ");
-            option = keyboard.next().charAt(0);
             
+            option = readSingleCharacter();
+           
             switch(option)
             {
             	case '1':
@@ -71,12 +73,15 @@ public class Screen
                 	int day, month, year;
                 	boolean correctDate;
                 	LocalDate date = LocalDate.now();
-                    System.out.print("Introduce la fecha de la caja del dia que quiere consultar (dia, mes, y año):");
+                    System.out.println("Introduce la fecha de la caja del dia que quiere consultar.");
                     
                     do
                     {
+                    	System.out.print("Dia: ");
                     	day = Integer.parseInt(keyboard.nextLine());
+                    	System.out.print("Mes: ");
                     	month = Integer.parseInt(keyboard.nextLine());
+                    	System.out.print("Anno: ");
                     	year = Integer.parseInt(keyboard.nextLine());
                     	try {
                     		date = LocalDate.of(year, month, day);
@@ -118,7 +123,7 @@ public class Screen
             System.out.println("R. Volver a la pantalla anterior.");
             System.out.println("---------------------------------------------");
             System.out.print("Introduzca una opcion: ");
-            option = keyboard.nextLine().toCharArray()[0];
+            option = readSingleCharacter();
             
             switch (option)
             {
@@ -204,22 +209,27 @@ public class Screen
 		int chosenProduct = 1;
 		int productQuantity = 0;
 	    List<Product> availableProducts;
+	    List<Product> productsOfChosenType = new ArrayList<Product>();
 	    
 	    do
 	    {
 	    	availableProducts = activeCoffee.getAvailableProducts();
+	    	for (Product p : availableProducts)
+	    	{
+	    		if (p.getType().equals(type))
+	    		{
+	    			productsOfChosenType.add(p);
+	    		}
+	    	}
 	    	counter = 1;
 	    	correctChoice = false;
 	    	
 	        System.out.println("Productos disponibles de la categoría \"" + type + "\"");
 	        System.out.println("---------------------------------------------");
-	        for(Product p: availableProducts)
+	        for(Product p: productsOfChosenType)
 	        {
-	        	if (p.getType().equals(type))
-	        	{
-	        		System.out.println(counter + ". " + p.getName() + " (" + p.getPrice().doubleValue() + " euros)");
-	        		counter++;	        		
-	        	}
+	        	System.out.println(counter + ". " + p.getName() + " (" + p.getPrice().doubleValue() + " euros)");
+	        	counter++;	        		
 	        }
 	        if (counter == 1)
 	        {
@@ -237,7 +247,7 @@ public class Screen
 	        	// Get the product and the quantity to add
 	        	try {
 	        		chosenProduct = Integer.parseInt(option);
-	        		if (chosenProduct < 1 || chosenProduct > availableProducts.size())
+	        		if (chosenProduct < 1 || chosenProduct > productsOfChosenType.size())
 	        		{
 	        			throw new NumberFormatException();
 	        		}
@@ -258,13 +268,14 @@ public class Screen
 	        	if (correctChoice == true)
 	        	{
 	        		try {
-	        			ordSer.addProductToOrder(activeCoffee, activeOrder, availableProducts.get(chosenProduct-1), productQuantity);
+	        			ordSer.addProductToOrder(activeCoffee, activeOrder, productsOfChosenType.get(chosenProduct-1), productQuantity);
 	        		} catch (InsufficientStockException ex)
 	        		{
-	        			System.out.println("\tLo sentimos, pero solo tenemos " + activeCoffee.getProductQuantity(availableProducts.get(chosenProduct-1)) + " unidades en stock.");
+	        			System.out.println("\tLo sentimos, pero solo tenemos " + activeCoffee.getProductQuantity(productsOfChosenType.get(chosenProduct-1)) + " unidades en stock.");
 	        		}
 	        	}
 	        }
+	        productsOfChosenType.clear();
 	    } while (!option.equalsIgnoreCase("R"));
 	}
 	
@@ -277,10 +288,10 @@ public class Screen
 	    boolean correctChoice;
 	    int chosenProduct =1, productQuantity =0;
 	    int counter;
-	    Map<Product, Integer> basket = activeOrder.getBasket();
-	    Product products[] = new Product[basket.size()];
 	    do
 	    {
+	    	Map<Product, Integer> basket = activeOrder.getBasket();
+	    	Product products[] = new Product[basket.size()];
 	    	counter = 1;
 	    	correctChoice = false;
 	        System.out.println("Eliminar producto del pedido");
@@ -301,9 +312,9 @@ public class Screen
 	            // We store the corresponding product to the given numerical choice position in the array
 	            products[counter-1] = entry.getKey();
 	            counter++;
+	            System.out.println(productString);
 	        }
 	        
-	        System.out.println(productString);
 	        System.out.println("R. Volver a pantalla anterior");
 	        System.out.println("---------------------------------------------");
 	        System.out.print("Introduzca una opcion: ");
@@ -318,7 +329,7 @@ public class Screen
 	        		{
 	        			throw new NumberFormatException();
 	        		}
-	        		
+	        		System.out.print("Introduzca una cantidad: ");
 	        		productQuantity = Integer.parseInt(keyboard.nextLine());
 	        		if (productQuantity < 1)
 	        		{
@@ -367,7 +378,7 @@ public class Screen
 	        System.out.println("R. Volver a pantalla anterior");
 	        System.out.println("---------------------------------------------");
 	        System.out.print("Introduzca una opcion: ");
-	        option = keyboard.nextLine().toCharArray()[0];
+	        option = readSingleCharacter();
 	        
 	        if (option == '1')
 	        {
@@ -426,8 +437,7 @@ public class Screen
 	        System.out.println("R. Volver a pantalla anterior");
 	        System.out.println("---------------------------------------------");
 	        System.out.print("Introduzca una opcion: ");
-	        option = keyboard.next().charAt(0);
-	        keyboard.nextLine();
+	        option = readSingleCharacter();
 	        
 	        if(option != 'r' && option != 'R')
 	        {
@@ -435,4 +445,18 @@ public class Screen
 	        }
 	    } while (option != 'r' && option != 'R');
 	}
+	
+	private char readSingleCharacter()
+	{
+		String input;
+		char c = '\0';
+		
+		input = keyboard.nextLine();
+		if (input.length() > 0)
+		{
+			c = input.charAt(0);
+		}
+		return c;
+	}
+	
 }
