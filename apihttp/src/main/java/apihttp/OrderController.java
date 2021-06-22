@@ -10,6 +10,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import coreapi.User;
+
 
 
 /**
@@ -30,10 +32,10 @@ public class OrderController {
 	
 	/* -------------------------- NEW CODE -------------------------- */
 
-	@PostMapping("/createorder")
-	public void createNewOrder()
+	@PostMapping("/createorder/{iduser}")
+	public void createNewOrder(@PathVariable("iduser") int iduser)
 	{
-		APIService.createOrder();
+		APIService.createOrder(iduser);
 	}
 
 	@PutMapping("/addproduct/{ordid}")
@@ -74,6 +76,18 @@ public class OrderController {
 		APIService.kitchenNotification(ordid);
 	}
 	
+	@PutMapping("/completeorder/")
+	public void completeOrder(@RequestBody Map<Integer,Integer> ou)
+	{
+		Map.Entry<Integer, Integer> entry = ou.entrySet().iterator().next();
+	    APIService.completeOrder(entry.getKey().intValue(),entry.getValue().intValue());
+	}
+
+	@PutMapping("/deleteuserord/{idord}")
+	public void deleteOrderFromUser(@RequestBody User u, @PathVariable("idord") int idord)
+	{
+		APIService.deleteOrderFromUser(u,idord);
+	}
 	/* -------------------------- OLD CODE -------------------------- */
 	
 	//@PostMapping("/createorder/{coffee}")

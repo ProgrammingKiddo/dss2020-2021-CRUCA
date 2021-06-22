@@ -12,14 +12,6 @@ public enum OrderStatus {
 	 */
 	OPEN,
 	/**
-	 * This state represents the order currently being cooked in the kitchen.
-	 */
-	IN_KITCHEN,
-	/**
-	 * This state represents the order fully complete having been delivered to the client.
-	 */
-	DELIVERED,
-	/**
 	 * This state represents the order being payed in full by the client.
 	 */
 	PAYED,

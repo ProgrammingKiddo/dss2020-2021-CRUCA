@@ -170,13 +170,39 @@ public class User implements Serializable
 		this.email = newEmail;
 	}
 	
+	/**
+	 * Set the DNI of this user to the one passed by parameter.
+	 * @param dni	The new DNI to set this user.
+	 */
 	public void setDNI(int dni)
 	{
 		this.dni = dni;
 	}
 	
+	/**
+	 * Returns the BirthDate of the user.
+	 * @return	The BirthDate of the user.
+	 */
 	public LocalDate getBirthDate()
 	{
 		return BirthDate;
+	}
+	
+	/**
+	 * Set the new order to the list of the user order.
+	 * @param o		The new order to set to the list.
+	 */
+	public void setOrder(Order o)
+	{
+		boolean b = UserOrderList.add(o);
+	}
+	
+	/**
+	 * Delete a specific order of the list of the user order.
+	 * @param o		The order we want to remove.
+	 */
+	public void deleteOrder(Order o)
+	{
+		boolean b = UserOrderList.remove(o);
 	}
 }

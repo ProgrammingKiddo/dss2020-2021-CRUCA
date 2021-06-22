@@ -14,6 +14,7 @@ import data.*;
  * through the methods provided here.
  *  @author Maria
  *  @author Borja
+ *  @author Fran
  *  @version 0.2
  */
 
@@ -106,52 +107,10 @@ public class OrderService
 	}
 	
 	/* ---------------------------------ORDER_STATUS----------------------------------*/
-	/**
-	 * Sets the status of the order passed as parameter to <code>IN_KITCHEN</code>
-	 * if the order has at least one product and its current status is <code>OPEN</code>.
-	 * @param ord	The order to change the status of.
-	 * @throws UnreachableStatusException	If the conditions to set the <code>IN_KITCHEN</code> status aren't met.
-	 */
-	public void OrderStatus_InKitchen(Order ord)
-			throws UnreachableStatusException
-	{
-		OrderImpl orderDownCast = (OrderImpl) ord;
-		//There must be products in the basket and the order be in the open state
-		if(!ord.getProducts().isEmpty() && ord.getStatus() == OrderStatus.OPEN)
-		{
-			orderDownCast.setStatus(OrderStatus.IN_KITCHEN);
-			oData.saveOrder(ord);
-		}
-		else
-		{
-			throw new UnreachableStatusException("The order has no products to send to the kitchen.");
-		}
-	}
 	
 	/**
-	 * Sets the status of the order passed as parameter to <code>DELIVERED</code>
-	 * if the order current status is <code>IN_KITCHEN</code>.
-	 * @param ord	The order to change the status of.
-	 * @throws UnreachableStatusException	If the conditions to set the <code>DELIVERED</code> status aren't met.
-	 */
-	public void OrderStatus_Delivered(Order ord)
-			throws UnreachableStatusException
-	{
-		OrderImpl orderDownCast = (OrderImpl) ord;
-		//The state must be in the kitchen to be delivered
-		if(orderDownCast.getStatus() == OrderStatus.IN_KITCHEN)
-		{
-			orderDownCast.setStatus(OrderStatus.DELIVERED);
-			oData.saveOrder(ord);
-		}
-		else
-		{
-			throw new UnreachableStatusException("The order cannot be entered if it has not been in the kitchen.");
-		}
-	}
-	/**
 	 * Sets the status of the order passed as parameter to <code>PAYED</code>
-	 * if the order current status is either <code>IN_KITCHEN</code> or <code>DELIVERED</code>.
+	 * if the order current status is either <code>OPEN</code>
 	 * @param ord	The order to change the status of.
 	 * @throws UnreachableStatusException	If the conditions to set the <code>PAYED</code> status aren't met.
 	 */
@@ -159,15 +118,14 @@ public class OrderService
 			throws UnreachableStatusException
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
-		//The state must be delivered or in the kitchen in order to be paid
-		if(orderDownCast.getStatus() == OrderStatus.IN_KITCHEN || ord.getStatus() == OrderStatus.DELIVERED)
+		if(orderDownCast.getStatus() == OrderStatus.OPEN)
 		{
 			orderDownCast.setStatus(OrderStatus.PAYED);
 			oData.saveOrder(ord);
 		}
 		else
 		{
-			throw new UnreachableStatusException("The order cannot be charged because it is not yet in the kitchen or delivered.");
+			throw new UnreachableStatusException("The order cannot be charged because it is closed.");
 		}
 		
 	}
@@ -235,7 +193,6 @@ public class OrderService
 		int numberOfOrders = 0;
 		if(date.compareTo(LocalDate.now()) <= 0)
 		{
-			//We go through the order history of the establishment
 			for(Order ord: coffee.getOrders())
 			{
 				if(ord.getDate().toLocalDate().equals(date))
@@ -251,30 +208,56 @@ public class OrderService
 		return numberOfOrders;
 	}
 	
+	/**
+	 * Returns the validation code of the order.
+	 * @param ord	The current order.
+	 * @return		Returns the validation code of the concrete order.
+	 */
 	public String getValidationCode(Order ord)
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
 		return orderDownCast.getCode();
 	}
 	
+	/**
+	 * Returns true or false based on whether enough products are available from an order.
+	 * @param ord	The current order.
+	 * @param c		The current coffee.
+	 * @return		Returns true if there is enough stock of products and false otherwise.
+	 */
 	public boolean getValidationStock(Order ord, Cafeteria c)
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
 		return orderDownCast.validationStock(c);
 	}
 	
+	/**
+	 * Returns the date for which the corresponding order has been scheduled.
+	 * @param ord	The current order.
+	 * @return		Returns the date and time of the scheduled order.
+	 */
 	public LocalDateTime getProgrammingDate(Order ord)
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
 		return orderDownCast.getProgrammingDate();
 	}
 	
+	/**
+	 * Set the validation code of this order to the one passed by parameter.
+	 * @param s		The new validation code.
+	 * @param ord	The current code.
+	 */
 	public void setCode(String s, Order ord)
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
 		orderDownCast.setCode(s);
 	}
 	
+	/**
+	 * Sets the programming date of this order to the one passed by parameter.
+	 * @param ord	The current order.
+	 * @param PD	The new programming date to set this order.
+	 */
 	public void setProgrammingDate(Order ord, LocalDateTime PD)
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;

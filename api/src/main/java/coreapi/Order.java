@@ -11,6 +11,8 @@ import java.util.Map;
  * Users should be able to get by with the methods declared here for a basic
  * usage of an order object.
  * @author Borja
+ * @author Maria
+ * @author Fran
  * @version 0.2
  */
 public interface Order {
@@ -48,6 +50,12 @@ public interface Order {
 	 * @see OrderStatus
 	 */
 	public OrderStatus getStatus();
+	
+	/**
+	 * Returns the validation code of the order.
+	 * @return Returns the validation code of the concrete order.
+	 */
+	public String getCode();
 	
 	/**
 	 * Returns a read-only list of the products contained in this order.

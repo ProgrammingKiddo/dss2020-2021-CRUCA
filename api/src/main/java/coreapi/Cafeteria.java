@@ -228,6 +228,11 @@ public class Cafeteria implements Serializable
 		}
 	}
 	
+	/**
+	 * Returns a list of a specific type products.
+	 * @param type	String which contains the type of product.
+	 * @return	returns a list of a specific type products.
+	 */
 	public List<Product> getSpecificTypeProduct(String type)
 	{
 		List<Product> p = getAvailableProducts();

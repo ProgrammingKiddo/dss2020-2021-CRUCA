@@ -8,7 +8,11 @@ package coreapi;
 */
 @SuppressWarnings("serial")
 public class InvalidQuantityException extends Exception{
-	
+	/**
+	 * Create a new exception of this type, detailing on the message
+	 * the specifics of the invalid quantity.
+	 * @param message The message detailing the specifics of the issue.
+	 */
 	public InvalidQuantityException(String message) {
 		super(message);
 	}

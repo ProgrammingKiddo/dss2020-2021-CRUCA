@@ -83,6 +83,10 @@ public class OrderImpl implements Order, Serializable {
 		return programmingDate;
 	}
 	
+	/**
+	 * Returns the validation code of the order.
+	 * @return Returns the validation code of the concrete order.
+	 */
 	public String getCode()
 	{
 		return validationCode;
@@ -274,9 +278,11 @@ public class OrderImpl implements Order, Serializable {
 	}
 	
 
-
-//MIRAR DONDE VA ESTA FUNCIÓN Y SI ES NECESARIA
-
+	/**
+	 * Returns true or false based on whether enough products are available from an order.
+	 * @param coffee	The current coffee.
+	 * @return	Returns true if there is enough stock of products and false otherwise.
+	 */
 	public boolean validationStock(Cafeteria coffee)
 	{
 		boolean comprobation = true;

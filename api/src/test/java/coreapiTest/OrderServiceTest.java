@@ -141,28 +141,6 @@ public class OrderServiceTest
 	/*
 	 * Check that the Order Status can't be changed to the one indicated.
 	 */
-	public void checkInvalidSetOrderStatus_InKitchen()
-	{
-		Assert.assertThrows(UnreachableStatusException.class, () -> {
-			ordSer.OrderStatus_InKitchen(myOrder);
-		});
-	}
-	
-	@Test
-	/*
-	 * Check that the Order Status can't be changed to the one indicated.
-	 */
-	public void checkInvalidSetOrderStatus_Delivered()
-	{
-		Assert.assertThrows(UnreachableStatusException.class, () -> {
-			ordSer.OrderStatus_Delivered(myOrder);
-		});
-	}
-	
-	@Test
-	/*
-	 * Check that the Order Status can't be changed to the one indicated.
-	 */
 	public void checkInvalidSetOrderStatus_Payed()
 	{
 		Assert.assertThrows(UnreachableStatusException.class, () -> {
