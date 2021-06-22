@@ -1,5 +1,11 @@
 package apihttp;
 
+/**
+ * Class that assembles the structure of the objects.
+ * @author Fran
+ * @author Maria
+ */
+
 import org.springframework.boot.SpringApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -65,6 +71,7 @@ public class ApihttpApplication {
 	{
 		return new OrderService(new DiskCafeteriaData("./"),new DiskOrderData("./"), new DiskProductData("./"));
 	}
+	
 	@Bean
 	public CardData newCardData()
 	{

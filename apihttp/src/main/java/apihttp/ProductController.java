@@ -1,5 +1,11 @@
 package apihttp;
 
+/**
+ * Class representing the functions to manage the products.
+ * @author Fran
+ * @author Maria
+ * 
+ */
 
 import java.util.List;
 
@@ -18,38 +24,31 @@ public class ProductController {
 	
 	@Autowired
 	private ApiHTTPService APIService;
+	
 	public ProductController(ApiHTTPService as)
 	{
 		this.APIService = as;
 	}
 	
-	/* -------------------------- NEW CODE -------------------------- */
-
+	/**
+	 * Returns a list with the different types of products that exist.
+	 * @return	Returns a list with the different types of products.
+	 */
 	@GetMapping("/productstypes")
 	public List<String> getTypes()
 	{
 		return APIService.getSpecificProduct();
 	}
-	
 
+	/**
+	 * Returns a list with the products of a certain type.
+	 * @param type	Specific product type.
+	 * @return	Returns a list with the products of the type entered.
+	 */
 	@GetMapping("/specifictypesproducts/{type}")
 	public List<Product> getTypeProducts(@PathVariable("type") String type)
 	{
 		return APIService.getAvailableTypeProducts(type);
 	}
-	
-	/* -------------------------- OLD CODE -------------------------- */
-	/*
-	@GetMapping("/productstype/{type}")
-	public List<Product> getAvailabletypeProducts(@PathVariable String type) 
-	{
-		return coffee.getSpecificTypeProduct(type);
-	}
-	
-	@GetMapping("/product/{id}")
-	public Product getSpecificProduct(@PathVariable int idP)
-	{
-		return DP.getProduct(idP);
-	}*/
 
 }

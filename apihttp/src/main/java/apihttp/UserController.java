@@ -27,75 +27,42 @@ public class UserController
 {
 	@Autowired
 	private ApiHTTPService APIService;
+	
 	public UserController(ApiHTTPService as)
 	{
 		this.APIService = as;
 	}
 	
-	/* -------------------------- NEW CODE -------------------------- */
-
+	/**
+	 * Register a new user.
+	 * @param u	Specific user data.
+	 */
 	@PostMapping("/newuser")
 	public void addUser(@RequestBody User u)
 	{
 		APIService.userRegister(u);
 	}
 	
+	/**
+	 * Update the data of a specific user.
+	 * @param u				Modified user data.
+	 * @param userid		Id of the user to whom we want to update the data.
+	 */
 	@PutMapping("/updateUser/{userid}")
 	public void updateUser(@RequestBody User u, @PathVariable int userid)
 	{
 		APIService.userUpdate(u, userid);
 	}
 
+	/**
+	 * Returns the list of all orders for a specific user.
+	 * @param userid	ID of the user from whom we want to obtain the orders.
+	 * @return		Returns the list of all orders for the indicated user.
+	 */
 	@GetMapping("/getuserorders/{userid}")
 	public List<Order> userOrders(@PathVariable int userid)
 	{
 		return APIService.getOrders(userid);
 	}
 	
-	/* -------------------------- OLD CODE -------------------------- */
-	
-	/**
-	 * Obtain a specific user object by the identifier
-	 * @param dni Identifier of the user
-	 * @see User
-	 * @see DiskUserData
-	 * @return User object with this DNI
-	 */
-	/*
-	@GetMapping("/users/profile/{dni}")
-    User getUser(@PathVariable int dni)
-    {
-        return DU.getUser(dni);
-    }
-    */
-	/**
-	 * Save an User object with data modifications
-	 * 
-	 * @param user User object will be saved with the new data
-	 * @see User
-	 * @see DiskUserData
-	 */
-	/*
-    @PutMapping("/users/editProfile/{user}")
-    void editProfile(@RequestBody User user)
-    {
-    	DU.saveUser(user);
-    }
-    */
-    /**
-     * Obtain a list of the different Orders from an User by his dni
-     * 
-     * @param dni	Identifier of the user
-     * @see User
-     * @see Order
-     * @return List of the different Orders from an User
-     */
-	/*
-    @GetMapping("/users/getorders/{dni}")
-    List<Order> getOrders(@PathVariable int dni)
-    {
-    	User u = DU.getUser(dni);
-    	return u.getUserOrderList();
-    }
-    */
 }
