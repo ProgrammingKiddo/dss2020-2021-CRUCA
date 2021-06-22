@@ -383,8 +383,6 @@ public class Screen
 	        if (option == '1')
 	        {
 	        	try {
-	        		ordSer.OrderStatus_InKitchen(activeOrder);
-	        		ordSer.OrderStatus_Delivered(activeOrder);
 	        		ordSer.OrderStatus_Payed(activeOrder);
 	        		ordSer.OrderStatus_Finished(activeOrder);
 	        		System.out.println("+++Su pedido ha sido finalizado correctamente.\n+++Volviendo al menu principal...");
