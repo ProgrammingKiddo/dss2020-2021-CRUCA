@@ -22,9 +22,10 @@ import filepersistence.*;
 @Configuration
 @RestController
 @EnableSwagger2
-@ComponentScan(basePackages =  {"coreapi","data","filepersistence","apihttp"})
+@ComponentScan(basePackages =  {"coreapi","data","filepersistence","apihttp","com.example.accessingdatamysql"})
 public class ApihttpApplication {
 
+	
 	@Bean
 	public Docket api()
 	{
@@ -63,6 +64,11 @@ public class ApihttpApplication {
 	public OrderService newOrderService()
 	{
 		return new OrderService(new DiskCafeteriaData("./"),new DiskOrderData("./"), new DiskProductData("./"));
+	}
+	@Bean
+	public CardData newCardData()
+	{
+		return new DiskCardData("./");
 	}
 
 }

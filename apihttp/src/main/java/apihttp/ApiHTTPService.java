@@ -1,22 +1,29 @@
 package apihttp;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import coreapi.Cafeteria;
+import coreapi.Card;
 import coreapi.InsufficientStockException;
 import coreapi.InvalidDateException;
 import coreapi.Order;
 import coreapi.OrderFactory;
 import coreapi.OrderService;
+import coreapi.OrderStatus;
 import coreapi.Product;
 import coreapi.ProductNotContainedInOrderException;
 import coreapi.UnreachableStatusException;
 import coreapi.User;
+import coreapi.WrongTransactionException;
+import data.CardData;
 import data.OrderData;
 import data.ProductData;
 import data.UserData;
@@ -37,8 +44,10 @@ public class ApiHTTPService {
 	private MailService MS;
 	@Autowired
 	private OrderService OService;
+	@Autowired
+    private CardData DC;
 	
-	public ApiHTTPService(Cafeteria cf, OrderData dord,ProductData dp,  UserData du, MailService ml, OrderService os)
+	public ApiHTTPService(Cafeteria cf, OrderData dord,ProductData dp,  UserData du, MailService ml, OrderService os, CardData cd)
 	{
 		this.coffee = cf;
 		this.DO = dord;
@@ -46,13 +55,18 @@ public class ApiHTTPService {
 		this.DU = du;
 		this.MS = ml;
 		this.OService = os;
+        this.DC = cd;
 	}
 	
 	/* CreateNewOrder */
 	
-	public void createOrder()
+	public void createOrder(int iduser)
 	{
-		DO.saveOrder(OrderFactory.createOrder(coffee,LocalDateTime.now()));
+		User u = DU.getUser(iduser);
+	    Order o = OrderFactory.createOrder(coffee,LocalDateTime.now());
+	    u.setOrder(o);
+	    DO.saveOrder(o);
+	    DU.saveUser(u);
 	}
 	
 	/* AvailableProductsTypes */
@@ -181,4 +195,49 @@ public class ApiHTTPService {
 		User u = DU.getUser(userID);
 		return u.getUserOrderList();
 	}
+	
+	   public void completeOrder(int idord, int iduser)
+	    {
+	        Order o = DO.getOrder(idord);
+	        User u = DU.getUser(iduser); // No se si servirá.
+	        Card c = DC.getCard(u.getNcard());
+	        RestTemplate rt = new RestTemplate();
+	        if(OService.getValidationStock(o,coffee)) //¿Comprobamos y restamos stock antes?
+	        {
+	            BigDecimal s = rt.getForObject("http:://localhost:8080/userbalance/" + iduser, BigDecimal.class ,c);
+	            if(((s.subtract(o.totalCost())).compareTo(new BigDecimal(-10)) >= 0) == true)
+	            {
+	                rt.put("http:://localhost:8080/payauthoritation/" + iduser , o);
+	            }
+	        }
+	    }
+
+	    public void deleteOrderFromUser(User u, int idord) // AHORA MISMO NO SE BORRA DE LOS PAYMENTS
+	    {
+	        Order o = DO.getOrder(idord);
+	        Card c = DC.getCard(u.getNcard());
+	        if(o.getStatus() != OrderStatus.FINISHED)
+	        {
+	            u.deleteOrder(o);
+	            Map<Product,Integer> bk = o.getBasket();
+	            try
+	            {
+		            for(Map.Entry<Product,Integer> entry: bk.entrySet())
+		            {
+		                coffee.addProductStock(entry.getKey(),entry.getValue().intValue());
+		            }
+		            if(o.getStatus() == OrderStatus.PAYED)
+		            {
+		                c.addBalance(c.getCardNumber(),o.totalCost());
+		            }
+	            }
+	            catch(WrongTransactionException e)
+	            {
+	            	
+	            }
+	        }
+	        DO.saveOrder(o);
+	        DC.saveCard(c);
+	        DU.saveUser(u);
+	    }
 }
