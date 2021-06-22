@@ -37,7 +37,7 @@ public class ProductController {
 	@GetMapping("/productstypes")
 	public List<String> getTypes()
 	{
-		return APIService.getSpecificProduct();
+		return APIService.getProductTypes();
 	}
 
 	/**
@@ -49,6 +49,12 @@ public class ProductController {
 	public List<Product> getTypeProducts(@PathVariable("type") String type)
 	{
 		return APIService.getAvailableTypeProducts(type);
+	}
+	
+	@GetMapping("/getproductquantity/{prodid}")
+	public int getProductQuantity(@PathVariable("prodid") int prodid)
+	{
+		return APIService.getProductQuantity(prodid);
 	}
 
 }

@@ -101,7 +101,7 @@ public class Cafeteria implements Serializable
 	{
 		if (productStock.containsKey(prod) == false)
 		{
-			productStock.put(prod, quantity);			
+			productStock.put(prod, Integer.valueOf(quantity));			
 		}
 	}
 	
@@ -112,7 +112,17 @@ public class Cafeteria implements Serializable
 	 */
 	public int getProductQuantity(Product prod)
 	{
-		return productStock.get(prod).intValue();
+		int quantity = 0;
+		
+		for (Map.Entry<Product,Integer> e : productStock.entrySet())
+		{
+			if (e.getKey().equals(prod))
+			{
+				quantity = e.getValue().intValue();
+			}
+		}
+		
+		return quantity;
 	}
 	
 	/**
@@ -125,7 +135,7 @@ public class Cafeteria implements Serializable
 			AddType(prod.getType());
 			if (productStock.containsKey(prod) == false)
 			{
-				productStock.put(prod, quantity);
+				productStock.put(prod, Integer.valueOf(quantity));
 			}
 			else
 			{
@@ -154,7 +164,7 @@ public class Cafeteria implements Serializable
 		}
 		else
 		{
-			Integer newQuantity = Integer.valueOf(productStock.get(prod).intValue() - quantity);
+			Integer newQuantity = Integer.valueOf(getProductQuantity(prod) - quantity);
 			if(newQuantity == 0)
 			{
 				productStock.remove(prod);
@@ -235,14 +245,15 @@ public class Cafeteria implements Serializable
 	 */
 	public List<Product> getSpecificTypeProduct(String type)
 	{
-		List<Product> p = getAvailableProducts();
-		for(Product cP : p)
+		List<Product> allProducts = getAvailableProducts();
+		List<Product> typeProducts = new ArrayList<Product>();
+		for(Product p : allProducts)
 		{
-			if(cP.getType() != type)
+			if(p.getType().equals(type))
 			{
-				p.remove(cP);
+				typeProducts.add(p);
 			}
 		}
-		return p;	
+		return typeProducts;	
 	}
 }

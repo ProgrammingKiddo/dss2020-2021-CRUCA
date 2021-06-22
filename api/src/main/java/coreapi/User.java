@@ -2,6 +2,7 @@ package coreapi;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +46,7 @@ public class User implements Serializable
 		this.surname = surname;
 		this.dni = dni;
 		this.email = email;
+		UserOrderList = new ArrayList<Order>();
 	}
 
 	/**

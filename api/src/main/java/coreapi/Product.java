@@ -35,4 +35,6 @@ public interface Product {
 	 * @return Returns the type of this product
 	 */
 	public String getType();
+	
+	public boolean equals(Object o);
 }

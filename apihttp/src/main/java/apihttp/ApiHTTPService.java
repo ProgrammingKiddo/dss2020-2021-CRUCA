@@ -29,6 +29,7 @@ import coreapi.ProductNotContainedInOrderException;
 import coreapi.UnreachableStatusException;
 import coreapi.User;
 import coreapi.WrongTransactionException;
+import data.CafeteriaData;
 import data.CardData;
 import data.OrderData;
 import data.ProductData;
@@ -40,6 +41,8 @@ public class ApiHTTPService {
 	
 	@Autowired
 	private Cafeteria coffee;
+	@Autowired
+	private CafeteriaData CD;
 	@Autowired
 	private OrderData DO;
 	@Autowired
@@ -53,7 +56,7 @@ public class ApiHTTPService {
 	@Autowired
     private CardData DC;
 	
-	public ApiHTTPService(Cafeteria cf, OrderData dord,ProductData dp,  UserData du, MailService ml, OrderService os, CardData cd)
+	public ApiHTTPService(Cafeteria cf, CafeteriaData dcof, OrderData dord,ProductData dp,  UserData du, MailService ml, OrderService os, CardData cd)
 	{
 		this.coffee = cf;
 		this.DO = dord;
@@ -62,6 +65,7 @@ public class ApiHTTPService {
 		this.MS = ml;
 		this.OService = os;
         this.DC = cd;
+        this.CD = dcof;
 	}
 	
 	
@@ -75,7 +79,13 @@ public class ApiHTTPService {
 	    Order o = OrderFactory.createOrder(coffee,LocalDateTime.now());
 	    u.setOrder(o);
 	    DO.saveOrder(o);
+	    CD.saveCafeteria(coffee);
 	    DU.saveUser(u);
+	}
+	
+	public Order getOrder(int orderid)
+	{
+		return DO.getOrder(orderid);
 	}
 
 	/**
@@ -92,9 +102,14 @@ public class ApiHTTPService {
 	 * Returns a list with the different types of products that exist.
 	 * @return	Returns a list with the different types of products.
 	 */
-	public List<String> getSpecificProduct()
+	public List<String> getProductTypes()
 	{
 		return coffee.getTypes();
+	}
+	
+	public int getProductQuantity(int prodId)
+	{
+		return coffee.getProductQuantity(DP.getProduct(prodId));
 	}
 	
 	/**
@@ -108,13 +123,15 @@ public class ApiHTTPService {
 	 */
 	public void addProductToOrder(int ordID, int prodID, int q) throws InsufficientStockException
 	{
+		Product p = DP.getProduct(prodID);
+		Order o = DO.getOrder(ordID);
 		try
 		{
-			OService.addProductToOrder(coffee,DO.getOrder(ordID),DP.getProduct(prodID), q);
+			OService.addProductToOrder(CD.getCafeteria(0), o, p, q);
 		}
 		catch(InsufficientStockException ex)
 		{
-			
+			System.out.println("Excepcion!!!!");
 		}
 		
 	}
@@ -170,7 +187,7 @@ public class ApiHTTPService {
 	{
 		try
 		{
-			return "La caja de la fecha introducida es: " + OService.getTotalDailyRegister(coffee, date) + " y el n�mero de pedidos ha sido: " + OService.getNumberOfDailyOrders(coffee,date);
+			return "La caja de la fecha introducida es: " + OService.getTotalDailyRegister(coffee, date).doubleValue() + " y el n�mero de pedidos ha sido: " + OService.getNumberOfDailyOrders(coffee,date);
 		}catch(InvalidDateException e)
 		{
 			return e.toString();
@@ -272,12 +289,13 @@ public class ApiHTTPService {
 
 	/**
 	 * Cancel and remove an user's order.
-	 * @param u			User who cancels the order.
+	 * @param userId	User who cancels the order.
 	 * @param idord		Contains the order id which will be delete.
 	 */
-	public void deleteOrderFromUser(User u, int idord) 
+	public void deleteOrderFromUser(int userId, int idord) 
 	{
 		Order o = DO.getOrder(idord);
+		User u = DU.getUser(userId);
 	    Card c = DC.getCard(u.getNcard());
 	    if(o.getStatus() != OrderStatus.FINISHED)
 	    {

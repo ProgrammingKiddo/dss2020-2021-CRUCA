@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import coreapi.InsufficientStockException;
+import coreapi.Order;
 import coreapi.ProductNotContainedInOrderException;
 import coreapi.UnreachableStatusException;
 import coreapi.User;
@@ -38,17 +39,29 @@ public class OrderController {
 		APIService.createOrder(iduser);
 	}
 	
+	@GetMapping("getorder/{orderid}")
+	public Order getOrder(@PathVariable("orderid") int orderid)
+	{
+		return APIService.getOrder(orderid);
+	}
+	
 	/**
 	 * Add a product to a current order.
 	 * @param pq	Map containing the identification of a product and the quantity to add.
 	 * @param ordid	The id of a current Order which the product will be added.
 	 * @throws InsufficientStockException 
 	 */
-	@PutMapping("/addproduct/{ordid}")
+	/*@PutMapping("/addproduct/{ordid}")
 	public void addProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid) throws InsufficientStockException
 	{
 		Map.Entry<Integer, Integer> entry = pq.entrySet().iterator().next();
 		APIService.addProductToOrder(ordid, entry.getKey().intValue(), entry.getValue().intValue());
+	}*/
+	
+	@PutMapping("/addproduct/{ordid}")
+	public void addProductToOrder(int productId, int quantity, @PathVariable("ordid") int ordid) throws InsufficientStockException
+	{
+		APIService.addProductToOrder(ordid, productId, quantity);
 	}
 
 	/**
@@ -81,10 +94,10 @@ public class OrderController {
 	 * @param date Contains the date which we want to obtain the orders.
 	 * @return	The number of the orders registered and the total amount of money earned.
 	 */
-	@GetMapping("/dailyregister/{date}")
-	public String dailyRegister(@PathVariable("date") LocalDate date)
+	@GetMapping("/dailyregister/")
+	public String dailyRegister(String date)
 	{
-		return APIService.DailyRegister(date);
+		return APIService.DailyRegister(LocalDate.parse(date));
 	}
 
 	/**
@@ -93,9 +106,9 @@ public class OrderController {
 	 * @param ordid		ID of the order to be scheduled.
 	 */
 	@PutMapping("/programmingdate/{ordid}")
-	public void programmingDate(@RequestBody LocalDateTime PD, @PathVariable("ordid") int ordid)
+	public void programmingDate(String programmingDateTime, @PathVariable("ordid") int ordid)
 	{
-		APIService.OrderProgramming(ordid, PD);
+		APIService.OrderProgramming(ordid, LocalDateTime.parse(programmingDateTime));
 	}
 
 	/**
@@ -121,13 +134,13 @@ public class OrderController {
 
 	/**
 	 * Cancel and remove an user's order.
-	 * @param u		User who cancels the order.
+	 * @param userId		User who cancels the order.
 	 * @param idord	Contains the order id which will be delete.
 	 */
 	@PutMapping("/deleteuserord/{idord}")
-	public void deleteOrderFromUser(@RequestBody User u, @PathVariable("idord") int idord)
+	public void deleteOrderFromUser(int userId, @PathVariable("idord") int idord)
 	{
-		APIService.deleteOrderFromUser(u,idord);
+		APIService.deleteOrderFromUser(userId ,idord);
 	}
 	
 }

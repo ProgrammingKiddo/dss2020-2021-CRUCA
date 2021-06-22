@@ -71,4 +71,21 @@ public class ProductImpl implements Product, Serializable {
 	{
 		return type;
 	}
+	
+	public boolean equals(Object o)
+	{
+		if (o == this)
+		{
+			return true;
+		}
+		
+		if (!(o instanceof Product))
+		{
+			return false;
+		}
+		
+		Product p = (Product) o;
+		
+		return p.getId() == this.id;
+	}
 }
