@@ -10,7 +10,7 @@ import coreapi.InsufficientStockException;
 import coreapi.Order;
 import coreapi.ProductNotContainedInOrderException;
 import coreapi.UnreachableStatusException;
-import coreapi.User;
+
 
 /**
  * Class representing the functions which user can manage his orders.
