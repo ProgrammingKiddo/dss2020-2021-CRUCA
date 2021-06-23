@@ -49,9 +49,17 @@ public class UserController
 	 * @param userid		Id of the user to whom we want to update the data.
 	 */
 	@PutMapping("/updateUser/{userid}")
-	public void updateUser(@RequestBody User u, @PathVariable int userid)
+	public User updateUser(@RequestBody User u, @PathVariable int userid)
 	{
-		APIService.userUpdate(u, userid);
+		return APIService.userUpdate(u, userid);
+		
+	}
+	
+	@GetMapping("/updateUser/{userid}")
+	public User verUser(@PathVariable int userid)
+	{
+		return APIService.verusuario(userid);
+		
 	}
 
 	/**

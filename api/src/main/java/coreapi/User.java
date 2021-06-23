@@ -29,6 +29,10 @@ public class User implements Serializable
 	//This list stores all the orders that the user has made
 	private List<Order> UserOrderList;
 	
+	public User() 
+	{
+		UserOrderList = new ArrayList<Order>();
+	}
 	/**
 	 * Creates a new instance of a specific user.
 	 * @param name			The name associated with this user.
@@ -38,14 +42,14 @@ public class User implements Serializable
 	 * @param dni			The DNI associated with this user, this is unique.
 	 * @param email			The email associated with this user.
 	 */
-	public User(String name, String surname, int n_card, LocalDate birth_date, int dni, String email)
+	public User(String Name, String Surname, int ncard, LocalDate birth_date, int Dni, String Email)
 	{
 		this.BirthDate = birth_date;
-		this.n_card = n_card;
-		this.name = name;
-		this.surname = surname;
-		this.dni = dni;
-		this.email = email;
+		this.n_card = ncard;
+		this.name = Name;
+		this.surname = Surname;
+		this.dni = Dni;
+		this.email = Email;
 		UserOrderList = new ArrayList<Order>();
 	}
 
