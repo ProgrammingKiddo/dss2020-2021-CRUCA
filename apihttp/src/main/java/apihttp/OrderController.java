@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import coreapi.InsufficientStockException;
+import coreapi.InvalidDateException;
 import coreapi.Order;
 import coreapi.ProductNotContainedInOrderException;
 import coreapi.UnreachableStatusException;
@@ -61,7 +62,12 @@ public class OrderController {
 	@PutMapping("/addproduct/{ordid}")
 	public void addProductToOrder(int productId, int quantity, @PathVariable("ordid") int ordid) throws InsufficientStockException
 	{
-		APIService.addProductToOrder(ordid, productId, quantity);
+		try
+		{
+			APIService.addProductToOrder(ordid, productId, quantity);
+		}
+		catch(InsufficientStockException e)
+		{}
 	}
 
 	/**
@@ -72,10 +78,14 @@ public class OrderController {
 	 * @throws InsufficientStockException 
 	 */
 	@PutMapping("/removeproduct/{ordid}")
-	public void removeProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid) throws InsufficientStockException, ProductNotContainedInOrderException
+	public void removeProductToOrder(int productId, int quantity, @PathVariable("ordid") int ordid) throws InsufficientStockException, ProductNotContainedInOrderException
 	{
-		Map.Entry<Integer, Integer> entry = pq.entrySet().iterator().next();
-		APIService.removeProductFromOrder(ordid, entry.getKey().intValue(), entry.getValue().intValue());
+		try
+		{
+			APIService.removeProductFromOrder(ordid, productId, quantity);
+		}
+		catch(InsufficientStockException e) {}
+		catch(ProductNotContainedInOrderException e) {}
 	}
 
 	/**
@@ -86,7 +96,12 @@ public class OrderController {
 	@PutMapping("/finishorder/{ordid}")
 	public void finishOrder(@PathVariable("ordid") int ordid) throws UnreachableStatusException
 	{
-		APIService.closeOrder(ordid);
+		try
+		{
+			APIService.closeOrder(ordid);
+		}
+		catch(UnreachableStatusException e) {}
+		
 	}
 
 	/**
@@ -106,9 +121,13 @@ public class OrderController {
 	 * @param ordid		ID of the order to be scheduled.
 	 */
 	@PutMapping("/programmingdate/{ordid}")
-	public void programmingDate(String programmingDateTime, @PathVariable("ordid") int ordid)
+	public void programmingDate(String programmingDateTime, @PathVariable("ordid") int ordid) throws InvalidDateException
 	{
-		APIService.OrderProgramming(ordid, LocalDateTime.parse(programmingDateTime));
+		try
+		{
+			APIService.OrderProgramming(ordid, LocalDateTime.parse(programmingDateTime));
+		}
+		catch(InvalidDateException e) {}
 	}
 
 	/**
@@ -126,10 +145,9 @@ public class OrderController {
 	 * @param ou	Map containing the id of the user and the id of the order to be completed.
 	 */
 	@PutMapping("/completeorder/")
-	public void completeOrder(@RequestBody Map<Integer,Integer> ou)
+	public void completeOrder(int ordid, int uid)
 	{
-		Map.Entry<Integer, Integer> entry = ou.entrySet().iterator().next();
-	    APIService.completeOrder(entry.getKey().intValue(),entry.getValue().intValue());
+	    APIService.completeOrder(ordid,uid);
 	}
 
 	/**
@@ -141,6 +159,17 @@ public class OrderController {
 	public void deleteOrderFromUser(int userId, @PathVariable("idord") int idord)
 	{
 		APIService.deleteOrderFromUser(userId ,idord);
+	}
+	
+	/**
+	 * Returns the products of an order with their quantity.
+	 * @param ordid		ID of the order from which we want to consult the products.
+	 * @return			Returns the map of products.
+	 */
+	@GetMapping("/productoforder/{ordid}")
+	public Map<String,Integer> ProductOfOrder(@PathVariable("ordid") int ordid)
+	{
+		return APIService.getProductOfOrder(ordid);
 	}
 	
 }

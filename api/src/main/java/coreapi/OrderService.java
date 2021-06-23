@@ -259,15 +259,17 @@ public class OrderService
 	 * @param ord	The current order.
 	 * @param PD	The new programming date to set this order.
 	 */
-	public void setProgrammingDate(Order ord, LocalDateTime PD)
+	public void setProgrammingDate(Order ord, LocalDateTime PD) throws InvalidDateException
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
 		try
 		{
 			orderDownCast.setProgrammingDate(PD);
-		}catch(InvalidDateException ex)
+			oData.saveOrder(ord);
+		}
+		catch(InvalidDateException ex)
 		{
-			
+			throw new InvalidDateException("Invalid date");
 		}
 	}
 }
