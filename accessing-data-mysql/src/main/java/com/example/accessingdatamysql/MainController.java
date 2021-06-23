@@ -29,25 +29,14 @@ public class MainController
 
 	/**
 	 * Returns the amount of balance that the user has on his card.
-	 * @param c		User card.
 	 * @param dni	ID of the user whose card balance we are going to verify.
 	 * @return		Returns the amount of the user's balance on the card.
-	 * @throws WrongTransactionException 	If the operation to be performed 
-	 * 										fails because the data entered is incorrect.
 	 */
 	@GetMapping("/userbalance/{dni}")
-	public Double getUserBalance(@RequestBody Card c, @PathVariable int dni)throws WrongTransactionException
+	public Double getUserBalance(@PathVariable int dni)
 	{
-		Double s = 0.0;
-		try
-		{
-			s = CService.userBalace(dni, c).doubleValue();
-		}
-		catch (WrongTransactionException e)
-		{
-			
-		}
-		return s;
+		return CService.userBalace(dni).doubleValue();
+	
 	}
 
 	/**
@@ -125,5 +114,11 @@ public class MainController
 		{
 			
 		}
+	}
+	
+	@GetMapping("/seecard/{iduser}")
+	public Card seeCard(@PathVariable("iduser") int iduser)
+	{
+		return CService.vercard(iduser);
 	}
 }

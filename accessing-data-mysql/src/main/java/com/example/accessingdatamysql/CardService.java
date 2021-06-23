@@ -49,26 +49,11 @@ public class CardService {
     /**
      * Returns the amount of balance that the user has on his card.
      * @param uDNI	ID of the user whose card balance we are going to verify.
-     * @param c		User card.
      * @return		Returns the amount of the user's balance on the card.
-     * @throws WrongTransactionException	If the operation to be performed 
-	 * 										fails because the data entered is incorrect.
      */
-    public BigDecimal userBalace(int uDNI, Card c) throws WrongTransactionException
+    public BigDecimal userBalace(int uDNI) 
     {
-        try {
-            if(uDNI == c.getUserDni())
-            {
-                return c.getBalance();
-            }
-            else
-            {
-                throw new WrongTransactionException("User DNI and card user DNI are different");
-            }
-        }catch(WrongTransactionException ex)
-        {
-            return new BigDecimal(0);
-        }
+       return DC.getCard(DU.getUser(uDNI).getNcard()).getBalance();
     }
     
     /**
@@ -166,6 +151,11 @@ public class CardService {
         	}
             
         }
+    }
+    
+    public Card vercard(int iduser)
+    {
+    	return DC.getCard(DU.getUser(iduser).getNcard());
     }
   
 }

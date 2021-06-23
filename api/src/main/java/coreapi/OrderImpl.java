@@ -26,7 +26,7 @@ public class OrderImpl implements Order, Serializable {
 	private LocalDateTime creationDate;
 	private LocalDateTime programmingDate;
 	// Map cannot take primitive types as the type of its mapped values
-	private LinkedHashMap<Product, Integer> basket;
+	private Map<Product, Integer> basket;
 	private OrderStatus orderStatus;
 	private String validationCode;
 	

@@ -9,6 +9,7 @@ package apihttp;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -187,7 +188,7 @@ public class ApiHTTPService {
 	{
 		try
 		{
-			return "La caja de la fecha introducida es: " + OService.getTotalDailyRegister(coffee, date).doubleValue() + " y el n�mero de pedidos ha sido: " + OService.getNumberOfDailyOrders(coffee,date);
+			return "La caja de la fecha introducida es: " + OService.getTotalDailyRegister(coffee, date).doubleValue() + " y el numero de pedidos ha sido: " + OService.getNumberOfDailyOrders(coffee,date);
 		}catch(InvalidDateException e)
 		{
 			return e.toString();
@@ -202,6 +203,8 @@ public class ApiHTTPService {
 	public void userRegister(User u)
 	{
 		DU.saveUser(u);
+		Card c = new Card(u.getDni(),u.getNcard());
+		DC.saveCard(c);
 	}
 	
 	/**
@@ -209,7 +212,7 @@ public class ApiHTTPService {
 	 * @param CopyUser	Modified user data.
 	 * @param userID	Id of the user to whom we want to update the data.
 	 */
-	public void userUpdate(User CopyUser, int userID)
+	public User userUpdate(User CopyUser, int userID)
 	{
 		User u = DU.getUser(userID);
 		u.setDNI(CopyUser.getDni());
@@ -218,30 +221,27 @@ public class ApiHTTPService {
 		u.setSurname(CopyUser.getSurname());
 		u.setBirthDate(CopyUser.getBirthDate());
 		u.setEmail(CopyUser.getEmail());
+		DU.saveUser(u);
+		return u;
 	}
-
+	
+	public User verusuario(int userID)
+	{
+		return DU.getUser(userID);
+	}
 	/**
 	 * Schedule an order for a specific date and time.
 	 * @param ordID		ID of the order to be scheduled.
 	 * @param PD		Date and time the order is scheduled.
 	 */
-	public void OrderProgramming(int ordID, LocalDateTime PD)
+	public void OrderProgramming(int ordID, LocalDateTime PD) throws InvalidDateException
 	{
 		try
 		{
-			if(OService.getValidationStock(DO.getOrder(ordID), coffee))
-			{
-				OService.setProgrammingDate(DO.getOrder(ordID), PD);
-			}
-			else
-			{
-				throw new InsufficientStockException("There isn't enough stock of any of your products");
-			}
-		}catch(InsufficientStockException ex)
-		{
-			
+			OService.setProgrammingDate(DO.getOrder(ordID), PD);
 		}
-		
+		catch(InvalidDateException e) {}
+			
 	}
 
 	/**
@@ -321,4 +321,22 @@ public class ApiHTTPService {
 	    DC.saveCard(c);
 	    DU.saveUser(u);
 	}
+	
+	/**
+	 * Returns the products of an order with their quantity.
+	 * @param ordid		ID of the order from which we want to consult the products.
+	 * @return			Returns the map of products.
+	 */
+	public Map<String,Integer> getProductOfOrder(int ordid)
+    {
+        Order o = DO.getOrder(ordid);
+        Map<String, Integer> list = new LinkedHashMap<String,Integer>();
+        for(Map.Entry<Product, Integer> entry: o.getBasket().entrySet())
+        {
+        	list.put(entry.getKey().getName(), entry.getValue().intValue());
+        }
+        return list;
+    }
+	
+	
 }

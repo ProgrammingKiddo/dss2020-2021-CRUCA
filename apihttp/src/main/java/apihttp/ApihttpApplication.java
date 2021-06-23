@@ -74,7 +74,7 @@ public class ApihttpApplication {
 		{
 			ProductData productData = new DiskProductData("./");
 			OrderService ordSer = new OrderService(coffeeData, orderData, productData);
-			coffee = new Cafeteria(0, "Cafeteria ESI", "cafeteria@esi.uca.es");
+			coffee = new Cafeteria(0, "Cafeteria ESI", "coffeecruca@gmail.com");
 			coffee.AddType("Menu");
 			coffee.AddType("Comida");
 			coffee.AddType("Bebida");
