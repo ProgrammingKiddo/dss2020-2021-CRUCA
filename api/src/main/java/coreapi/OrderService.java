@@ -170,6 +170,7 @@ public class OrderService
 				if(ord.getDate().toLocalDate().equals(date))
 				{
 					dailyRegister = dailyRegister.add(ord.totalCost());
+					System.out.println("Order "+ord.getId()+": "+ord.totalCost());
 				}
 			}
 		}

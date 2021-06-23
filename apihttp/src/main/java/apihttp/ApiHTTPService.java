@@ -127,7 +127,7 @@ public class ApiHTTPService {
 		Order o = DO.getOrder(ordID);
 		try
 		{
-			OService.addProductToOrder(CD.getCafeteria(0), o, p, q);
+			OService.addProductToOrder(coffee, o, p, q);
 		}
 		catch(InsufficientStockException ex)
 		{
@@ -149,7 +149,7 @@ public class ApiHTTPService {
 	{
 		try
 		{
-			OService.removeProductFromOrder(coffee,DO.getOrder(ordID),DP.getProduct(prodID), q);
+			OService.removeProductFromOrder(coffee, DO.getOrder(ordID), DP.getProduct(prodID), q);
 		}catch(InsufficientStockException ex)
 		{
 			

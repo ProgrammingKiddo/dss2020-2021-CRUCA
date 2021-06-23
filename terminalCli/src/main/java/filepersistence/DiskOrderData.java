@@ -1,5 +1,7 @@
 package filepersistence;
 
+import java.io.File;
+
 /** 
  * This class represent the functions for load or save the Order objects using files
  * @author Maria
@@ -66,5 +68,21 @@ public class DiskOrderData implements OrderData
 		{
 			System.err.println(ex.getMessage());
 		}
+	}
+	
+	public int getNumberOfExistingOrders()
+	{
+		int count = 0;
+		
+		File dataFolder = new File(path);
+		String[] filesInFolder = dataFolder.list();
+		for(String s : filesInFolder)
+		{
+			if (s.startsWith("Order"))
+			{
+				count++;
+			}
+		}
+		return count;
 	}
 }

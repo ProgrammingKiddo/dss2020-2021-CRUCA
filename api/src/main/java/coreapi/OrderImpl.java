@@ -146,12 +146,13 @@ public class OrderImpl implements Order, Serializable {
 		BigDecimal sumCost = BigDecimal.ZERO;
 		BigDecimal productCost;
 		BigDecimal productQuantity;
-		
+		System.out.println(basket.isEmpty());
 		for (Map.Entry<Product, Integer> entry : basket.entrySet())
 		{
 			// We create a copy of the product's price as to not modify its value via this reference.
 			productCost = entry.getKey().getPrice();
 			productQuantity = new BigDecimal(entry.getValue().intValue());
+			System.out.println(entry.getKey().getName()+"-"+productCost.doubleValue()+"--"+productQuantity.intValue());
 			productCost = productCost.multiply(productQuantity);
 			
 			sumCost = sumCost.add(productCost);
@@ -188,7 +189,15 @@ public class OrderImpl implements Order, Serializable {
 	 */
 	public boolean containsProduct(Product prod)
 	{
-		return basket.containsKey(prod);
+		boolean contained = false;
+		for (Map.Entry<Product,Integer> e: basket.entrySet())
+		{
+			if (e.getKey().equals(prod))
+			{
+				contained = true;
+			}
+		}
+		return contained;
 	}
 
 	/**
@@ -232,8 +241,15 @@ public class OrderImpl implements Order, Serializable {
 		{
 			if (this.containsProduct(prod))
 			{
-				int actualQuantity = basket.get(prod).intValue();
-				basket.replace(prod, Integer.valueOf(actualQuantity + quantity));
+				Integer actualQuantity = basket.get(prod);
+				for (Map.Entry<Product,Integer> e : basket.entrySet())
+				{
+					if (e.getKey().equals(prod))
+					{
+						e.setValue(actualQuantity);
+					}
+				}
+				//basket.replace(prod, Integer.valueOf(actualQuantity + quantity));
 			}
 			else
 			{

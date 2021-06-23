@@ -46,6 +46,9 @@ public class Terminal {
 		else
 		{
 			coffee = coffeeData.getCafeteria(0);
+			// Si cargamos los pedidos desde un repositorio de datos ya existente, aumentamos
+			// el contador de la factoría acorde al número de pedidos encontrados.
+			OrderFactory.setOrderCount(orderData.getNumberOfExistingOrders());
 		}
 
 		Screen cli = new Screen(coffee, ordSer);

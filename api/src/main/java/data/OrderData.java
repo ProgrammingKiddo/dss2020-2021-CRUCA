@@ -23,4 +23,6 @@ public interface OrderData
 	 * @param orderToSave	The specific order.
 	 */
 	public void saveOrder(Order orderToSave);
+	
+	public int getNumberOfExistingOrders();
 }

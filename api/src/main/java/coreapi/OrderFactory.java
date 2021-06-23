@@ -28,6 +28,11 @@ public class OrderFactory
 		return orderCount;
 	}
 	
+	public static void setOrderCount(int baseCount)
+	{
+		orderCount = baseCount;
+	}
+	
 	/**
 	 * Returns a new instance of Order with a unique id.
 	 * 
