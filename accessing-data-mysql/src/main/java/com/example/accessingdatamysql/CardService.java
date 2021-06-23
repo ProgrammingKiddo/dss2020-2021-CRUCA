@@ -1,4 +1,11 @@
 package com.example.accessingdatamysql;
+
+/**
+ * Contains the implementation of the functions used by the controller.
+ * @author Fran
+ * @author Maria
+ * 
+ */
 import java.math.BigDecimal;
 import java.util.Random;
 
@@ -39,7 +46,15 @@ public class CardService {
         this.RR = rr;
     }
     
-    public BigDecimal userBalace(int uDNI, Card c)
+    /**
+     * Returns the amount of balance that the user has on his card.
+     * @param uDNI	ID of the user whose card balance we are going to verify.
+     * @param c		User card.
+     * @return		Returns the amount of the user's balance on the card.
+     * @throws WrongTransactionException	If the operation to be performed 
+	 * 										fails because the data entered is incorrect.
+     */
+    public BigDecimal userBalace(int uDNI, Card c) throws WrongTransactionException
     {
         try {
             if(uDNI == c.getUserDni())
@@ -56,7 +71,13 @@ public class CardService {
         }
     }
     
-    public void addBalance(Reload r)
+    /**
+     * Carry out a reload on a user's card.
+     * @param r		Reload data.
+     * @throws WrongTransactionException	If the operation to be performed 
+	 * 										fails because the data entered is incorrect.
+     */
+    public void addBalance(Reload r) throws WrongTransactionException
     {
         try
         {
@@ -70,6 +91,12 @@ public class CardService {
         
     }
     
+    /**
+     * Send an email to the user with the validation code 
+     * to make the payment of a specific order.
+     * @param o		The specific order to pay.
+     * @param uDNI	The ID of the user who is going to pay for the order.
+     */
     public void paymentAuthoritation(Order o, int uDNI)
     {
         User u = DU.getUser(uDNI);
@@ -86,7 +113,14 @@ public class CardService {
         DO.saveOrder(o);
     }
     
-    public void PayRegister(Payment p, int nCard)
+    /**
+     * Register the payment of an order with a specific card.
+     * @param p			Payment data.
+     * @param nCard		The number of the card with which we are going to make the payment.
+     * @throws WrongTransactionException	If the operation to be performed 
+	 * 										fails because the data entered is incorrect.
+     */
+    public void PayRegister(Payment p, int nCard) throws WrongTransactionException
     {
         try
         {
@@ -100,7 +134,16 @@ public class CardService {
         }
     }
     
-    public void payconfirm(int idord, int iduser, String code)
+    /**
+     * Check that the payment has been made correctly and the order status has been changed to <code>PAYED</code>.
+     * @param idord		Contains the id of the Order to obtain his code.
+     * @param iduser	Contains the user id.
+     * @param code		The code introduced by the user.
+     * @throws UnreachableStatusException	If the conditions to set the <code>PAYED</code> status aren't met.
+     * @throws WrongTransactionException	If the operation to be performed 
+	 * 										fails because the data entered is incorrect.
+     */
+    public void payconfirm(int idord, int iduser, String code) throws WrongTransactionException,UnreachableStatusException
     {
         User u = DU.getUser(iduser);
         Order o = DO.getOrder(idord);
@@ -110,13 +153,18 @@ public class CardService {
         	try
         	{
         		OService.OrderStatus_Payed(o);
+        		PayRegister(new Payment("Pago Pedido " + idord, u , o.totalCost()), c.getCardNumber());
         		
         	}
         	catch(UnreachableStatusException ex)
         	{
         		
         	}
-            PayRegister(new Payment("Pago Pedido " + idord, u , o.totalCost()), c.getCardNumber());
+        	catch(WrongTransactionException ex)
+        	{
+        		
+        	}
+            
         }
     }
   

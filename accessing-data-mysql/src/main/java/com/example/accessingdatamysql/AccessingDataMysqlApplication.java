@@ -1,5 +1,10 @@
 package com.example.accessingdatamysql;
 
+/**
+ * Class that assembles the structure of the objects.
+ * @author Fran
+ * @author Maria
+ */
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +28,6 @@ public class AccessingDataMysqlApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AccessingDataMysqlApplication.class, args);
 	}
-	
 	
 	@Bean
 	public JavaMailSender newMailService()

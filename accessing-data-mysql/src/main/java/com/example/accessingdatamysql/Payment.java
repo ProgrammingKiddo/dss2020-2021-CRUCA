@@ -1,5 +1,9 @@
 package com.example.accessingdatamysql;
-
+/**
+ * Contains all the information and operations related to a payment.
+ * @author Fran
+ * @author Maria
+ */
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import javax.persistence.Entity;
@@ -28,16 +32,28 @@ public class Payment
 	    this.date = LocalDateTime.now(); 
 	}
 
+	/**
+	 * Returns the payment concept.
+	 * @return	Return the concept.
+	 */
 	public String getConcpt() 
 	{ 
 		return concept; 
 	}
 
+	/**
+	 * Returns the user who has made the payment.
+	 * @return	Returns the user.
+	 */
 	public User getUser() 
 	{ 
 		return user; 
 	}
 
+	/**
+	 * Returns the payment amount.
+	 * @return	Return the amount.
+	 */
 	BigDecimal getBalance() 
 	{ 
 		return price; 

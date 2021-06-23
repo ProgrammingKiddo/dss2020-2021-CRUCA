@@ -1,5 +1,10 @@
 package com.example.accessingdatamysql;
 
+/**
+ * Contains all the information and operations related to a reload.
+ * @author Fran
+ * @author Maria
+ */
 import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,16 +30,28 @@ public class Reload
 	    this.afterBalance = ab;
 	}
 
+	/**
+	 * Returns the DNI of the user being reloaded.
+	 * @return	Returns the DNI of the user.
+	 */
 	public int getDNI() 
 	{ 
 		return dni; 
 	}
 
+	/**
+	 * Returns the card number on which the reload is made.
+	 * @return Return the card number.
+	 */
 	public int getNCard() 
 	{ 
 		return nCard; 
 	}
 
+	/**
+	 * Returns the amount to reload.
+	 * @return	Return the amount.
+	 */
 	public BigDecimal getQuantity() 
 	{ 
 		return quantity; 
