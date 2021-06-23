@@ -22,6 +22,7 @@ public class Reload
 	private BigDecimal quantity;
 	private BigDecimal afterBalance;
 
+	public Reload() {}
 	public Reload(int DNI, int nc, BigDecimal q, BigDecimal ab)
 	{
 		this.dni = DNI;

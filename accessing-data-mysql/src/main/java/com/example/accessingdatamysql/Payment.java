@@ -24,6 +24,10 @@ public class Payment
 	private LocalDateTime date;
 	private BigDecimal price;
 
+	public Payment()
+	{
+		this.date = LocalDateTime.now(); 
+	}
 	public Payment(String ccpt, User u, BigDecimal p)
 	{
 		this.concept = ccpt;
