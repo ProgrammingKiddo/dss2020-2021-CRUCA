@@ -165,12 +165,12 @@ public class OrderService
 		
 		if(date.compareTo(LocalDate.now()) <= 0)
 		{
-			for(Order ord: coffe.getOrders())
+			for(Integer ordID: coffe.getOrdersID())
 			{
-				if(ord.getDate().toLocalDate().equals(date))
+				Order aux = oData.getOrder(ordID.intValue());
+				if(aux.getDate().toLocalDate().equals(date))
 				{
-					dailyRegister = dailyRegister.add(ord.totalCost());
-					System.out.println("Order "+ord.getId()+": "+ord.totalCost());
+					dailyRegister = dailyRegister.add(aux.totalCost());
 				}
 			}
 		}
@@ -194,9 +194,10 @@ public class OrderService
 		int numberOfOrders = 0;
 		if(date.compareTo(LocalDate.now()) <= 0)
 		{
-			for(Order ord: coffee.getOrders())
+			for(Integer ordID : coffee.getOrdersID())
 			{
-				if(ord.getDate().toLocalDate().equals(date))
+				Order aux = oData.getOrder(ordID.intValue());
+				if(aux.getDate().toLocalDate().equals(date))
 				{
 					numberOfOrders++;
 				}

@@ -18,7 +18,7 @@ public class Cafeteria implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private LinkedHashMap<Product, Integer> productStock;
-	private List<Order> orderHistory;
+	private List<Integer> orderHistory;
 	private String name;
 	private int id;
 	private List<String> types;
@@ -36,7 +36,7 @@ public class Cafeteria implements Serializable
 	public Cafeteria(int assignedId, String givenName, String Email)
 	{
 		productStock = new LinkedHashMap<Product, Integer>();
-		orderHistory = new ArrayList<Order>();
+		orderHistory = new ArrayList<Integer>();
 		id = assignedId;
 		name = givenName;
 		types = new ArrayList<String>();
@@ -193,14 +193,14 @@ public class Cafeteria implements Serializable
 	 */
 	public void registerOrder(Order newOrder)
 	{
-		orderHistory.add(newOrder);
+		orderHistory.add(Integer.valueOf(newOrder.getId()));
 	}
 	
 	/**
 	 * Returns the list of orders registered to this cafeteria.
 	 * @return Returns the list of orders registered to this cafeteria.
 	 */
-	public List<Order> getOrders()
+	public List<Integer> getOrdersID()
 	{
 		return List.copyOf(orderHistory);
 	}

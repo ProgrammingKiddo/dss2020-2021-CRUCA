@@ -26,12 +26,12 @@ public class User implements Serializable
 	private String surname;
 	private String email;
 	
-	//This list stores all the orders that the user has made
-	private List<Order> UserOrderList;
+	//This list stores all the ids of the orders that the user has made
+	private List<Integer> UserOrderList;
 	
 	public User() 
 	{
-		UserOrderList = new ArrayList<Order>();
+		UserOrderList = new ArrayList<Integer>();
 	}
 	/**
 	 * Creates a new instance of a specific user.
@@ -50,7 +50,7 @@ public class User implements Serializable
 		this.surname = Surname;
 		this.dni = Dni;
 		this.email = Email;
-		UserOrderList = new ArrayList<Order>();
+		UserOrderList = new ArrayList<Integer>();
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class User implements Serializable
 	* Returns the list of orders made by the user.
 	* @return Returns the list of orders made by the user.
 	*/
-	public List<Order> getUserOrderList()
+	public List<Integer> getUserOrderList()
 	{
 		return List.copyOf(UserOrderList);
 	}
@@ -195,12 +195,12 @@ public class User implements Serializable
 	}
 	
 	/**
-	 * Set the new order to the list of the user order.
+	 * Set the new order id to the list of the user order.
 	 * @param o		The new order to set to the list.
 	 */
 	public void setOrder(Order o)
 	{
-		boolean b = UserOrderList.add(o);
+		boolean b = UserOrderList.add(Integer.valueOf(o.getId()));
 	}
 	
 	/**

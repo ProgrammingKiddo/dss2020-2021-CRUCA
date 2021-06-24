@@ -36,5 +36,9 @@ public interface Product {
 	 */
 	public String getType();
 	
+	@Override
 	public boolean equals(Object o);
+	
+	@Override
+	public int hashCode();
 }

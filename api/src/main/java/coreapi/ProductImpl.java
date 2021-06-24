@@ -72,6 +72,7 @@ public class ProductImpl implements Product, Serializable {
 		return type;
 	}
 	
+	@Override
 	public boolean equals(Object o)
 	{
 		if (o == this)
@@ -79,13 +80,25 @@ public class ProductImpl implements Product, Serializable {
 			return true;
 		}
 		
-		if (!(o instanceof Product))
+		if(!(o instanceof Product) && !(o instanceof ProductImpl))
 		{
 			return false;
 		}
 		
 		Product p = (Product) o;
-		
 		return p.getId() == this.id;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		int result = 17;
+		
+		result = 31 * result + id;
+		result = 31 * result + price.hashCode();
+		result = 31 * result + name.hashCode();
+		result = 31 * result + type.hashCode();
+		
+		return result;
 	}
 }

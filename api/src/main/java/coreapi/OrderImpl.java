@@ -146,13 +146,11 @@ public class OrderImpl implements Order, Serializable {
 		BigDecimal sumCost = BigDecimal.ZERO;
 		BigDecimal productCost;
 		BigDecimal productQuantity;
-		System.out.println(basket.isEmpty());
 		for (Map.Entry<Product, Integer> entry : basket.entrySet())
 		{
 			// We create a copy of the product's price as to not modify its value via this reference.
 			productCost = entry.getKey().getPrice();
 			productQuantity = new BigDecimal(entry.getValue().intValue());
-			System.out.println(entry.getKey().getName()+"-"+productCost.doubleValue()+"--"+productQuantity.intValue());
 			productCost = productCost.multiply(productQuantity);
 			
 			sumCost = sumCost.add(productCost);
