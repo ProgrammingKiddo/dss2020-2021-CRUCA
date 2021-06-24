@@ -241,7 +241,7 @@ public class OrderImpl implements Order, Serializable {
 		{
 			if (this.containsProduct(prod))
 			{
-				Integer actualQuantity = basket.get(prod);
+				Integer actualQuantity = Integer.valueOf(quantity + basket.get(prod).intValue());
 				for (Map.Entry<Product,Integer> e : basket.entrySet())
 				{
 					if (e.getKey().equals(prod))
