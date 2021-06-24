@@ -125,6 +125,10 @@ public class ApihttpApplication {
 			UserData userData = new DiskUserData("./");
 			userData.saveUser(pruebaUser);
 			
+			CardData cardData = new DiskCardData("./");
+			Card tarjetaUser = new Card(320, 4000);
+			cardData.saveCard(tarjetaUser);
+			
 			coffeeData.saveCafeteria(coffee);
 		}
 		else

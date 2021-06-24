@@ -24,5 +24,15 @@ public interface OrderData
 	 */
 	public void saveOrder(Order orderToSave);
 	
+	/**
+	 * Checks how many Order files exist already in the active directory.
+	 * @return	The number of pre-existing orders
+	 */
 	public int getNumberOfExistingOrders();
+	
+	/**
+	 * Deletes the data from the indicated order.
+	 * @param id	The id of a specific order.
+	 */
+	public void deleteOrder(int id);
 }

@@ -94,26 +94,11 @@ public class MainController
 	 * Check that the payment has been made correctly and the order status has been changed to <code>PAYED</code>.
 	 * @param ou		Map containing the ID of the order and the ID of the user to whom the order belongs.
 	 * @param code		Validation code for the payment of the specific order
-	 * @throws WrongTransactionException	If the operation to be performed 
-	 * 										fails because the data entered is incorrect.
-	 * @throws UnreachableStatusException	If the conditions to set the <code>PAYED</code> status aren't met.
 	 */
 	@PutMapping("/payconfirm/{code}")
-	public void payComfirm(@RequestBody Map<Integer, Integer> ou, @PathVariable("code") String code) throws WrongTransactionException, UnreachableStatusException
+	public void payComfirm(int userId, int orderId, @PathVariable("code") String code)
 	{
-		Map.Entry<Integer, Integer> entry = ou.entrySet().iterator().next();
-		try
-		{
-			CService.payconfirm(entry.getKey().intValue() , entry.getValue().intValue() , code);
-		}
-		catch(WrongTransactionException e)
-		{
-			
-		}
-		catch(UnreachableStatusException e)
-		{
-			
-		}
+		CService.payconfirm(orderId, userId, code);
 	}
 	
 	@GetMapping("/seecard/{iduser}")

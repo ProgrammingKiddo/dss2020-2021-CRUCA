@@ -59,7 +59,7 @@ public class OrderFactory
 	public static Order createOrder(Cafeteria assignedCafeteria, LocalDateTime creationDate)
 	{
 		OrderImpl createdOrder = new OrderImpl(orderCount++, creationDate);
-		assignedCafeteria.registerOrder(createdOrder);
+		assignedCafeteria.registerOrder(createdOrder.getId());
 		return createdOrder;
 	}
 }

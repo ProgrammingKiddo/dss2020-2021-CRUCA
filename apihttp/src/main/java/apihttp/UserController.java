@@ -55,10 +55,15 @@ public class UserController
 		
 	}
 	
-	@GetMapping("/updateUser/{userid}")
-	public User verUser(@PathVariable int userid)
+	/**
+	 * Get the data of a specific user.
+	 * @param userid	The id of a specific order
+	 * @return			Returns the object of the specified User
+	 */
+	@GetMapping("/getuser/{userid}")
+	public User getUser(@PathVariable int userid)
 	{
-		return APIService.verusuario(userid);
+		return APIService.getUser(userid);
 		
 	}
 

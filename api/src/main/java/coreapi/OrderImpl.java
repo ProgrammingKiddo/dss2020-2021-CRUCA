@@ -119,7 +119,7 @@ public class OrderImpl implements Order, Serializable {
 	{
 		try
 		{
-			if((pDate.compareTo(LocalDateTime.now()) <= 0))
+			if((pDate.compareTo(LocalDateTime.now()) >= 0))
 			{
 				programmingDate = pDate;
 			}

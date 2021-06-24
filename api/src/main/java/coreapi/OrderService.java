@@ -263,14 +263,8 @@ public class OrderService
 	public void setProgrammingDate(Order ord, LocalDateTime PD) throws InvalidDateException
 	{
 		OrderImpl orderDownCast = (OrderImpl) ord;
-		try
-		{
-			orderDownCast.setProgrammingDate(PD);
-			oData.saveOrder(ord);
-		}
-		catch(InvalidDateException ex)
-		{
-			throw new InvalidDateException("Invalid date");
-		}
+
+		orderDownCast.setProgrammingDate(PD);
+		oData.saveOrder(ord);
 	}
 }

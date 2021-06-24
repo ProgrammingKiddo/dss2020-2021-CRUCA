@@ -189,11 +189,20 @@ public class Cafeteria implements Serializable
 	
 	/**
 	 * Registers an order as pertaining to this cafeteria.
-	 * @param newOrder The order to register to this cafeteria.
+	 * @param newOrderId The order to register to this cafeteria.
 	 */
-	public void registerOrder(Order newOrder)
+	public void registerOrder(int newOrderId)
 	{
-		orderHistory.add(Integer.valueOf(newOrder.getId()));
+		orderHistory.add(Integer.valueOf(newOrderId));
+	}
+	
+	/**
+	 * Removes the connection of an order pertaining to this cafeteria.
+	 * @param newOrderId The order to remove from this cafeteria.
+	 */
+	public void deleteOrder(int ordId)
+	{
+		orderHistory.remove(Integer.valueOf(ordId));
 	}
 	
 	/**

@@ -52,7 +52,7 @@ public class DiskOrderData implements OrderData
 	}
 	
 	/**
-	 * Save in a file an User object
+	 * Save in a file an Order object
 	 * 
 	 * @param orderToSave	Order object will be saved
 	 * @see Order
@@ -70,6 +70,12 @@ public class DiskOrderData implements OrderData
 		}
 	}
 	
+	/**
+	 * Gets the number of files in the current directory that relate to Orders in the system.
+	 * 
+	 * I.e. files like "OrderX.txt"
+	 * @return	The amount of Order files in the active directory
+	 */
 	public int getNumberOfExistingOrders()
 	{
 		int count = 0;
@@ -84,5 +90,20 @@ public class DiskOrderData implements OrderData
 			}
 		}
 		return count;
+	}
+	
+	/**
+	 * Deletes the Order file relative to the ID indicated.
+	 */
+	public void deleteOrder(int orderId)
+	{
+		try
+		{
+			File order = new File(path + "Order" + orderId + ".txt");
+			order.delete();
+		} catch (Exception ex)
+		{
+			System.err.println(ex.getMessage());
+		}
 	}
 }

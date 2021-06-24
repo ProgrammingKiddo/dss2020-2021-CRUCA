@@ -26,6 +26,7 @@ public class Card {
 	{
 		this.userDni = dni;
 		this.cardNumber = cNumber;
+		balance = BigDecimal.ZERO;
 	}
 	
 	/**

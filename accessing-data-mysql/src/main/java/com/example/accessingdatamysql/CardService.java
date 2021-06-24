@@ -6,6 +6,7 @@ package com.example.accessingdatamysql;
  * @author Maria
  * 
  */
+
 import java.math.BigDecimal;
 import java.util.Random;
 
@@ -59,10 +60,8 @@ public class CardService {
     /**
      * Carry out a reload on a user's card.
      * @param r		Reload data.
-     * @throws WrongTransactionException	If the operation to be performed 
-	 * 										fails because the data entered is incorrect.
      */
-    public void addBalance(Reload r) throws WrongTransactionException
+    public void addBalance(Reload r)
     {
         try
         {
@@ -105,7 +104,7 @@ public class CardService {
      * @throws WrongTransactionException	If the operation to be performed 
 	 * 										fails because the data entered is incorrect.
      */
-    public void PayRegister(Payment p, int nCard) throws WrongTransactionException
+    public void payRegister(Payment p, int nCard) throws WrongTransactionException
     {
         try
         {
@@ -128,7 +127,7 @@ public class CardService {
      * @throws WrongTransactionException	If the operation to be performed 
 	 * 										fails because the data entered is incorrect.
      */
-    public void payconfirm(int idord, int iduser, String code) throws WrongTransactionException,UnreachableStatusException
+    public void payconfirm(int idord, int iduser, String code)
     {
         User u = DU.getUser(iduser);
         Order o = DO.getOrder(idord);
@@ -138,8 +137,7 @@ public class CardService {
         	try
         	{
         		OService.OrderStatus_Payed(o);
-        		PayRegister(new Payment("Pago Pedido " + idord, u , o.totalCost()), c.getCardNumber());
-        		
+        		payRegister(new Payment("Pago Pedido " + idord, u , o.totalCost()), c.getCardNumber());
         	}
         	catch(UnreachableStatusException ex)
         	{

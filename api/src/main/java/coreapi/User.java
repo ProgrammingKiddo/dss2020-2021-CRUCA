@@ -196,19 +196,19 @@ public class User implements Serializable
 	
 	/**
 	 * Set the new order id to the list of the user order.
-	 * @param o		The new order to set to the list.
+	 * @param ordID		The new order to set to the list.
 	 */
-	public void setOrder(Order o)
+	public void setOrder(int ordID)
 	{
-		boolean b = UserOrderList.add(Integer.valueOf(o.getId()));
+		UserOrderList.add(Integer.valueOf(ordID));
 	}
 	
 	/**
 	 * Delete a specific order of the list of the user order.
-	 * @param o		The order we want to remove.
+	 * @param ordID		The order we want to remove.
 	 */
-	public void deleteOrder(Order o)
+	public void deleteOrder(int ordID)
 	{
-		boolean b = UserOrderList.remove(o);
+		UserOrderList.remove(Integer.valueOf(ordID));
 	}
 }

@@ -138,9 +138,9 @@ public class OrderController {
 	 * @param ou	Map containing the id of the user and the id of the order to be completed.
 	 */
 	@PutMapping("/completeorder/")
-	public void completeOrder(int ordid, int uid)
+	public void completeOrder(int ordid, int uid, String code)
 	{
-	    APIService.completeOrder(ordid,uid);
+	    APIService.completeOrder(ordid,uid, code);
 	}
 
 	/**

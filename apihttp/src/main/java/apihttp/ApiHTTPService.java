@@ -79,12 +79,17 @@ public class ApiHTTPService {
 	{
 		User u = DU.getUser(iduser);
 	    Order o = OrderFactory.createOrder(coffee,LocalDateTime.now());
-	    u.setOrder(o);
+	    u.setOrder(o.getId());
 	    DO.saveOrder(o);
 	    CD.saveCafeteria(coffee);
 	    DU.saveUser(u);
 	}
 	
+	/**
+	 * Get the data of a specific Order
+	 * @param orderid	The id of a specific order
+	 * @return			The object of the specified Order
+	 */
 	public Order getOrder(int orderid)
 	{
 		return DO.getOrder(orderid);
@@ -226,10 +231,16 @@ public class ApiHTTPService {
 		return u;
 	}
 	
-	public User verusuario(int userID)
+	/**
+	 * Get the data of a specific user.
+	 * @param userid	The id of a specific order
+	 * @return			Returns the object of the specified User
+	 */
+	public User getUser(int userID)
 	{
 		return DU.getUser(userID);
 	}
+	
 	/**
 	 * Schedule an order for a specific date and time.
 	 * @param ordID		ID of the order to be scheduled.
@@ -252,7 +263,14 @@ public class ApiHTTPService {
 	public void kitchenNotification(int ordID)
 	{
 		Order o = DO.getOrder(ordID);
-		MS.sendEmail(coffee.getEmail(),"Order " + o.getId(), "This order is programming" + " to the date: " + OService.getProgrammingDate(o));
+		String body = "This order is programmed for the date: " + OService.getProgrammingDate(o);
+		int counter = 1;
+		for (Map.Entry<Product,Integer> e : o.getBasket().entrySet())
+		{
+			body += "\nItem "+counter+": " + e.getKey().getName() +" x"+ e.getValue().intValue();
+			counter++;
+		}
+		MS.sendEmail(coffee.getEmail(),"Order " + o.getId(), body);
 	}
 	
 
@@ -278,7 +296,7 @@ public class ApiHTTPService {
 	 * @param idord		User ID whose order we want to complete.
 	 * @param iduser	ID of the user's order which we want to complete.
 	 */
-	public void completeOrder(int idord, int iduser)
+	public void completeOrder(int idord, int iduser, String code)
 	{
 		Order o = DO.getOrder(idord);
 	    User u = DU.getUser(iduser); 
@@ -286,16 +304,20 @@ public class ApiHTTPService {
 	    RestTemplate rt = new RestTemplate();
 	    if(OService.getValidationStock(o,coffee))
 	    {
-	    	BigDecimal s = rt.getForObject("http:://localhost:8080/userbalance/" + iduser, BigDecimal.class ,c);
-	        if(((s.subtract(o.totalCost())).compareTo(new BigDecimal(-10)) >= 0) == true)
+	    	BigDecimal newBalance = c.getBalance().subtract(o.totalCost());
+	        if((newBalance.compareTo(new BigDecimal(-10)) >= 0) == true)
 	        {
-	        	rt.put("http:://localhost:8080/payauthoritation/" + iduser , o);
+	        	rt.put("http:://localhost:8080/payconfirm/" + code , iduser, idord);
 	        }
 	    }
+	    DO.saveOrder(o);
+	    DU.saveUser(u);
 	}
 
 	/**
-	 * Cancel and remove an user's order.
+	 * Cancel and remove a user's order.
+	 * 
+	 * Also deletes that order from its associated Cafeteria and from the data repository.
 	 * @param userId	User who cancels the order.
 	 * @param idord		Contains the order id which will be delete.
 	 */
@@ -306,7 +328,7 @@ public class ApiHTTPService {
 	    Card c = DC.getCard(u.getNcard());
 	    if(o.getStatus() != OrderStatus.FINISHED)
 	    {
-	    	u.deleteOrder(o);
+	    	u.deleteOrder(o.getId());
 	        Map<Product,Integer> bk = o.getBasket();
 	        try
 	        {
@@ -314,6 +336,7 @@ public class ApiHTTPService {
 		        {
 	        		coffee.addProductStock(entry.getKey(),entry.getValue().intValue());
 		        }
+	        	coffee.deleteOrder(o.getId());
 		        if(o.getStatus() == OrderStatus.PAYED)
 		        {
 		        	c.addBalance(c.getCardNumber(),o.totalCost());
@@ -324,9 +347,10 @@ public class ApiHTTPService {
 	            	
 	        }
 	   }
-	    DO.saveOrder(o);
+	    DO.deleteOrder(o.getId());
 	    DC.saveCard(c);
 	    DU.saveUser(u);
+	    CD.saveCafeteria(coffee);
 	}
 	
 	/**
