@@ -9,6 +9,7 @@ package apihttp;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -263,7 +264,13 @@ public class ApiHTTPService {
 	List<Order> getOrders(int userID)
 	{
 		User u = DU.getUser(userID);
-		return u.getUserOrderList();
+		List<Integer> userOrdersId = u.getUserOrderList();
+		List<Order> userOrders = new ArrayList<Order>();
+		for(Integer oID : userOrdersId)
+		{
+			userOrders.add(DO.getOrder(oID.intValue()));
+		}
+		return userOrders;
 	}
 	
 	/**

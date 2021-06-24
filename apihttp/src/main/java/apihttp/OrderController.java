@@ -52,13 +52,6 @@ public class OrderController {
 	 * @param ordid	The id of a current Order which the product will be added.
 	 * @throws InsufficientStockException 
 	 */
-	/*@PutMapping("/addproduct/{ordid}")
-	public void addProductToOrder(@RequestBody Map<Integer,Integer> pq, @PathVariable("ordid") int ordid) throws InsufficientStockException
-	{
-		Map.Entry<Integer, Integer> entry = pq.entrySet().iterator().next();
-		APIService.addProductToOrder(ordid, entry.getKey().intValue(), entry.getValue().intValue());
-	}*/
-	
 	@PutMapping("/addproduct/{ordid}")
 	public void addProductToOrder(int productId, int quantity, @PathVariable("ordid") int ordid) throws InsufficientStockException
 	{
