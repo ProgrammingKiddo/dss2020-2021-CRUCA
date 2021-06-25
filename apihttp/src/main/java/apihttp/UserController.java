@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import coreapi.Card;
 import coreapi.Order;
 import coreapi.User;
 
@@ -38,9 +40,10 @@ public class UserController
 	 * @param u	Specific user data.
 	 */
 	@PostMapping("/newuser")
-	public void addUser(@RequestBody User u)
+	public Card addUser(@RequestBody User u)
 	{
-		APIService.userRegister(u);
+		return APIService.userRegister(u);
+		
 	}
 	
 	/**

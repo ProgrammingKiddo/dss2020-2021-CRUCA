@@ -5,8 +5,6 @@ package com.example.accessingdatamysql;
  * @author Fran
  * @author Maria
  */
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,20 +40,11 @@ public class MainController
 	/**
 	 * Carry out a reload on a user's card.
 	 * @param R		Reload data.
-	 * @throws WrongTransactionException	If the operation to be performed 
-	 * 										fails because the data entered is incorrect.
 	 */
 	@PutMapping("/addbalance")
-	public void addBalance(@RequestBody Reload R) throws WrongTransactionException
+	public void addBalance(@RequestBody Reload R)
 	{
-		try 
-		{
 			CService.addBalance(R);
-		} 
-		catch (WrongTransactionException e) 
-		{
-		
-		}
 	}
 
 	/**
@@ -65,9 +54,21 @@ public class MainController
 	 * @param dni	The ID of the user who is going to pay for the order.
 	 */
 	@PutMapping("/payauthoritation/{dni}")
-	public void payauthoritation(@RequestBody Order o, @PathVariable int dni)
+	public void payauthoritation(int idord, @PathVariable int dni)
 	{
-		CService.paymentAuthoritation(o, dni);
+		CService.paymentAuthoritation(idord, dni);
+	}
+	
+	/**
+	 * Send an email to the user with the validation code 
+     * to make the payment of a specific order.
+	 * @param idord		Order id to pay
+	 * @param code	Validation code
+	 */
+	@PutMapping("/setcode/{code}")
+	public void setcode(int idord, @PathVariable String code)
+	{
+		CService.setcode(idord, code);
 	}
 
 	/**
@@ -80,14 +81,7 @@ public class MainController
 	@PutMapping("/payregister/{ncard}")
 	public void payregister(@RequestBody Payment p, @PathVariable int ncard) throws WrongTransactionException
 	{	
-		try 
-		{
-			CService.PayRegister(p, ncard);
-		} 
-		catch (WrongTransactionException e) 
-		{
-		
-		}
+		CService.payRegister(p, ncard);	
 	}
 
 	/**

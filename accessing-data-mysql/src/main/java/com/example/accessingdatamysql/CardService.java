@@ -68,6 +68,7 @@ public class CardService {
             Card c = DC.getCard(r.getNCard());
             c.addBalance(r.getNCard(), r.getQuantity());
             r = RR.save(r);
+            DC.saveCard(c);
         }catch(WrongTransactionException ex)
         {
             
@@ -81,9 +82,10 @@ public class CardService {
      * @param o		The specific order to pay.
      * @param uDNI	The ID of the user who is going to pay for the order.
      */
-    public void paymentAuthoritation(Order o, int uDNI)
+    public void paymentAuthoritation(int idord, int uDNI)
     {
         User u = DU.getUser(uDNI);
+        Order o = DO.getOrder(idord);
         char[] chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUWXYZ".toCharArray();
         int charsLength = chars.length;
         Random r = new Random();
@@ -98,13 +100,24 @@ public class CardService {
     }
     
     /**
+     * Auxiliary method to test payment validation
+     * @param idord		Order id to pay
+     * @param cod		Validation code
+     */
+    public void setcode(int idord, String cod)
+    {
+    	Order o = DO.getOrder(idord);
+    	OService.setCode(cod, o);
+    	DO.saveOrder(o);
+    	
+    }
+    
+    /**
      * Register the payment of an order with a specific card.
      * @param p			Payment data.
      * @param nCard		The number of the card with which we are going to make the payment.
-     * @throws WrongTransactionException	If the operation to be performed 
-	 * 										fails because the data entered is incorrect.
      */
-    public void payRegister(Payment p, int nCard) throws WrongTransactionException
+    public void payRegister(Payment p, int nCard)
     {
         try
         {
@@ -123,9 +136,6 @@ public class CardService {
      * @param idord		Contains the id of the Order to obtain his code.
      * @param iduser	Contains the user id.
      * @param code		The code introduced by the user.
-     * @throws UnreachableStatusException	If the conditions to set the <code>PAYED</code> status aren't met.
-     * @throws WrongTransactionException	If the operation to be performed 
-	 * 										fails because the data entered is incorrect.
      */
     public void payconfirm(int idord, int iduser, String code)
     {
@@ -140,10 +150,6 @@ public class CardService {
         		payRegister(new Payment("Pago Pedido " + idord, u , o.totalCost()), c.getCardNumber());
         	}
         	catch(UnreachableStatusException ex)
-        	{
-        		
-        	}
-        	catch(WrongTransactionException ex)
         	{
         		
         	}

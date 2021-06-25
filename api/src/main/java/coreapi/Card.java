@@ -1,5 +1,6 @@
 package coreapi;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -10,8 +11,9 @@ import java.math.BigDecimal;
  * @author Borja
  */
 
-public class Card {
+public class Card implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private int userDni;
 	private int cardNumber;
 	private BigDecimal balance;

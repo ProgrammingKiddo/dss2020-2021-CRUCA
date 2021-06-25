@@ -20,15 +20,13 @@ public class Reload
 	private int dni;
 	private int nCard;
 	private BigDecimal quantity;
-	private BigDecimal afterBalance;
 
 	public Reload() {}
-	public Reload(int DNI, int nc, BigDecimal q, BigDecimal ab)
+	public Reload(int DNI, int nc, BigDecimal q)
 	{
 		this.dni = DNI;
 	    this.nCard = nc;
 	    this.quantity = q;
-	    this.afterBalance = ab;
 	}
 
 	/**
@@ -56,6 +54,32 @@ public class Reload
 	public BigDecimal getQuantity() 
 	{ 
 		return quantity; 
+	}
+	
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	/**
+	 * @param dni the dni to set
+	 */
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+	/**
+	 * @param nCard the nCard to set
+	 */
+	public void setnCard(int nCard) {
+		this.nCard = nCard;
+	}
+	/**
+	 * @param quantity the quantity to set
+	 */
+	
+	public void setQuantity(BigDecimal quantity) {
+		this.quantity = quantity;
 	}
 
 }
